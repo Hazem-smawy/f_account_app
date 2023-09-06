@@ -3,7 +3,6 @@ import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/empty_widget.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -70,7 +69,6 @@ class _ShowAllFilesState extends State<ShowAllFiles> {
                         ),
                         child: files?.length != null && files!.isNotEmpty
                             ? GridView.builder(
-                                dragStartBehavior: DragStartBehavior.start,
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
@@ -114,7 +112,7 @@ class ShowFileItemWidget extends StatelessWidget {
 
   ShowFileItemWidget({super.key, required this.file, required this.action});
 
-  CopyController copyController = Get.find();
+  final CopyController copyController = Get.find();
 
   @override
   Widget build(BuildContext context) {

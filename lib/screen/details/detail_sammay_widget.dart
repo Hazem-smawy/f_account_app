@@ -18,7 +18,7 @@ class DetailsSammaryWidget extends StatelessWidget {
       required this.subTitle,
       required this.color})
       : super(key: key);
-  CurencyController curencyController = Get.find();
+  final CurencyController curencyController = Get.find();
 
   @override
   Widget build(BuildContext context) {

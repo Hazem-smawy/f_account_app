@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart' as DateFormater;
 
 class CustomerAccountDetailsSheet extends StatefulWidget {
-  CustomerAccount customerAccount;
+  final CustomerAccount customerAccount;
   CustomerAccountDetailsSheet({super.key, required this.customerAccount});
 
   @override

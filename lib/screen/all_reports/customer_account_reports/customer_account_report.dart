@@ -87,7 +87,7 @@ class CustomerAccountsReportScreen extends StatelessWidget {
                 child: Obx(
               () =>
                   customerAccountReportController.allCustomerAccountsRow.isEmpty
-                      ? const EmptyReportListWidget()
+                      ? EmptyReportListWidget()
                       : ListView.builder(
                           itemCount: customerAccountReportController
                               .allCustomerAccountsRow.length,
@@ -120,12 +120,12 @@ class AccGroupCurencyListWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(
         left: 15,
-        top: 90,
+        top: 105,
         // right: Get.width / 2.3,
       ),
-      width: Get.width / 2,
+      width: Get.width / 2 - 30,
       //height: 300,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: MyColors.containerColor.withOpacity(0.7),
@@ -134,11 +134,6 @@ class AccGroupCurencyListWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            "كل التصنيفات",
-            style: myTextStyles.title2,
-          ),
-          const SizedBox(height: 10),
           ListView.builder(
             shrinkWrap: true,
             primary: true,
@@ -182,7 +177,7 @@ class AccGroupReportListItemWidget extends StatelessWidget {
         Get.back();
       },
       child: Container(
-        margin: const EdgeInsets.only(top: 5),
+        margin: const EdgeInsets.only(bottom: 5),
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

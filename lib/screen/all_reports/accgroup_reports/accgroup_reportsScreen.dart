@@ -71,7 +71,7 @@ class AccGroupReportScreen extends StatelessWidget {
             Expanded(
                 child: Obx(
               () => accGroupReportController.allCustomerAccountsRow.isEmpty
-                  ? const EmptyReportListWidget()
+                  ? EmptyReportListWidget()
                   : ListView.builder(
                       itemCount: accGroupReportController
                           .allCustomerAccountsRow.length,

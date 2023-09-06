@@ -368,7 +368,7 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
 class FirstPage extends StatelessWidget {
   final page;
   FirstPage({super.key, required this.page, required this.lastPage});
-  bool lastPage;
+  final bool lastPage;
 
   @override
   Widget build(BuildContext context) {

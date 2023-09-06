@@ -18,12 +18,12 @@ import 'package:account_app/screen/quick_help/quick_help_screen.dart';
 
 class MyMainScreen extends StatelessWidget {
   MyMainScreen({super.key});
-  AccGroupCurencyController accGroupCurencyController = Get.find();
+  final AccGroupCurencyController accGroupCurencyController = Get.find();
 
-  AccGroupController accGroupController = Get.find();
+  final AccGroupController accGroupController = Get.find();
 
-  CurencyController curencyController = Get.find();
-  HomeController homeController = Get.find();
+  final CurencyController curencyController = Get.find();
+  final HomeController homeController = Get.find();
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   final controller = PageController();
   @override

@@ -8,6 +8,7 @@ import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/intro_controller.dart';
 import 'package:account_app/controller/main_controller.dart';
 import 'package:account_app/models/sitting_model.dart';
+import 'package:account_app/screen/all_reports/account_move/account_move_screen.dart';
 import 'package:account_app/screen/all_reports/all_money_report/all_money_report_screen.dart';
 import 'package:account_app/screen/intro_screen/intro_screen.dart';
 import 'package:account_app/screen/main_screen/main_screen.dart';
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: MyColors.containerColor,
       ),
       // theme: AppThemes.darkTheme,
-      // home: AllMoenyReportScreen(),
+      // home: AccountMoveScreen(),
       home: FutureBuilder(
         future: introController.readIntro(),
         initialData: true,

@@ -2,14 +2,12 @@
 import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/controller/image_controller.dart';
 import 'package:account_app/controller/personal_controller.dart';
-import 'package:account_app/controller/sitting_controller.dart';
 import 'package:account_app/screen/copy_screen/google_copy_screen.dart';
 import 'package:account_app/screen/copy_screen/local_copy_screen.dart';
 import 'package:account_app/screen/personal_info/personal_info.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
 import 'package:account_app/screen/settings/curency_setting.dart';
 import 'package:account_app/constant/text_styles.dart';
-import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/no_personal_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,9 +19,9 @@ import 'package:account_app/screen/settings/customer_setting.dart';
 
 class SettingScreen extends StatelessWidget {
   SettingScreen({super.key});
-  PersonalController personalController = Get.find();
-  CopyController copyController = Get.find();
-  ImageController imageController = Get.find();
+  final PersonalController personalController = Get.find();
+  final CopyController copyController = Get.find();
+  final ImageController imageController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -148,12 +146,12 @@ class SettingScreen extends StatelessWidget {
                                           child: imageController
                                                       .customImage['image'] ==
                                                   null
-                                              ?const FaIcon(
+                                              ? const FaIcon(
                                                   FontAwesomeIcons.user,
                                                   color:
                                                       MyColors.containerColor,
                                                 )
-                                              :const SizedBox(),
+                                              : const SizedBox(),
                                         ),
                                         Positioned(
                                           bottom: -2.5,

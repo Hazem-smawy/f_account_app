@@ -14,9 +14,10 @@ class HomeRowView extends StatelessWidget {
   final HomeModel homeModel;
 
   HomeRowView({super.key, required this.homeModel, required this.status});
-  NewAccountController newAccountController = Get.put(NewAccountController());
-  CurencyController curencyController = Get.find();
-  bool status;
+  final NewAccountController newAccountController =
+      Get.put(NewAccountController());
+  final CurencyController curencyController = Get.find();
+  final bool status;
   @override
   Widget build(BuildContext context) {
     return Container(

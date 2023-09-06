@@ -12,6 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:account_app/constant/colors.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
   final AccGroup accGroup;
   bool stauts;

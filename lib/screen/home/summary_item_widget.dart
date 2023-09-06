@@ -8,7 +8,7 @@ import 'package:account_app/constant/colors.dart';
 import 'package:get/get.dart';
 
 class HomeSammaryWidget extends StatelessWidget {
-  CurencyController curencyController = Get.find();
+  final CurencyController curencyController = Get.find();
   final IconData icon;
   final String title;
   final String subTitle;

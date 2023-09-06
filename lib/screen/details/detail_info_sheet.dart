@@ -10,8 +10,8 @@ import 'package:intl/intl.dart' as DateFormater;
 
 class DetialInfoSheet extends StatelessWidget {
   final name;
-  Journal detailsRows;
-  Curency curency;
+  final Journal detailsRows;
+  final Curency curency;
 
   DetialInfoSheet(
       {super.key,

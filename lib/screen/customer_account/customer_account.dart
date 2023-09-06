@@ -13,11 +13,11 @@ import 'customer_sheet.dart';
 
 class CustomerAccountsView extends StatelessWidget {
   CustomerAccountsView({super.key});
-  CustomerAccountController customerAccountController =
+  final CustomerAccountController customerAccountController =
       Get.put(CustomerAccountController());
-  CurencyController curencyController = Get.put(CurencyController());
-  CustomerController customerController = Get.put(CustomerController());
-  AccGroupController accGroupController = Get.put(AccGroupController());
+  final CurencyController curencyController = Get.put(CurencyController());
+  final CustomerController customerController = Get.put(CustomerController());
+  final AccGroupController accGroupController = Get.put(AccGroupController());
 
   @override
   Widget build(BuildContext context) {
@@ -219,8 +219,8 @@ class CustomerAccountsView extends StatelessWidget {
 }
 
 class CustomerAccountItem extends StatelessWidget {
-  String title;
-  IconData icon;
+  final String title;
+  final IconData icon;
   final bool isCustomerName;
   CustomerAccountItem(
       {super.key,

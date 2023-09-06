@@ -15,8 +15,8 @@ import 'package:get/get.dart';
 
 class AccGroupSettingScreen extends StatelessWidget {
   AccGroupSettingScreen({super.key});
-  AccGroupController accGroupController = Get.put(AccGroupController());
-  CustomerAccountController customerAccountController = Get.find();
+  final AccGroupController accGroupController = Get.put(AccGroupController());
+  final CustomerAccountController customerAccountController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -161,9 +161,9 @@ class AccGroupSettingScreen extends StatelessWidget {
 class NewAccGroupSheet extends StatelessWidget {
   final bool isEditing;
   NewAccGroupSheet({super.key, this.isEditing = false});
-  AccGroupController accGroupController = Get.find();
-  CustomerAccountController customerAccountController = Get.find();
-  AccGroupCurencyController accGroupCurencyController = Get.find();
+  final AccGroupController accGroupController = Get.find();
+  final CustomerAccountController customerAccountController = Get.find();
+  final AccGroupCurencyController accGroupCurencyController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Obx(

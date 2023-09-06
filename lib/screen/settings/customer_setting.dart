@@ -16,7 +16,7 @@ import 'package:get/get.dart';
 
 class CustomerSettingScreen extends StatelessWidget {
   CustomerSettingScreen({super.key});
-  CustomerController customerController = Get.find();
+  final CustomerController customerController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -65,12 +65,12 @@ class CustomerSettingScreen extends StatelessWidget {
 
 class CustomerSettingItemWidget extends StatelessWidget {
   final Customer customer;
-  CustomerAccountController customerAccountController = Get.find();
+  final CustomerAccountController customerAccountController = Get.find();
   CustomerSettingItemWidget({
     super.key,
     required this.customer,
   });
-  CustomerController customerController = Get.find();
+  final CustomerController customerController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -202,8 +202,8 @@ class CustomerSettingItemWidget extends StatelessWidget {
 class NewCustomerSheet extends StatelessWidget {
   final bool isEditing;
   NewCustomerSheet({super.key, this.isEditing = false});
-  CustomerController customerController = Get.find();
-  HomeController homeController = Get.find();
+  final CustomerController customerController = Get.find();
+  final HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {

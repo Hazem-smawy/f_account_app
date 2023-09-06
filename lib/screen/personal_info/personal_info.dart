@@ -1,10 +1,10 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/shadows.dart';
 import 'package:account_app/constant/text_styles.dart';
-import 'package:account_app/controller/error_controller.dart';
 import 'package:account_app/controller/image_controller.dart';
 import 'package:account_app/controller/personal_controller.dart';
 import 'package:account_app/models/personal_model.dart';
+import 'package:account_app/screen/personal_info/personal_text_field_widget.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 class PersonalInfoScreen extends StatelessWidget {
   PersonalInfoScreen({super.key});
   final PersonalController personalController = Get.find();
-  ImageController imageController = Get.find();
+  final ImageController imageController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -212,9 +212,9 @@ class PersonalInfoScreen extends StatelessWidget {
 
 class EditPersonalInfoSheet extends StatelessWidget {
   EditPersonalInfoSheet({super.key, required this.isFirstTime});
-  PersonalController personalController = Get.find();
+  final PersonalController personalController = Get.find();
   final isFirstTime;
-  ImageController imageController = Get.find();
+  final ImageController imageController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -398,63 +398,6 @@ class EditPersonalInfoSheet extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class PersonalTextFieldWidget extends StatelessWidget {
-  final String textHint;
-  final IconData icon;
-  Function(String)? action;
-  String? placeHolder;
-  PersonalTextFieldWidget(
-      {super.key,
-      required this.icon,
-      required this.textHint,
-      this.placeHolder = "",
-      required this.action});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 52,
-      alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: MyColors.containerSecondColor,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: TextFormField(
-              initialValue: placeHolder ?? "",
-              textAlign: TextAlign.right,
-              textDirection: TextDirection.rtl,
-              style: myTextStyles.subTitle.copyWith(
-                  color: MyColors.blackColor, fontWeight: FontWeight.bold),
-              onChanged: (value) {
-                action!(value);
-                CEC.errorMessage.value = "";
-              },
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: textHint,
-                hintStyle:
-                    myTextStyles.body.copyWith(fontWeight: FontWeight.normal),
-              ),
-            ),
-          ),
-          const SizedBox(width: 10),
-          FaIcon(
-            icon,
-            size: 20,
-            color: MyColors.secondaryTextColor,
-          ),
-          const SizedBox(width: 5),
-        ],
       ),
     );
   }

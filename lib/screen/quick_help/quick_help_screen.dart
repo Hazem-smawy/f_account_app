@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:account_app/screen/all_reports/accgroup_reports/accgroup_reportsScreen.dart';
-import 'package:account_app/screen/all_reports/all_money_report/all_money_report_screen.dart';
+import 'package:account_app/screen/all_reports/account_move/account_move_screen.dart';
+import 'package:account_app/screen/all_reports/all_accgroup_reports/all_accgroup_reports.dart';
 import 'package:account_app/screen/all_reports/customer_account_reports/customer_account_report.dart';
 import 'package:account_app/screen/customer_account/customer_account.dart';
 import 'package:account_app/screen/all_reports/daily_report/daily_report_screen.dart';
@@ -84,6 +85,18 @@ class HomeReportsScreen extends StatelessWidget {
                             Get.to(() => AccGroupReportScreen());
                           },
                           title: " إجمالي المبالغ حسب التصنيف",
+                        ),
+                        ReportItemWidget(
+                          action: () {
+                            Get.to(() => AllAccGroupReportScreen());
+                          },
+                          title: " إجمالي التصنيفات",
+                        ),
+                        ReportItemWidget(
+                          action: () {
+                            Get.to(() => AccountMoveScreen());
+                          },
+                          title: " حركة الحسابات",
                         )
                         // item tow
                       ],
@@ -240,9 +253,9 @@ class ReportItemWidget extends StatelessWidget {
 }
 
 class HomeReportFooterWidget extends StatelessWidget {
-  String title;
-  IconData icon;
-  VoidCallback action;
+  final String title;
+  final IconData icon;
+  final VoidCallback action;
   HomeReportFooterWidget({
     Key? key,
     required this.title,

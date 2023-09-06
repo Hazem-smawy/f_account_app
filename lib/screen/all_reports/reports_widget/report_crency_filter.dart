@@ -11,11 +11,12 @@ class ReportCurenyFilterWidget extends StatelessWidget {
   final VoidCallback action;
   final int curencyId;
 
-  ReportCurenyFilterWidget(
-      {super.key,
-      required this.action,
-      required this.curencyId,
-      required this.controller});
+  ReportCurenyFilterWidget({
+    super.key,
+    required this.action,
+    required this.curencyId,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {

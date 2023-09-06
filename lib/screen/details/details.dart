@@ -17,9 +17,9 @@ import 'detail_info_sheet.dart';
 import 'detail_sammay_widget.dart';
 
 class DetailsScreen extends StatefulWidget {
-  HomeModel homeModel;
+  final HomeModel homeModel;
 
-  bool accGoupStatus;
+  final bool accGoupStatus;
   DetailsScreen(
       {super.key, required this.homeModel, required this.accGoupStatus});
 

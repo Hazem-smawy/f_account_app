@@ -77,7 +77,7 @@ class DailyReportScreen extends StatelessWidget {
                             child: const CircularProgressIndicator.adaptive(),
                           )
                         : reportsController.journalsReports.isEmpty
-                            ? const EmptyReportListWidget()
+                            ? EmptyReportListWidget()
                             : Container(
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 10),

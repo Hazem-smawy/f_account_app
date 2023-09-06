@@ -15,8 +15,8 @@ import 'package:get/get.dart';
 
 class CurencySettingScreen extends StatelessWidget {
   CurencySettingScreen({super.key});
-  CurencyController curencyController = Get.find();
-  CustomerAccountController customerAccountController = Get.find();
+  final CurencyController curencyController = Get.find();
+  final CustomerAccountController customerAccountController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,8 +169,8 @@ class CurencySettingScreen extends StatelessWidget {
 class NewCurencySheet extends StatelessWidget {
   NewCurencySheet({super.key, this.isEdding = false});
   final bool isEdding;
-  CurencyController curencyController = Get.find();
-  CustomerAccountController customerAccountController = Get.find();
+  final CurencyController curencyController = Get.find();
+  final CustomerAccountController customerAccountController = Get.find();
   @override
   Widget build(BuildContext context) {
     //print(curencyController.newCurency);
