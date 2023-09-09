@@ -17,10 +17,8 @@ class DetailData {
   Future<void> create(String details) async {
     try {
       final db = await DatabaseService().database;
-      await db.insert('detail', {"body": details});
-    } catch (e) {
-      print("error for creatting");
-    }
+      await db.insert('detail', {"body": details.trim()});
+    } catch (e) {}
   }
 
   Future<List<Map<String, Object?>>?> readAll() async {

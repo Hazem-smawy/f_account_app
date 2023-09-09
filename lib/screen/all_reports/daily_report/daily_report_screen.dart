@@ -2,7 +2,7 @@
 
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
-import 'package:account_app/controller/report_controller.dart';
+import 'package:account_app/controller/daily_report_controller.dart';
 import 'package:account_app/screen/all_reports/reports_widget/dialy_sammary_widget.dart';
 import 'package:account_app/screen/all_reports/reports_widget/empyt_report.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_headers.dart';
@@ -14,7 +14,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart' as dateFormater;
 
 class DailyReportScreen extends StatelessWidget {
-  final ReportsController reportsController = Get.put(ReportsController());
+  final DailyReportsController reportsController =
+      Get.put(DailyReportsController());
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +88,8 @@ class DailyReportScreen extends StatelessWidget {
                                       reportsController.journalsReports.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return Container(
+                                    return AnimatedContainer(
+                                      duration: Duration(milliseconds: 200),
                                       margin: const EdgeInsets.only(top: 5),
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10, vertical: 5),
@@ -95,150 +97,202 @@ class DailyReportScreen extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(7),
                                         color: MyColors.bg.withOpacity(0.5),
                                       ),
-                                      child: Row(
+                                      child: Column(
                                         children: [
-                                          Text(
-                                            dateFormater.DateFormat.MEd()
-                                                .format(DateTime.parse(
-                                                    reportsController
-                                                            .journalsReports[
-                                                        index]['date'])),
-                                            textDirection: TextDirection.rtl,
-                                            style: myTextStyles.body.copyWith(
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 7,
-                                          ),
-                                          Container(
-                                            width: 20,
-                                            height: 5,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: reportsController
-                                                                .journalsReports[
-                                                            index]['debit'] >
-                                                        reportsController
-                                                                .journalsReports[
-                                                            index]['credit']
-                                                    ? MyColors.creditColor
-                                                    : MyColors.debetColor),
-                                          ),
-                                          const SizedBox(
-                                            width: 15,
-                                          ),
-                                          Text(
-                                            reportsController
-                                                    .journalsReports[index]
-                                                ['symbol'],
-                                            style: myTextStyles.body,
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          SizedBox(
-                                            width: Get.width / 8,
-                                            child: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: Text(
-                                                (reportsController
-                                                                .journalsReports[
-                                                            index]['debit'] -
-                                                        reportsController
-                                                                .journalsReports[
-                                                            index]['credit'])
-                                                    .toString(),
-                                                style: myTextStyles.title2,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          Flexible(
-                                            flex: 1,
-                                            child: SizedBox(
-                                              width: Get.width / 6,
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  Expanded(
-                                                    child: FittedBox(
-                                                      fit: BoxFit.scaleDown,
-                                                      clipBehavior:
-                                                          Clip.hardEdge,
-                                                      child: Text(
-                                                        reportsController
-                                                                .journalsReports[
-                                                            index]['accName'],
-                                                        textDirection:
-                                                            TextDirection.rtl,
-                                                        textAlign:
-                                                            TextAlign.right,
-                                                        style: myTextStyles
-                                                            .subTitle
-                                                            .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 3,
-                                                  ),
-                                                  const FaIcon(
-                                                    FontAwesomeIcons.folder,
-                                                    size: 12,
-                                                    color: MyColors
-                                                        .secondaryTextColor,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          // const Spacer(),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          Flexible(
-                                            flex: 2,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    alignment:
-                                                        Alignment.centerRight,
-                                                    // width: Get.width / 2.7,
-                                                    child: FittedBox(
-                                                      child: Text(
-                                                        reportsController
-                                                                .journalsReports[
-                                                            index]['name'],
-                                                        textDirection:
-                                                            TextDirection.rtl,
-                                                        textAlign:
-                                                            TextAlign.right,
-                                                        style: myTextStyles
-                                                            .subTitle
-                                                            .copyWith(
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
+                                          Row(
+                                            children: [
+                                              SizedBox(
+                                                width: Get.width / 9,
+                                                child: FittedBox(
+                                                  fit: BoxFit.scaleDown,
+                                                  child: Text(
+                                                    dateFormater.DateFormat
+                                                            .MEd()
+                                                        .format(DateTime.parse(
+                                                            reportsController
+                                                                    .journalsReports[
+                                                                index]['date'])),
+                                                    textDirection:
+                                                        TextDirection.ltr,
+                                                    style: myTextStyles.body
+                                                        .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.normal,
                                                     ),
                                                   ),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                              SizedBox(
+                                                width: 7,
+                                              ),
+                                              Container(
+                                                width: 20,
+                                                height: 5,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    color: reportsController
+                                                                        .journalsReports[
+                                                                    index]
+                                                                ['debit'] >
+                                                            reportsController
+                                                                    .journalsReports[
+                                                                index]['credit']
+                                                        ? MyColors.creditColor
+                                                        : MyColors.debetColor),
+                                              ),
+                                              const SizedBox(
+                                                width: 15,
+                                              ),
+                                              Text(
+                                                reportsController
+                                                        .journalsReports[index]
+                                                    ['symbol'],
+                                                style: myTextStyles.body,
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              SizedBox(
+                                                width: Get.width / 8,
+                                                child: FittedBox(
+                                                  fit: BoxFit.scaleDown,
+                                                  child: Text(
+                                                    (reportsController.journalsReports[
+                                                                    index]
+                                                                ['debit'] -
+                                                            reportsController
+                                                                    .journalsReports[
+                                                                index]['credit'])
+                                                        .abs()
+                                                        .toString(),
+                                                    style: myTextStyles.title2,
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Flexible(
+                                                flex: 1,
+                                                child: SizedBox(
+                                                  width: Get.width / 6,
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Expanded(
+                                                        child: FittedBox(
+                                                          fit: BoxFit.scaleDown,
+                                                          clipBehavior:
+                                                              Clip.hardEdge,
+                                                          child: Text(
+                                                            reportsController
+                                                                    .journalsReports[
+                                                                index]['accName'],
+                                                            textDirection:
+                                                                TextDirection
+                                                                    .rtl,
+                                                            textAlign:
+                                                                TextAlign.right,
+                                                            style: myTextStyles
+                                                                .subTitle
+                                                                .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 3,
+                                                      ),
+                                                      const FaIcon(
+                                                        FontAwesomeIcons.folder,
+                                                        size: 12,
+                                                        color: MyColors
+                                                            .secondaryTextColor,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              // const Spacer(),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Flexible(
+                                                flex: 2,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    Expanded(
+                                                      child: Container(
+                                                        alignment: Alignment
+                                                            .centerRight,
+                                                        // width: Get.width / 2.7,
+                                                        child: FittedBox(
+                                                          child: Text(
+                                                            reportsController
+                                                                    .journalsReports[
+                                                                index]['name'],
+                                                            textDirection:
+                                                                TextDirection
+                                                                    .rtl,
+                                                            textAlign:
+                                                                TextAlign.right,
+                                                            style: myTextStyles
+                                                                .subTitle
+                                                                .copyWith(
+                                                                    color: MyColors
+                                                                        .blackColor,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis),
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Obx(
+                                            () => reportsController
+                                                        .isAll.value ==
+                                                    0
+                                                ? SizedBox()
+                                                : Container(
+                                                    margin:
+                                                        EdgeInsets.only(top: 5),
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                            flex: 2,
+                                                            child: Text(
+                                                              reportsController
+                                                                      .journalsReports[
+                                                                  index]['desc'],
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .right,
+                                                              style:
+                                                                  myTextStyles
+                                                                      .body,
+                                                            )),
+                                                        // Expanded(child: Container())
+                                                      ],
+                                                    ),
+                                                  ),
                                           )
                                         ],
                                       ),
@@ -260,9 +314,9 @@ class DailyReportScreen extends StatelessWidget {
                         children: [
                           ReportSammaryWidget(
                             icon: FontAwesomeIcons.arrowUp,
-                            title: reportsController.totalDebit.toString(),
-                            subTitle: "لك",
-                            color: Colors.green,
+                            title: reportsController.totalCredit.toString(),
+                            subTitle: "لة",
+                            color: MyColors.debetColor,
                             curencyId: reportsController.curencyId.value,
                           ),
                           SizedBox(
@@ -271,9 +325,9 @@ class DailyReportScreen extends StatelessWidget {
                           ReportSammaryWidget(
                             curencyId: reportsController.curencyId.value,
                             icon: FontAwesomeIcons.arrowDown,
-                            title: reportsController.totalCredit.toString(),
-                            subTitle: "عليك",
-                            color: Colors.red,
+                            title: reportsController.totalDebit.toString(),
+                            subTitle: "علية",
+                            color: MyColors.creditColor,
                           )
                         ],
                       ),
@@ -291,18 +345,19 @@ class DailyReportScreen extends StatelessWidget {
                             FaIcon(
                               reportsController.totalDebit.value >=
                                       reportsController.totalCredit.value
-                                  ? FontAwesomeIcons.arrowUp
-                                  : FontAwesomeIcons.arrowDown,
+                                  ? FontAwesomeIcons.arrowDown
+                                  : FontAwesomeIcons.arrowUp,
                               size: 10,
-                              color: reportsController.totalDebit.value >=
+                              color: reportsController.totalDebit.value >
                                       reportsController.totalCredit.value
-                                  ? Colors.green
-                                  : Colors.red,
+                                  ? MyColors.creditColor
+                                  : MyColors.debetColor,
                             ),
                             const SizedBox(width: 5),
                             Text(
                               (reportsController.totalDebit.value -
                                       reportsController.totalCredit.value)
+                                  .abs()
                                   .toString(),
                               style: myTextStyles.title1,
                             ),
@@ -310,8 +365,8 @@ class DailyReportScreen extends StatelessWidget {
                             Text(
                               reportsController.totalDebit.value <
                                       reportsController.totalCredit.value
-                                  ? "عليك"
-                                  : "لك",
+                                  ? "لة"
+                                  : "علية",
                               style: myTextStyles.body,
                             ),
                             Spacer(),
@@ -330,7 +385,7 @@ class DailyReportScreen extends StatelessWidget {
 }
 
 class ReportFilterWidget extends StatelessWidget {
-  final ReportsController reportsController = Get.find();
+  final DailyReportsController reportsController = Get.find();
   Future _selectFromDate(BuildContext ctx) async {
     final DateTime? picked = await showDatePicker(
         context: ctx,
@@ -367,47 +422,75 @@ class ReportFilterWidget extends StatelessWidget {
     return Obx(
       () => Row(
         children: [
-          Row(
-            children: [
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                "إجمالي",
-                style: myTextStyles.subTitle.copyWith(
-                  color: MyColors.lessBlackColor,
+          GestureDetector(
+            onTap: () {
+              reportsController.isAll.value = 0;
+            },
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 10,
                 ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              FaIcon(
-                FontAwesomeIcons.circleCheck,
-                size: 15,
-                color: MyColors.lessBlackColor,
-              )
-            ],
+                Text(
+                  "إجمالي",
+                  style: myTextStyles.subTitle.copyWith(
+                    fontWeight: reportsController.isAll.value == 0
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                    color: reportsController.isAll.value == 0
+                        ? Colors.green
+                        : MyColors.secondaryTextColor,
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                FaIcon(
+                  reportsController.isAll.value == 0
+                      ? FontAwesomeIcons.circleCheck
+                      : FontAwesomeIcons.circle,
+                  size: 15,
+                  color: reportsController.isAll.value == 0
+                      ? Colors.green
+                      : MyColors.secondaryTextColor,
+                )
+              ],
+            ),
           ),
           SizedBox(
             width: 10,
           ),
-          Row(
-            children: [
-              Text(
-                "تفصيلي",
-                style: myTextStyles.subTitle.copyWith(
-                  color: MyColors.secondaryTextColor,
+          GestureDetector(
+            onTap: () {
+              reportsController.isAll.value = 1;
+            },
+            child: Row(
+              children: [
+                Text(
+                  "تفصيلي",
+                  style: myTextStyles.subTitle.copyWith(
+                    fontWeight: reportsController.isAll.value == 1
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                    color: reportsController.isAll.value == 1
+                        ? Colors.green
+                        : MyColors.secondaryTextColor,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              const FaIcon(
-                FontAwesomeIcons.circle,
-                size: 15,
-                color: MyColors.secondaryTextColor,
-              )
-            ],
+                const SizedBox(
+                  width: 5,
+                ),
+                FaIcon(
+                  reportsController.isAll.value == 1
+                      ? FontAwesomeIcons.circleCheck
+                      : FontAwesomeIcons.circle,
+                  size: 15,
+                  color: reportsController.isAll.value == 1
+                      ? Colors.green
+                      : MyColors.secondaryTextColor,
+                )
+              ],
+            ),
           ),
           Spacer(),
           GestureDetector(
@@ -422,7 +505,7 @@ class ReportFilterWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               "الى",
-              style: myTextStyles.title2.copyWith(
+              style: myTextStyles.subTitle.copyWith(
                 color: MyColors.blackColor,
               ),
             ),

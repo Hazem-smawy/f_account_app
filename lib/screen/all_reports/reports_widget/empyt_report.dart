@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../constant/colors.dart';
 
 class EmptyReportListWidget extends StatelessWidget {
-  bool? isCustomerMovementAccount;
+  final bool? isCustomerMovementAccount;
   EmptyReportListWidget({super.key, this.isCustomerMovementAccount});
 
   @override

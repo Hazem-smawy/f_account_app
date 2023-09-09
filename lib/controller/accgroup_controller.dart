@@ -34,7 +34,6 @@ class AccGroupController extends GetxController {
   }
 
   Future<void> readAllAccGroup() async {
-    await accGroupCurencyController.getAllAccGroupAndCurency();
     allAccGroups.value = await accGroupData.readAllAccGroups();
     await accGroupCurencyController.getAllAccGroupAndCurency();
   }

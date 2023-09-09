@@ -57,8 +57,10 @@ class HomeSammaryWidget extends StatelessWidget {
               children: [
                 Text(
                   curency.symbol,
-                  style: myTextStyles.subTitle
-                      .copyWith(color: MyColors.secondaryTextColor),
+                  style: myTextStyles.body.copyWith(
+                    // color: MyColors.secondaryTextColor,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
                 const SizedBox(
                   width: 5,

@@ -5,7 +5,6 @@ import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/reports/account_move_controller.dart';
 import 'package:account_app/models/accgroup_model.dart';
-import 'package:account_app/screen/all_reports/account_move/account_move_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -22,7 +21,7 @@ class AccountMovementAccGroupListWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(
         right: 15,
-        top: 95,
+        top: 110,
         // right: Get.width / 2.3,
       ),
       width: Get.width / 2 - 30,

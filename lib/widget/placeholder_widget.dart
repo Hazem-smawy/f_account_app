@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 class PlaceHolderWidget extends StatelessWidget {
   PlaceHolderWidget({super.key});
-  CurencyController curencyController = Get.find();
+  final CurencyController curencyController = Get.find();
 
   @override
   Widget build(BuildContext context) {

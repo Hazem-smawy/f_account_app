@@ -2,7 +2,6 @@ import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/error_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CustomTextFieldWidget extends StatefulWidget {
   final String textHint;

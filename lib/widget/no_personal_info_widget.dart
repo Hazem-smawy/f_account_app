@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 class NoPersonalInfoWidget extends StatelessWidget {
   final bool isDrawer;
   NoPersonalInfoWidget({super.key, required this.isDrawer});
-  ImageController imageController = Get.find();
+  final ImageController imageController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class NoPersonalInfoWidget extends StatelessWidget {
         children: [
           Obx(
             () => CircleAvatar(
-              radius: 25,
+              radius: 35,
               backgroundColor: isDrawer ? MyColors.bg : MyColors.lessBlackColor,
               backgroundImage: imageController.customImage['image'] == null
                   ? null

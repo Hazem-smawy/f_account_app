@@ -3,7 +3,6 @@ import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/curency_controller.dart';
-import 'package:account_app/controller/pdf_controller.dart';
 import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/models/curency_model.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
@@ -24,8 +23,8 @@ class MyAppBarWidget extends StatelessWidget {
       : _globalKey = globalKey;
 
   final GlobalKey<ScaffoldState> _globalKey;
-  AccGroupController accGroupController = Get.find();
-  AccGroupCurencyController accGroupCurencyController = Get.find();
+  final AccGroupController accGroupController = Get.find();
+  final AccGroupCurencyController accGroupCurencyController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -114,16 +113,16 @@ class MyAppBarWidget extends StatelessWidget {
 
 class AccGroupCurencyListWidget extends StatelessWidget {
   AccGroupCurencyListWidget({super.key, required this.goToPageAction});
-  AccGroupCurencyController accGroupCurencyController = Get.find();
-  AccGroupController accGroupController = Get.find();
-  CurencyController curencyController = Get.find();
-  VoidCallback goToPageAction;
+  final AccGroupCurencyController accGroupCurencyController = Get.find();
+  final AccGroupController accGroupController = Get.find();
+  final CurencyController curencyController = Get.find();
+  final VoidCallback goToPageAction;
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(
         left: 15,
-        top: 55,
+        top: 60,
         // right: Get.width / 2.3,
       ),
       width: Get.width / 2,
@@ -215,8 +214,8 @@ class AccGroupCurencyListWidget extends StatelessWidget {
 }
 
 class AccGroupCurencyListItemWidget extends StatelessWidget {
-  AccGroup accGroup;
-  Curency? curency;
+  final AccGroup accGroup;
+  final Curency? curency;
   AccGroupCurencyListItemWidget({
     super.key,
     required this.accGroup,
@@ -231,7 +230,7 @@ class AccGroupCurencyListItemWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: !accGroup.status || !(curency?.status ?? true)
-            ? MyColors.blackColor.withOpacity(0.3)
+            ? MyColors.blackColor.withOpacity(0.1)
             : MyColors.containerColor.withOpacity(0.7),
       ),
       child: Row(

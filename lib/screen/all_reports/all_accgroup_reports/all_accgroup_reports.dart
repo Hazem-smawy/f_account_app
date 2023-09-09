@@ -95,12 +95,26 @@ class AccGroupReportWidget extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-              child: Text(
-                accGroupReportsController
-                    .getTotalDebit(accGroup.id!)
-                    .$2
-                    .toString(),
-                style: myTextStyles.title2.copyWith(color: Colors.green),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  (accGroupReportsController.getTotalDebit(accGroup.id!).$2 -
+                          accGroupReportsController
+                              .getTotalDebit(accGroup.id!)
+                              .$1)
+                      .abs()
+                      .toString(),
+                  style: myTextStyles.subTitle.copyWith(
+                    color: accGroupReportsController
+                                .getTotalDebit(accGroup.id!)
+                                .$1 <
+                            accGroupReportsController
+                                .getTotalDebit(accGroup.id!)
+                                .$2
+                        ? MyColors.creditColor
+                        : MyColors.debetColor,
+                  ),
+                ),
               ),
             ),
             SizedBox(
@@ -108,13 +122,34 @@ class AccGroupReportWidget extends StatelessWidget {
             ),
             Expanded(
               flex: 1,
-              child: Text(
-                accGroupReportsController
-                    .getTotalDebit(accGroup.id!)
-                    .$1
-                    .toString(),
-                textAlign: TextAlign.right,
-                style: myTextStyles.title2.copyWith(color: Colors.red),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  accGroupReportsController
+                      .getTotalDebit(accGroup.id!)
+                      .$2
+                      .toString(),
+                  style: myTextStyles.subTitle
+                      .copyWith(color: MyColors.creditColor),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Expanded(
+              flex: 1,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  accGroupReportsController
+                      .getTotalDebit(accGroup.id!)
+                      .$1
+                      .toString(),
+                  textAlign: TextAlign.right,
+                  style: myTextStyles.subTitle
+                      .copyWith(color: MyColors.debetColor),
+                ),
               ),
             ),
             SizedBox(

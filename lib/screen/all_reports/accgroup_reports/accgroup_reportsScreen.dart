@@ -3,8 +3,8 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/reports/accgourp_report_controller.dart';
+import 'package:account_app/screen/all_reports/customer_account_reports/customer_account_report.dart';
 import 'package:account_app/screen/all_reports/customer_account_reports/row.dart';
-import 'package:account_app/screen/all_reports/reports_widget/empyt_report.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_crency_filter.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_footer.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_headers.dart';
@@ -39,11 +39,58 @@ class AccGroupReportScreen extends StatelessWidget {
               children: [
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    // color: MyColors.bg,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            // color: MyColors.bg,
+                          ),
+                          child: ReportAccGroupFilterWidget(),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Obx(
+                        () => GestureDetector(
+                          onTap: () {
+                            accGroupReportController.accGroupId.value = 0;
+                            accGroupReportController
+                                .getCustomerAccountReportsForAccGroup();
+                          },
+                          child: Row(
+                            children: [
+                              Text("الكل",
+                                  style: myTextStyles.subTitle.copyWith(
+                                    fontWeight:
+                                        accGroupReportController.accGroupId == 0
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
+                                    color:
+                                        accGroupReportController.accGroupId == 0
+                                            ? Colors.green
+                                            : MyColors.secondaryTextColor,
+                                  )),
+                              SizedBox(
+                                width: 6,
+                              ),
+                              FaIcon(
+                                accGroupReportController.accGroupId == 0
+                                    ? FontAwesomeIcons.circleCheck
+                                    : FontAwesomeIcons.circle,
+                                size: 15,
+                                color: accGroupReportController.accGroupId == 0
+                                    ? Colors.green
+                                    : MyColors.secondaryTextColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  child: ReportAccGroupFilterWidget(),
                 ),
                 SizedBox(
                   height: 5,
@@ -71,7 +118,7 @@ class AccGroupReportScreen extends StatelessWidget {
             Expanded(
                 child: Obx(
               () => accGroupReportController.allCustomerAccountsRow.isEmpty
-                  ? EmptyReportListWidget()
+                  ? EmptyCustomerAccountReport()
                   : ListView.builder(
                       itemCount: accGroupReportController
                           .allCustomerAccountsRow.length,
@@ -110,13 +157,14 @@ class ReportAccGroupFilterWidget extends StatelessWidget {
         padding: const EdgeInsets.all(7),
         // margin: const EdgeInsets.only(top: 15),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: MyColors.containerSecondColor,
+          borderRadius: BorderRadius.circular(9),
+          color: MyColors.bg.withOpacity(0.7),
         ),
         child: SingleChildScrollView(
           reverse: true,
           scrollDirection: Axis.horizontal,
           child: Row(
+              textDirection: TextDirection.rtl,
               mainAxisAlignment: MainAxisAlignment.start,
               children: accGroupController.allAccGroups.map((element) {
                 return accGroupFilterItem(

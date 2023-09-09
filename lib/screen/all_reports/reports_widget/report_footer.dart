@@ -25,9 +25,9 @@ class ReportFooterWidget extends StatelessWidget {
               children: [
                 ReportSammaryWidget(
                   icon: FontAwesomeIcons.arrowUp,
-                  title: controller.totalDebit.toString(),
-                  subTitle: "لك",
-                  color: Colors.green,
+                  title: controller.totalCredit.toString(),
+                  subTitle: "لة",
+                  color: MyColors.debetColor,
                   curencyId: controller.curencyId.value,
                 ),
                 SizedBox(
@@ -36,9 +36,9 @@ class ReportFooterWidget extends StatelessWidget {
                 ReportSammaryWidget(
                   curencyId: controller.curencyId.value,
                   icon: FontAwesomeIcons.arrowDown,
-                  title: controller.totalCredit.toString(),
-                  subTitle: "عليك",
-                  color: Colors.red,
+                  title: controller.totalDebit.toString(),
+                  subTitle: "علية",
+                  color: MyColors.creditColor,
                 )
               ],
             ),
@@ -54,25 +54,26 @@ class ReportFooterWidget extends StatelessWidget {
                   Spacer(),
                   FaIcon(
                     controller.totalDebit.value < controller.totalCredit.value
-                        ? FontAwesomeIcons.arrowDown
-                        : FontAwesomeIcons.arrowUp,
+                        ? FontAwesomeIcons.arrowUp
+                        : FontAwesomeIcons.arrowDown,
                     size: 10,
                     color: controller.totalDebit.value <
                             controller.totalCredit.value
-                        ? Colors.red
-                        : Colors.green,
+                        ? MyColors.debetColor
+                        : MyColors.creditColor,
                   ),
                   const SizedBox(width: 5),
                   Text(
                     (controller.totalDebit.value - controller.totalCredit.value)
+                        .abs()
                         .toString(),
                     style: myTextStyles.title1,
                   ),
                   const SizedBox(width: 5),
                   Text(
                     controller.totalDebit.value < controller.totalCredit.value
-                        ? "عليك"
-                        : 'لك',
+                        ? "لة"
+                        : 'علية',
                     style: myTextStyles.body,
                   ),
                   Spacer(),

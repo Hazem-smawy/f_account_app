@@ -4,7 +4,6 @@ import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/reports/customer_accounts_report_controller.dart';
 import 'package:account_app/screen/all_reports/customer_account_reports/row.dart';
-import 'package:account_app/screen/all_reports/reports_widget/empyt_report.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_crency_filter.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_footer.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_headers.dart';
@@ -87,7 +86,7 @@ class CustomerAccountsReportScreen extends StatelessWidget {
                 child: Obx(
               () =>
                   customerAccountReportController.allCustomerAccountsRow.isEmpty
-                      ? EmptyReportListWidget()
+                      ? EmptyCustomerAccountReport()
                       : ListView.builder(
                           itemCount: customerAccountReportController
                               .allCustomerAccountsRow.length,
@@ -114,7 +113,8 @@ class AccGroupCurencyListWidget extends StatelessWidget {
     super.key,
   });
   final AccGroupController accGroupController = Get.find();
-
+  final CustomerAccountReportController customerAccountReportController =
+      Get.find();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -152,7 +152,33 @@ class AccGroupCurencyListWidget extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          // const Spacer(),
+          GestureDetector(
+            onTap: () {
+              customerAccountReportController.getCustomerAccountReports();
+              Get.back();
+            },
+            child: Container(
+              margin: const EdgeInsets.only(top: 5),
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: MyColors.lessBlackColor.withOpacity(0.9),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "كل التصنيفات",
+                    textAlign: TextAlign.right,
+                    style: myTextStyles.subTitle.copyWith(
+                      color: MyColors.bg,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -204,5 +230,36 @@ class AccGroupReportListItemWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+// empyt account
+class EmptyCustomerAccountReport extends StatelessWidget {
+  EmptyCustomerAccountReport({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: MyColors.bg.withOpacity(0.3),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("assets/images/customerAccount.png"),
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              "لاتوجد حسابات هنا",
+              style: myTextStyles.subTitle,
+            )
+          ],
+        ));
   }
 }

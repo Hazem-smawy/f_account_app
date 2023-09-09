@@ -2,7 +2,7 @@ import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/service/database/reports_data.dart';
 import 'package:get/get.dart';
 
-class ReportsController extends GetxController {
+class DailyReportsController extends GetxController {
   RxList<dynamic> journalsReports = [].obs;
   ReportsData reportsData = ReportsData();
   var totalDebit = 0.0.obs;
@@ -14,6 +14,7 @@ class ReportsController extends GetxController {
   DateTime toDateTime = DateTime.now();
   CurencyController curencyController = Get.find();
   final isLoadding = false.obs;
+  final isAll = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -22,7 +23,7 @@ class ReportsController extends GetxController {
     if (curencyController.allCurency.isNotEmpty) {
       curencyId.value = curencyController.allCurency.last.id ?? 0;
     }
-    getJournalReport().then((value) => print(journalsReports));
+    getJournalReport();
   }
 
   Future<void> getJournalReport() async {
@@ -33,8 +34,6 @@ class ReportsController extends GetxController {
         from: DateTime.parse(fromDate.value),
         to: DateTime.parse(toDate.value),
         curencyId: curencyId.value);
-
-    print(journalsReports);
 
     if (journalsReports.isNotEmpty) {
       journalsReports.forEach((element) {

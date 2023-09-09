@@ -52,7 +52,8 @@ class HomeRowView extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  (((homeModel.totalCredit - homeModel.totalDebit) * -1).obs())
+                  (homeModel.totalCredit - homeModel.totalDebit)
+                      .abs()
                       .toString(),
                   textAlign: TextAlign.left,
                   style: myTextStyles.title2.copyWith(

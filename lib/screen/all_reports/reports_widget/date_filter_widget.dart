@@ -57,7 +57,7 @@ class DateFilterWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               "الى",
-              style: myTextStyles.title2.copyWith(
+              style: myTextStyles.subTitle.copyWith(
                 color: MyColors.blackColor,
               ),
             ),

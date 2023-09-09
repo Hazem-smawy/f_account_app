@@ -90,7 +90,6 @@ class CustomerSettingItemWidget extends StatelessWidget {
                 radius: 5,
                 backgroundColor: customer.status ? Colors.green : Colors.red,
               ),
-              const Spacer(),
               Expanded(
                 child: Text(
                   customer.name,

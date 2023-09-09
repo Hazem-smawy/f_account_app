@@ -25,20 +25,18 @@ class AccGroupReportController extends GetxController {
     super.onInit();
 
     curencyId.value = curencyController.allCurency.last.id ?? 0;
-    accGroupId.value = accGroupController.allAccGroups.last.id ?? 0;
+    // accGroupId.value = accGroupController.allAccGroups.last.id ?? 0;
 
-    getCustomerAccountReportsForAccGroup();
+    getAllAccGroupSammary();
   }
 
-  Future<void> getCustomerAccountReportsForAccGroup() async {
+  Future<void> getAllAccGroupSammary() async {
     isLoadding.value = true;
     totalDebit.value = 0;
     totalCredit.value = 0;
 
     allCustomerAccountsRow.value = customerAccountController.allCustomerAccounts
-        .where((p0) =>
-            p0.curencyId == curencyId.value &&
-            p0.accgroupId == accGroupId.value)
+        .where((p0) => p0.curencyId == curencyId.value)
         .toList();
 
     allCustomerAccountsRow.forEach((element) {
@@ -47,5 +45,28 @@ class AccGroupReportController extends GetxController {
     });
 
     isLoadding.value = false;
+  }
+
+  Future<void> getCustomerAccountReportsForAccGroup() async {
+    isLoadding.value = true;
+    totalDebit.value = 0;
+    totalCredit.value = 0;
+    if (accGroupId.value != 0) {
+      allCustomerAccountsRow.value = customerAccountController
+          .allCustomerAccounts
+          .where((p0) =>
+              p0.curencyId == curencyId.value &&
+              p0.accgroupId == accGroupId.value)
+          .toList();
+
+      allCustomerAccountsRow.forEach((element) {
+        totalCredit.value += element.totalCredit;
+        totalDebit.value += element.totalDebit;
+      });
+
+      isLoadding.value = false;
+    } else {
+      getAllAccGroupSammary();
+    }
   }
 }

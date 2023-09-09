@@ -13,6 +13,6 @@ class MyColors {
   static const Color containerColor = Color(0xffeeeeee);
   static const Color containerSecondColor = Color(0xffD9D9D9);
   static const Color secondaryTextColor = Color(0xff777777);
-  static const Color creditColor = Colors.green;
-  static const Color debetColor = Colors.red;
+  static const Color creditColor = Colors.red;
+  static const Color debetColor = Colors.green;
 }

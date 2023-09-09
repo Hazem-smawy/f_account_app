@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:account_app/constant/colors.dart';
-import 'package:account_app/controller/report_controller.dart';
 import 'package:account_app/controller/reports/all_money_report_controller.dart';
 import 'package:account_app/screen/all_reports/all_money_report/row.dart';
 import 'package:account_app/screen/all_reports/reports_widget/date_filter_widget.dart';
@@ -13,7 +12,7 @@ import 'package:get/get.dart';
 
 class AllMoenyReportScreen extends StatelessWidget {
   AllMoenyReportScreen({super.key});
-  final ReportsController reportsController = Get.put(ReportsController());
+  // final DailyReportsController reportsController = Get.put(DailyReportsController());
   final AllMoneyReportController allMoneyReportController =
       Get.put(AllMoneyReportController());
 

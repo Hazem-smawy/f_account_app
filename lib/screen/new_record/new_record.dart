@@ -57,6 +57,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   @override
   Widget build(BuildContext context) {
     CEC.errorMessage.value = "";
+
     return SafeArea(
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),

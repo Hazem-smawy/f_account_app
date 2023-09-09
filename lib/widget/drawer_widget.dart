@@ -21,15 +21,16 @@ import 'package:account_app/screen/settings/setting_screen.dart';
 class MyDrawerView extends StatelessWidget {
   MyDrawerView({super.key});
 
-  PersonalController personalController = Get.find();
-  CopyController copyController = Get.find();
-  ImageController imageController = Get.find();
+  final PersonalController personalController = Get.find();
+  final CopyController copyController = Get.find();
+  final ImageController imageController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       bottom: false,
-      top: Platform.isAndroid ? true : false,
+      top: false,
+      // top: Platform.isAndroid ? true : false,
       child: Drawer(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -37,8 +38,9 @@ class MyDrawerView extends StatelessWidget {
           height: Get.height,
           // margin:
           //     const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
             color: MyColors.bg,
           ),
           child: Column(
@@ -47,25 +49,23 @@ class MyDrawerView extends StatelessWidget {
               Obx(
                 () => personalController.newPersonal['name'] == null
                     ? Container(
-                        padding: EdgeInsets.only(
-                            top: Platform.isAndroid ? 20 : 60, bottom: 20),
+                        padding: const EdgeInsets.only(top: 60, bottom: 20),
                         decoration: const BoxDecoration(
                             color: MyColors.lessBlackColor,
                             borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20))),
+                              topLeft: Radius.circular(20),
+                            )),
                         child: NoPersonalInfoWidget(
                           isDrawer: true,
                         ))
                     : Container(
                         width: double.infinity,
-                        padding: EdgeInsets.only(
-                            top: Platform.isAndroid ? 20 : 60, bottom: 20),
+                        padding: const EdgeInsets.only(top: 60, bottom: 20),
                         decoration: const BoxDecoration(
                             color: MyColors.lessBlackColor,
                             borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20))),
+                              topLeft: Radius.circular(20),
+                            )),
                         child: GestureDetector(
                           onTap: () {
                             Get.to(() => PersonalInfoScreen());
@@ -74,7 +74,7 @@ class MyDrawerView extends StatelessWidget {
                             () => Column(
                               children: [
                                 CircleAvatar(
-                                  radius: 30,
+                                  radius: 40,
                                   backgroundImage: imageController
                                               .customImage['image'] ==
                                           null
@@ -323,8 +323,8 @@ class MyDrawerView extends StatelessWidget {
 }
 
 class ShortCutCopyWidget extends StatelessWidget {
-  VoidCallback actoin;
-  IconData icon;
+  final VoidCallback actoin;
+  final IconData icon;
   ShortCutCopyWidget({super.key, required this.actoin, required this.icon});
 
   @override

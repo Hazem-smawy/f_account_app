@@ -32,7 +32,8 @@ class CustomerAccountReportRowWidget extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 cac.totalDebit.toString(),
-                style: myTextStyles.title2.copyWith(color: Colors.green),
+                style:
+                    myTextStyles.title2.copyWith(color: MyColors.creditColor),
               ),
             ),
           ),
@@ -47,7 +48,7 @@ class CustomerAccountReportRowWidget extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 cac.totalCredit.toString(),
-                style: myTextStyles.title2.copyWith(color: Colors.red),
+                style: myTextStyles.title2.copyWith(color: MyColors.debetColor),
               ),
             ),
           ),

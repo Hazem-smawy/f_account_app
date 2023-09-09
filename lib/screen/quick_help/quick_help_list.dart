@@ -95,6 +95,7 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                             (homeController.todaysJournals[index]['debit'] -
                                     homeController.todaysJournals[index]
                                         ['credit'])
+                                .abs()
                                 .toString(),
                             style: myTextStyles.title2,
                           ),

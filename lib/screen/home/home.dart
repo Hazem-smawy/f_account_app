@@ -165,7 +165,7 @@ class HomePrivateSammaryWidget extends StatelessWidget {
       children: [
         HomeSammaryWidget(
           curency: curency,
-          icon: FontAwesomeIcons.angleUp,
+          icon: FontAwesomeIcons.angleDown,
           title: "$forYou ",
           subTitle: " لك",
           color: MyColors.creditColor,
@@ -175,7 +175,7 @@ class HomePrivateSammaryWidget extends StatelessWidget {
         ),
         HomeSammaryWidget(
           curency: curency,
-          icon: FontAwesomeIcons.angleDown,
+          icon: FontAwesomeIcons.angleUp,
           title: "$onYou ",
           subTitle: "عليك",
           color: MyColors.debetColor,

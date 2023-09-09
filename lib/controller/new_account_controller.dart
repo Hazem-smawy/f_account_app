@@ -83,7 +83,7 @@ class NewAccountController extends GetxController {
         debit: newAccount['debit'],
         createdAt: DateTime.now(),
         modifiedAt: DateTime.now());
-    await detailController.create(newAccount['desc']);
+    await detailController.create(newAccount['desc'].toString().trim());
 
     journalController.createJournal(newJournal);
   }

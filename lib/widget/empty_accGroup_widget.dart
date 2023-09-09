@@ -2,15 +2,13 @@ import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/main.dart';
-import 'package:account_app/screen/main_screen/main_screen.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
-import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EmptyAccGroupsWidget extends StatelessWidget {
   EmptyAccGroupsWidget({super.key});
-  HomeController homeController = Get.find();
+  final HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {

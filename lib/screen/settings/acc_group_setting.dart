@@ -315,9 +315,14 @@ class NewAccGroupSheet extends StatelessWidget {
                         description: "هل انت متاكد من حذف هذا التصنيف",
                         color: Colors.red,
                         icon: FontAwesomeIcons.trashCan,
-                        action: () {
-                          accGroupController.deleteAccGroup(
+                        action: () async {
+                          await accGroupController.deleteAccGroup(
                               accGroupController.newAccGroup[AccGroupField.id]);
+                          await accGroupCurencyController
+                              .getAllAccGroupAndCurency();
+                          await accGroupController.readAllAccGroup();
+                          print(
+                              accGroupCurencyController.allAccgroupsAndCurency);
                           Get.back();
                           Get.back();
                         });

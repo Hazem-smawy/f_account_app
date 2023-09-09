@@ -41,6 +41,8 @@ class CustomerAccountsView extends StatelessWidget {
                         // color: MyColors.bg,
                       ),
                       child: TextField(
+                        style: myTextStyles.subTitle,
+
                         onChanged: (value) {
                           var customerList = customerController.allCustomers
                               .where((p0) => p0.name

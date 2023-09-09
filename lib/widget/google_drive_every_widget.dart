@@ -1,15 +1,13 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
-import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/sitting_controller.dart';
-import 'package:account_app/models/curency_model.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class GoogleDriveAveryList extends StatelessWidget {
-  SittingController sittingController = Get.find();
+  final SittingController sittingController = Get.find();
 
   GoogleDriveAveryList({super.key});
   String getCopyEveryString(int i) {
@@ -78,7 +76,7 @@ class GoogleDriveAveryListItem extends StatelessWidget {
       required this.action,
       required this.isSelected,
       required this.lable});
-  VoidCallback action;
+  final VoidCallback action;
   final bool isSelected;
   final String lable;
 

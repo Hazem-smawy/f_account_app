@@ -6,7 +6,6 @@ import 'package:account_app/models/journal_model.dart';
 import 'package:account_app/service/database/reports_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:googleapis/websecurityscanner/v1.dart';
 
 class AccountMovemoentController extends GetxController {
   ReportsData reportsData = ReportsData();

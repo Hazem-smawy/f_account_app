@@ -84,23 +84,23 @@ class _CustomerAccountDetailsSheetState
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color: MyColors.creditColor.withOpacity(0.09)),
+                      color: MyColors.debetColor.withOpacity(0.09)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        widget.customerAccount.totalDebit.toString(),
+                        widget.customerAccount.totalCredit.toString(),
                         style: myTextStyles.title2,
                       ),
                       const SizedBox(width: 10),
                       const FaIcon(
                         FontAwesomeIcons.arrowUp,
                         size: 10,
-                        color: MyColors.creditColor,
+                        color: MyColors.debetColor,
                       ),
                       const SizedBox(width: 5),
                       Text(
-                        ": لك",
+                        ": لة",
                         style: myTextStyles.body
                             .copyWith(color: MyColors.blackColor),
                       )
@@ -114,23 +114,23 @@ class _CustomerAccountDetailsSheetState
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color: MyColors.debetColor.withOpacity(0.09)),
+                      color: MyColors.creditColor.withOpacity(0.09)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        widget.customerAccount.totalCredit.toString(),
+                        widget.customerAccount.totalDebit.toString(),
                         style: myTextStyles.title2,
                       ),
                       const SizedBox(width: 10),
                       const FaIcon(
                         FontAwesomeIcons.arrowDown,
                         size: 10,
-                        color: MyColors.debetColor,
+                        color: MyColors.creditColor,
                       ),
                       const SizedBox(width: 5),
                       Text(
-                        ": عليك",
+                        ": علية",
                         style: myTextStyles.body
                             .copyWith(color: MyColors.blackColor),
                       )
@@ -195,11 +195,11 @@ class _CustomerAccountDetailsSheetState
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: MyColors.primaryColor.withOpacity(0.4)),
+                  color: MyColors.primaryColor.withOpacity(0.9)),
               child: Text(
                 "تحد يث",
                 style: myTextStyles.title2.copyWith(
-                  color: MyColors.blackColor,
+                  color: MyColors.bg,
                 ),
               ),
             ),

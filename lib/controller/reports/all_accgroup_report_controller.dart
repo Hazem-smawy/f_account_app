@@ -1,6 +1,5 @@
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
-import 'package:account_app/models/customer_account.dart';
 import 'package:account_app/service/database/reports_data.dart';
 import 'package:get/get.dart';
 

@@ -14,356 +14,378 @@ import 'package:account_app/constant/shadows.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/reports/account_move_controller.dart';
-import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/screen/all_reports/reports_widget/date_filter_widget.dart';
-import 'package:account_app/screen/all_reports/reports_widget/empyt_report.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_crency_filter.dart';
 
 class AccountMoveScreen extends StatelessWidget {
-  AccountMovemoentController accountMovemoentController =
+  final AccountMovemoentController accountMovemoentController =
       Get.put(AccountMovemoentController());
 
-  AccGroupController accGroupController = Get.find();
+  final AccGroupController accGroupController = Get.find();
 
-  CustomerController customerController = Get.find();
+  final CustomerController customerController = Get.find();
 
-  CustomerAccountController customerAccountController = Get.find();
+  final CustomerAccountController customerAccountController = Get.find();
 
-  TextEditingController textEditingController = TextEditingController();
-  DateTime fromDateTime = DateTime(2022, 1, 1);
-  DateTime toDateTime = DateTime.now();
+  final TextEditingController textEditingController = TextEditingController();
+  final DateTime fromDateTime = DateTime(2022, 1, 1);
+  final DateTime toDateTime = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: Obx(
-        () => Stack(
-          children: [
-            Column(
-              children: [
-                Expanded(
-                  child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
-                            // decoration: BoxDecoration(
-                            //   borderRadius: BorderRadius.circular(12),
-                            //   color: MyColors.bg,
-                            // ),
-                            child: Row(
-                              children: [
-                                FaIcon(
-                                  FontAwesomeIcons.filePdf,
-                                  color: MyColors.secondaryTextColor,
-                                  size: 20,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                    child: Container(
-                                  height: 35,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    // color: MyColors.bg,
+      resizeToAvoidBottomInset: false,
+      body: GestureDetector(
+        onTap: () {
+          accountMovemoentController.searchList.clear();
+        },
+        child: SafeArea(
+            child: Obx(
+          () => Stack(
+            children: [
+              Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              child: Row(
+                                children: [
+                                  FaIcon(
+                                    FontAwesomeIcons.filePdf,
+                                    color: MyColors.secondaryTextColor,
+                                    size: 20,
                                   ),
-                                  child: TextFormField(
-                                    controller: textEditingController,
-                                    onChanged: (value) {
-                                      accountMovemoentController
-                                              .fromDate.value =
-                                          fromDateTime.toIso8601String();
-                                      accountMovemoentController.toDate.value =
-                                          toDateTime.toIso8601String();
-                                      accountMovemoentController
-                                          .customerAccountsJournals
-                                          .clear();
-                                      if (value.length > 0) {
-                                        var customerList = customerController
-                                            .allCustomers
-                                            .where((p0) => p0.name
-                                                .toLowerCase()
-                                                .contains(value.toLowerCase()))
-                                            .toList();
-                                        accountMovemoentController
-                                                .searchList.value =
-                                            customerAccountController
-                                                .allCustomerAccounts
-                                                .where((p0) =>
-                                                    customerList
-                                                        .firstWhereOrNull(
-                                                            (element) =>
-                                                                element.id ==
-                                                                p0.customerId) !=
-                                                    null)
-                                                .toList();
-                                        value = "";
-                                      } else {
-                                        accountMovemoentController.searchList
-                                            .clear();
-                                      }
-                                    },
-
-                                    textAlign: TextAlign.right,
-                                    textDirection: TextDirection.rtl,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                          borderRadius:
-                                              BorderRadius.circular(25)),
-                                      fillColor: MyColors.containerSecondColor,
-                                      focusColor: Colors.transparent,
-                                      filled: true,
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                        horizontal: 20,
-                                        vertical: 0,
-                                      ),
-                                      hintText: "بحث في حسابات العملاء",
-                                      hintStyle: myTextStyles.body,
-                                    ),
-                                    // style: myTextStyles.subTitle,
+                                  SizedBox(
+                                    width: 10,
                                   ),
-                                )),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, top: 5, bottom: 5),
-                                    child: FaIcon(
-                                      FontAwesomeIcons.arrowRightLong,
-                                      color: MyColors.secondaryTextColor,
-                                      size: 20,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          //filter
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                flex: 3,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: DateFilterWidget(
-                                        controller: accountMovemoentController,
-                                        action: () {
-                                          accountMovemoentController
-                                              .getCustomerAccountJournals();
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Get.dialog(GestureDetector(
-                                      onTap: () => Get.back(),
-                                      child: Scaffold(
-                                        backgroundColor: Colors.transparent,
-                                        body: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            AccountMovementAccGroupListWidget(),
-                                          ],
-                                        ),
-                                      ),
-                                    ));
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 3),
+                                  Expanded(
+                                      child: Container(
+                                    height: 35,
+                                    alignment: Alignment.center,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: MyColors.bg,
+                                      borderRadius: BorderRadius.circular(30),
+                                      // color: MyColors.bg,
                                     ),
+                                    child: TextFormField(
+                                      controller: textEditingController,
+                                      style: myTextStyles.subTitle
+                                          .copyWith(color: MyColors.blackColor),
+                                      onChanged: (value) {
+                                        accountMovemoentController
+                                                .fromDate.value =
+                                            fromDateTime.toIso8601String();
+                                        accountMovemoentController
+                                                .toDate.value =
+                                            toDateTime.toIso8601String();
+                                        accountMovemoentController
+                                            .customerAccountsJournals
+                                            .clear();
+
+                                        accountMovemoentController
+                                            .totalCredit.value = 0;
+                                        accountMovemoentController
+                                            .totalDebit.value = 0;
+                                        if (value.length > 0) {
+                                          var customerList = customerController
+                                              .allCustomers
+                                              .where((p0) => p0.name
+                                                  .toLowerCase()
+                                                  .contains(
+                                                      value.toLowerCase()))
+                                              .toList();
+                                          accountMovemoentController
+                                                  .searchList.value =
+                                              customerAccountController
+                                                  .allCustomerAccounts
+                                                  .where((p0) =>
+                                                      customerList
+                                                          .firstWhereOrNull(
+                                                              (element) =>
+                                                                  element.id ==
+                                                                  p0.customerId) !=
+                                                      null)
+                                                  .toList();
+                                          value = "";
+                                        } else {
+                                          accountMovemoentController.searchList
+                                              .clear();
+                                        }
+                                      },
+
+                                      textAlign: TextAlign.right,
+                                      textDirection: TextDirection.rtl,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                            borderRadius:
+                                                BorderRadius.circular(25)),
+                                        fillColor:
+                                            MyColors.containerSecondColor,
+                                        focusColor: Colors.transparent,
+                                        filled: true,
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 0,
+                                        ),
+                                        hintText: "بحث في حسابات العملاء",
+                                        hintStyle: myTextStyles.body,
+                                      ),
+                                      // style: myTextStyles.subTitle,
+                                    ),
+                                  )),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, top: 5, bottom: 5),
+                                      child: FaIcon(
+                                        FontAwesomeIcons.arrowRightLong,
+                                        color: MyColors.secondaryTextColor,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            //filter
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 3,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Text(
-                                          accGroupController.allAccGroups
-                                              .firstWhere((element) =>
-                                                  element.id ==
-                                                  accountMovemoentController
-                                                      .accGroupId.value)
-                                              .name,
-                                          style: myTextStyles.subTitle,
+                                        Expanded(
+                                          child: DateFilterWidget(
+                                            controller:
+                                                accountMovemoentController,
+                                            action: () {
+                                              accountMovemoentController
+                                                  .getCustomerAccountJournals();
+                                            },
+                                          ),
                                         ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        const FaIcon(
-                                          FontAwesomeIcons.folder,
-                                          size: 15,
-                                          color: MyColors.lessBlackColor,
-                                        )
                                       ],
                                     ),
                                   ),
-                                ),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: MyColors.bg,
-                            ),
-                            child: ReportCurenyFilterWidget(
-                                action: () {
-                                  accountMovemoentController
-                                      .getCustomerAccountJournals();
-                                },
-                                curencyId:
-                                    accountMovemoentController.curencyId.value,
-                                controller: accountMovemoentController),
-                          ),
-
-                          // list
-                          const SizedBox(height: 10),
-
-                          Expanded(
-                            child: accountMovemoentController
-                                    .customerAccountsJournals.isEmpty
-                                ? EmptyCustomerAccountJournlsReport(
-                                    isCustomerMovementAccount: true,
-                                  )
-                                : ListView.builder(
-                                    itemCount: accountMovemoentController
-                                        .customerAccountsJournals.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return AccountMoveRowWidget(
-                                          journal: accountMovemoentController
-                                              .customerAccountsJournals[index]);
-                                    },
+                                  SizedBox(
+                                    width: 20,
                                   ),
-                          ),
-                        ],
-                      )),
-                ),
-                ReportFooterWidget(
-                  controller: accountMovemoentController,
-                ),
-              ],
-            ),
-
-            //search list
-            if (accountMovemoentController.searchList.isNotEmpty)
-              Positioned(
-                top: 45,
-                right: 0,
-                left: 0,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(top: 3),
-                      margin: EdgeInsets.symmetric(horizontal: 40),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: MyColors.secondaryTextColor.withOpacity(0.3),
-                      ),
-                      child: ListView.builder(
-                        itemCount: accountMovemoentController.searchList.length,
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          return CustomerAccountsSearchListItem(
-                            curencyId: accountMovemoentController
-                                .searchList[index].curencyId,
-                            accGroupId: accountMovemoentController
-                                .searchList[index].accgroupId,
-                            customerId: accountMovemoentController
-                                .searchList[index].customerId,
-                            action: () {
-                              textEditingController.text = customerController
-                                  .allCustomers
-                                  .firstWhere((element) =>
-                                      element.id ==
-                                      accountMovemoentController
-                                          .searchList[index].customerId)
-                                  .name;
-                              //accId
-                              accountMovemoentController.accGroupId.value =
-                                  accountMovemoentController
-                                      .searchList[index].accgroupId;
-
-                              //curId
-                              accountMovemoentController.curencyId.value =
-                                  accountMovemoentController
-                                      .searchList[index].curencyId;
-                              //customerId
-                              accountMovemoentController.customerId.value =
-                                  accountMovemoentController
-                                      .searchList[index].customerId;
-
-                              accountMovemoentController.searchList.clear();
-                              accountMovemoentController
-                                  .getCustomerAccountJournals();
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                    Positioned(
-                        left: 35,
-                        top: -10,
-                        child: GestureDetector(
-                          onTap: () {
-                            accountMovemoentController.searchList.clear();
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white,
-                                boxShadow: [myShadow.blackShadow]),
-                            child: const FaIcon(
-                              FontAwesomeIcons.xmark,
-                              size: 13,
-                              color: Colors.red,
+                                  Expanded(
+                                    flex: 1,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Get.dialog(GestureDetector(
+                                          onTap: () => Get.back(),
+                                          child: Scaffold(
+                                            backgroundColor: Colors.transparent,
+                                            body: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                AccountMovementAccGroupListWidget(),
+                                              ],
+                                            ),
+                                          ),
+                                        ));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 3),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: MyColors.bg,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              accGroupController.allAccGroups
+                                                  .firstWhere((element) =>
+                                                      element.id ==
+                                                      accountMovemoentController
+                                                          .accGroupId.value)
+                                                  .name,
+                                              style: myTextStyles.subTitle
+                                                  .copyWith(
+                                                color: MyColors.lessBlackColor,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            const FaIcon(
+                                              FontAwesomeIcons.folder,
+                                              size: 15,
+                                              color: MyColors.lessBlackColor,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: MyColors.bg,
+                              ),
+                              child: ReportCurenyFilterWidget(
+                                  action: () {
+                                    accountMovemoentController
+                                        .getCustomerAccountJournals();
+                                  },
+                                  curencyId: accountMovemoentController
+                                      .curencyId.value,
+                                  controller: accountMovemoentController),
+                            ),
+
+                            // list
+                            const SizedBox(height: 10),
+
+                            Expanded(
+                              child: accountMovemoentController
+                                      .customerAccountsJournals.isEmpty
+                                  ? EmptyCustomerAccountJournlsReport(
+                                      isCustomerMovementAccount: true,
+                                    )
+                                  : ListView.builder(
+                                      itemCount: accountMovemoentController
+                                          .customerAccountsJournals.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return AccountMoveRowWidget(
+                                            journal: accountMovemoentController
+                                                    .customerAccountsJournals[
+                                                index]);
+                                      },
+                                    ),
+                            ),
+                          ],
                         )),
-                  ],
-                ),
+                  ),
+                  ReportFooterWidget(
+                    controller: accountMovemoentController,
+                  ),
+                ],
               ),
-          ],
-        ),
-      )),
+
+              //search list
+              if (accountMovemoentController.searchList.isNotEmpty)
+                Positioned(
+                  top: 60,
+                  right: 0,
+                  left: 0,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(top: 3),
+                        margin: EdgeInsets.symmetric(horizontal: 40),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: MyColors.secondaryTextColor.withOpacity(0.3),
+                        ),
+                        child: ListView.builder(
+                          itemCount:
+                              accountMovemoentController.searchList.length,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return CustomerAccountsSearchListItem(
+                              curencyId: accountMovemoentController
+                                  .searchList[index].curencyId,
+                              accGroupId: accountMovemoentController
+                                  .searchList[index].accgroupId,
+                              customerId: accountMovemoentController
+                                  .searchList[index].customerId,
+                              action: () {
+                                textEditingController.text = customerController
+                                    .allCustomers
+                                    .firstWhere((element) =>
+                                        element.id ==
+                                        accountMovemoentController
+                                            .searchList[index].customerId)
+                                    .name;
+                                //accId
+                                accountMovemoentController.accGroupId.value =
+                                    accountMovemoentController
+                                        .searchList[index].accgroupId;
+
+                                //curId
+                                accountMovemoentController.curencyId.value =
+                                    accountMovemoentController
+                                        .searchList[index].curencyId;
+                                //customerId
+                                accountMovemoentController.customerId.value =
+                                    accountMovemoentController
+                                        .searchList[index].customerId;
+
+                                accountMovemoentController.searchList.clear();
+                                accountMovemoentController
+                                    .getCustomerAccountJournals();
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                      Positioned(
+                          left: 35,
+                          top: -10,
+                          child: GestureDetector(
+                            onTap: () {
+                              accountMovemoentController.searchList.clear();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                  boxShadow: [myShadow.blackShadow]),
+                              child: const FaIcon(
+                                FontAwesomeIcons.xmark,
+                                size: 13,
+                                color: Colors.red,
+                              ),
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        )),
+      ),
     );
   }
 }
 
 // empyt account
 class EmptyCustomerAccountJournlsReport extends StatelessWidget {
-  bool? isCustomerMovementAccount;
+  final bool? isCustomerMovementAccount;
   EmptyCustomerAccountJournlsReport(
       {super.key, this.isCustomerMovementAccount});
 
@@ -441,9 +463,9 @@ class CustomerAccountsSearchListItem extends StatelessWidget {
     required this.accGroupId,
     required this.action,
   });
-  CustomerController customerController = Get.find();
-  CurencyController curencyController = Get.find();
-  AccGroupController accGroupController = Get.find();
+  final CustomerController customerController = Get.find();
+  final CurencyController curencyController = Get.find();
+  final AccGroupController accGroupController = Get.find();
 
   @override
   Widget build(BuildContext context) {

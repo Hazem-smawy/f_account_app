@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EmptyWidget extends StatelessWidget {
-  String imageName;
-  String label;
+  final String imageName;
+  final String label;
   EmptyWidget({super.key, required this.imageName, required this.label});
 
   @override

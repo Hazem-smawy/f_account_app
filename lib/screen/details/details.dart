@@ -4,6 +4,7 @@ import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/journal_controller.dart';
 import 'package:account_app/models/home_model.dart';
 import 'package:account_app/models/journal_model.dart';
+import 'package:account_app/screen/details/details_row.dart';
 import 'package:account_app/screen/new_record/new_record.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
@@ -11,7 +12,7 @@ import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as DateFormater;
+// import 'package:intl/intl.dart' as DateFormater;
 
 import 'detail_info_sheet.dart';
 import 'detail_sammay_widget.dart';
@@ -99,160 +100,250 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           .name,
                     ),
                     const SizedBox(height: 10),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 7, horizontal: 4),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9),
+                        color: MyColors.lessBlackColor,
+                      ),
                       child: Row(
                         children: [
-                          Expanded(
-                            child: Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: DataTable(
-                                headingRowColor:
-                                    MaterialStateProperty.resolveWith<Color?>(
-                                        (Set<MaterialState> states) {
-                                  return MyColors.lessBlackColor;
-                                  // Use the default value.
-                                }),
-                                columnSpacing: 5,
-                                headingRowHeight: 45,
-                                headingTextStyle:
-                                    myTextStyles.subTitle.copyWith(
-                                  color: MyColors.bg,
-                                  fontSize: 12,
-                                ),
-                                dataTextStyle: myTextStyles.subTitle.copyWith(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                                decoration: BoxDecoration(
-                                    color: MyColors.bg,
-                                    borderRadius: BorderRadius.circular(12)),
-                                columns: [
-                                  const DataColumn(label: Text('التأريخ')),
-                                  const DataColumn(label: Text('المبلغ')),
-                                  const DataColumn(
-                                      label: Center(
-                                    child: Text(
-                                      ' تفاصيل',
-                                    ),
-                                  )),
-                                  DataColumn(
-                                      label: Container(
-                                    width: 20,
-                                    height: 5,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: widget.homeModel.totalCredit >
-                                              widget.homeModel.totalDebit
-                                          ? MyColors.debetColor
-                                          : MyColors.creditColor,
-                                    ),
-                                  )),
-                                  const DataColumn(
-                                    label: Text('الحساب'),
-                                  ),
-                                ],
-                                rows: journals
-                                    .map(
-                                      (e) => DataRow(
-                                          onLongPress: () {
-                                            Get.dialog(DetialInfoSheet(
-                                              name: customerController
-                                                  .allCustomers
-                                                  .firstWhere((element) =>
-                                                      element.id ==
-                                                      widget.homeModel.caId)
-                                                  .name,
-                                              detailsRows: e,
-                                              curency: curencyController
-                                                  .allCurency
-                                                  .firstWhere((element) =>
-                                                      element.id ==
-                                                      widget.homeModel.curId),
-                                            ));
-                                          },
-                                          cells: [
-                                            DataCell(
-                                              FittedBox(
-                                                child: Text(
-                                                  DateFormater.DateFormat.yMd()
-                                                      .format(e.registeredAt),
-                                                  style: myTextStyles.body,
-                                                ),
-                                              ),
-                                            ),
-                                            DataCell(FittedBox(
-                                              child: Text(
-                                                " ${(e.credit - e.debit).abs()}",
-                                                style: myTextStyles.subTitle
-                                                    .copyWith(
-                                                        color: Colors.black),
-                                              ),
-                                            )),
-                                            DataCell(FittedBox(
-                                              fit: BoxFit.fill,
-                                              clipBehavior: Clip.hardEdge,
-                                              child: Text(
-                                                e.details,
-                                                textAlign: TextAlign.right,
-                                                overflow: TextOverflow.clip,
-                                                textDirection:
-                                                    TextDirection.rtl,
-                                                style: myTextStyles.body,
-                                              ),
-                                            )),
-                                            DataCell(Container(
-                                              width: 20,
-                                              height: 5,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: e.credit > e.debit
-                                                    ? MyColors.debetColor
-                                                    : MyColors.creditColor,
-                                              ),
-                                            )),
-                                            DataCell(Text(
-                                              getAccountMoney(e)
-                                                  .abs()
-                                                  .toString(),
-                                              textAlign: TextAlign.left,
-                                              style: myTextStyles.subTitle
-                                                  .copyWith(
-                                                      color:
-                                                          MyColors.blackColor),
-                                            )),
-                                          ]),
-                                    )
-                                    .toList(),
+                          SizedBox(
+                            width: Get.width / 6,
+                            child: Text(
+                              'الحساب',
+                              textAlign: TextAlign.center,
+                              style: myTextStyles.subTitle.copyWith(
+                                color: MyColors.bg,
                               ),
                             ),
                           ),
+                          SizedBox(
+                            width: Get.width / 7,
+                            child: Text(
+                              'التأريخ',
+                              textAlign: TextAlign.center,
+                              style: myTextStyles.subTitle.copyWith(
+                                color: MyColors.bg,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Container(
+                            width: 20,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: widget.homeModel.totalCredit >
+                                      widget.homeModel.totalDebit
+                                  ? MyColors.debetColor
+                                  : MyColors.creditColor,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          SizedBox(
+                            width: Get.width / 6,
+                            child: Text('المبلغ',
+                                textAlign: TextAlign.center,
+                                style: myTextStyles.subTitle.copyWith(
+                                  color: MyColors.bg,
+                                )),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          SizedBox(
+                              width: Get.width / 4,
+                              child: Text(
+                                ' التفاصيل',
+                                textAlign: TextAlign.center,
+                                style: myTextStyles.subTitle.copyWith(
+                                  color: MyColors.bg,
+                                ),
+                              )),
                         ],
                       ),
                     ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: journals.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Get.dialog(DetialInfoSheet(
+                                name: customerController.allCustomers
+                                    .firstWhere((element) =>
+                                        element.id == widget.homeModel.caId)
+                                    .name,
+                                detailsRows: journals[index],
+                                curency: curencyController.allCurency
+                                    .firstWhere((element) =>
+                                        element.id == widget.homeModel.curId),
+                              ));
+                            },
+                            child: DetailsRowWidget(
+                              journal: journals[index],
+                              accountMoney: getAccountMoney(journals[index])
+                                  .abs()
+                                  .toString(),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    // ClipRRect(
+                    //   borderRadius: BorderRadius.circular(12),
+                    //   child: Row(
+                    //     children: [
+                    //       Expanded(
+                    //         child: Directionality(
+                    //           textDirection: TextDirection.rtl,
+                    //           child: DataTable(
+                    //             headingRowColor:
+                    //                 MaterialStateProperty.resolveWith<Color?>(
+                    //                     (Set<MaterialState> states) {
+                    //               return MyColors.lessBlackColor;
+                    //               // Use the default value.
+                    //             }),
+                    //             columnSpacing: 5,
+                    //             headingRowHeight: 45,
+                    //             headingTextStyle:
+                    //                 myTextStyles.subTitle.copyWith(
+                    //               color: MyColors.bg,
+                    //               fontSize: 12,
+                    //             ),
+                    //             dataTextStyle: myTextStyles.subTitle.copyWith(
+                    //               fontSize: 10,
+                    //               fontWeight: FontWeight.normal,
+                    //             ),
+                    //             decoration: BoxDecoration(
+                    //                 color: MyColors.bg,
+                    //                 borderRadius: BorderRadius.circular(12)),
+                    //             columns: [
+                    //               const DataColumn(label: Text('التأريخ')),
+                    //               const DataColumn(label: Text('المبلغ')),
+                    //               const DataColumn(
+                    //                   label: Center(
+                    //                 child: Text(
+                    //                   ' تفاصيل',
+                    //                 ),
+                    //               )),
+                    //               DataColumn(
+                    //                   label: Container(
+                    //                 width: 20,
+                    //                 height: 5,
+                    //                 decoration: BoxDecoration(
+                    //                   borderRadius: BorderRadius.circular(10),
+                    //                   color: widget.homeModel.totalCredit >
+                    //                           widget.homeModel.totalDebit
+                    //                       ? MyColors.debetColor
+                    //                       : MyColors.creditColor,
+                    //                 ),
+                    //               )),
+                    //               const DataColumn(
+                    //                 label: Text('الحساب'),
+                    //               ),
+                    //             ],
+                    //             rows: journals
+                    //                 .map(
+                    //                   (e) => DataRow(
+                    //                       onLongPress: () {
+
+                    //                       },
+                    //                       cells: [
+                    //                         DataCell(
+                    //                           FittedBox(
+                    //                             child: Text(
+                    //                               DateFormater.DateFormat.yMd()
+                    //                                   .format(e.registeredAt),
+                    //                               style: myTextStyles.body,
+                    //                             ),
+                    //                           ),
+                    //                         ),
+                    //                         DataCell(FittedBox(
+                    //                           child: Text(
+                    //                             " ${(e.credit - e.debit).abs()}",
+                    //                             style: myTextStyles.subTitle
+                    //                                 .copyWith(
+                    //                                     color: Colors.black),
+                    //                           ),
+                    //                         )),
+                    //                         DataCell(FittedBox(
+                    //                           fit: BoxFit.fill,
+                    //                           clipBehavior: Clip.hardEdge,
+                    //                           child: Text(
+                    //                             e.details,
+                    //                             textAlign: TextAlign.right,
+                    //                             overflow: TextOverflow.clip,
+                    //                             textDirection:
+                    //                                 TextDirection.rtl,
+                    //                             style: myTextStyles.body,
+                    //                           ),
+                    //                         )),
+                    //                         DataCell(Container(
+                    //                           width: 20,
+                    //                           height: 5,
+                    //                           decoration: BoxDecoration(
+                    //                             borderRadius:
+                    //                                 BorderRadius.circular(10),
+                    //                             color: e.credit > e.debit
+                    //                                 ? MyColors.debetColor
+                    //                                 : MyColors.creditColor,
+                    //                           ),
+                    //                         )),
+                    //                         DataCell(Text(
+                    //                           getAccountMoney(e)
+                    //                               .abs()
+                    //                               .toString(),
+                    //                           textAlign: TextAlign.left,
+                    //                           style: myTextStyles.subTitle
+                    //                               .copyWith(
+                    //                                   color:
+                    //                                       MyColors.blackColor),
+                    //                         )),
+                    //                       ]),
+                    //                 )
+                    //                 .toList(),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     const Spacer(),
                     Row(
                       children: [
                         DetailsSammaryWidget(
-                            icon: FontAwesomeIcons.arrowDown,
+                            icon: FontAwesomeIcons.arrowUp,
                             title: "$onYou",
                             subTitle: "له",
                             color: MyColors.debetColor),
-                        const SizedBox(width: 5),
+                        const SizedBox(width: 3),
                         DetailsSammaryWidget(
-                            icon: FontAwesomeIcons.arrowUp,
+                            icon: FontAwesomeIcons.arrowDown,
                             title: ' $onHem',
                             subTitle: "عليه",
                             color: MyColors.creditColor),
                       ],
                     ),
                     const SizedBox(
-                      height: 5,
+                      height: 2,
                     ),
                     Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(13),
                         border: Border.all(color: MyColors.shadowColor),
@@ -261,45 +352,48 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: MyColors.containerColor,
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const SizedBox(width: 10),
-                                Text(
-                                  curencyController.selectedCurency['symbol'],
-                                  style: myTextStyles.body.copyWith(
-                                    fontSize: 10,
-                                    color: MyColors.lessBlackColor,
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Container(
-                                  width: 1,
-                                  height: 15,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(3),
-                                    color: MyColors.secondaryTextColor
-                                        .withOpacity(0.7),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Text(
-                                  curencyController.selectedCurency['name'],
-                                  style: myTextStyles.body.copyWith(
-                                    fontSize: 10,
-                                    color: MyColors.lessBlackColor,
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                              ],
-                            ),
+                          // Container(
+                          //   padding: const EdgeInsets.all(5),
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(20),
+                          //     color: MyColors.containerColor,
+                          //   ),
+                          //   child: Row(
+                          //     mainAxisSize: MainAxisSize.min,
+                          //     crossAxisAlignment: CrossAxisAlignment.center,
+                          //     children: [
+                          //       const SizedBox(width: 10),
+                          //       Text(
+                          //         curencyController.selectedCurency['symbol'],
+                          //         style: myTextStyles.body.copyWith(
+                          //           fontSize: 10,
+                          //           color: MyColors.lessBlackColor,
+                          //         ),
+                          //       ),
+                          //       const SizedBox(width: 10),
+                          //       Container(
+                          //         width: 1,
+                          //         height: 15,
+                          //         decoration: BoxDecoration(
+                          //           borderRadius: BorderRadius.circular(3),
+                          //           color: MyColors.secondaryTextColor
+                          //               .withOpacity(0.7),
+                          //         ),
+                          //       ),
+                          //       const SizedBox(width: 10),
+                          //       Text(
+                          //         curencyController.selectedCurency['name'],
+                          //         style: myTextStyles.body.copyWith(
+                          //           fontSize: 10,
+                          //           color: MyColors.lessBlackColor,
+                          //         ),
+                          //       ),
+                          //       const SizedBox(width: 10),
+                          //     ],
+                          //   ),
+                          // ),
+                          SizedBox(
+                            width: 20,
                           ),
                           Row(
                             children: [
@@ -312,15 +406,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               ),
                               FittedBox(
                                 child: Text(
-                                  "$resultMoney",
-                                  style: myTextStyles.title2,
+                                  resultMoney.abs().toString(),
+                                  style: myTextStyles.subTitle.copyWith(
+                                    color: MyColors.lessBlackColor,
+                                  ),
                                 ),
                               ),
                               const SizedBox(
                                 width: 10,
                               ),
                               Text(
-                                resultMoney > 0 ? "عليك" : "لك",
+                                resultMoney < 0 ? "علية" : "لة",
                                 style: myTextStyles.subTitle,
                               ),
                               const SizedBox(
@@ -340,8 +436,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 child: Center(
                                   child: FaIcon(
                                     resultMoney > 0
-                                        ? FontAwesomeIcons.chevronDown
-                                        : FontAwesomeIcons.chevronUp,
+                                        ? FontAwesomeIcons.chevronUp
+                                        : FontAwesomeIcons.chevronDown,
                                     color: resultMoney > 0
                                         ? MyColors.debetColor
                                         : MyColors.creditColor,

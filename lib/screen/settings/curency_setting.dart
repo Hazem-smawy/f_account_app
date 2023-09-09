@@ -13,6 +13,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../controller/error_controller.dart';
+import '../../widget/error_widget.dart';
+
 class CurencySettingScreen extends StatelessWidget {
   CurencySettingScreen({super.key});
   final CurencyController curencyController = Get.find();
@@ -174,9 +177,11 @@ class NewCurencySheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //print(curencyController.newCurency);
+    CEC.errorMessage.value = "";
     return Obx(
-      () => Container(
+      () => AnimatedContainer(
         //margin: const EdgeInsets.only(top: 50),
+        duration: Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -200,6 +205,15 @@ class NewCurencySheet extends StatelessWidget {
                   .copyWith(color: MyColors.secondaryTextColor),
             ),
             const SizedBox(height: 20),
+            if (CEC.errorMessage.isNotEmpty)
+              Column(
+                children: [
+                  const ErrorShowWidget(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
 
             // acc  state
             Row(
@@ -291,7 +305,14 @@ class NewCurencySheet extends StatelessWidget {
                                 1) {
                           CustomDialog.customSnackBar(
                               "ادخل كل القيم بطريقة صحيحة", SnackPosition.TOP);
+                          CEC.errorMessage.value = "ادخل كل القيم بطريقة صحيحة";
 
+                          return;
+                        }
+                        if (curencyController
+                                .newCurency[CurencyField.symbol].length >
+                            10) {
+                          CEC.errorMessage.value = "رمز العملة طويل جدا";
                           return;
                         }
                         var curency = Curency(
@@ -320,6 +341,8 @@ class NewCurencySheet extends StatelessWidget {
                       } else {
                         CustomDialog.customSnackBar(
                             "ادخل كل القيم بطريقة صحيحة", SnackPosition.TOP);
+
+                        CEC.errorMessage.value = "ادخل كل القيم بطريقة صحيحة";
 
                         return;
                       }

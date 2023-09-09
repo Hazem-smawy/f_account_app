@@ -41,7 +41,9 @@ class DetailsSammaryWidget extends StatelessWidget {
                   size: 10,
                   color: color,
                 ),
-                Spacer(),
+                SizedBox(
+                  width: 10,
+                ),
                 Text(
                   curencyController.selectedCurency['symbol'],
                   style: myTextStyles.body,
@@ -51,10 +53,13 @@ class DetailsSammaryWidget extends StatelessWidget {
                 ),
                 Expanded(
                   child: FittedBox(
+                    key: Key(subTitle),
                     fit: BoxFit.scaleDown,
                     child: Text(
                       "$title ",
-                      style: myTextStyles.title2,
+                      style: myTextStyles.subTitle.copyWith(
+                        color: MyColors.lessBlackColor,
+                      ),
                       textAlign: TextAlign.left,
                     ),
                   ),

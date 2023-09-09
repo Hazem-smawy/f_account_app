@@ -1,16 +1,13 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
-import 'package:account_app/controller/pdf_controller.dart';
-import 'package:account_app/models/home_model.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:open_file/open_file.dart';
 
 class CustomBackBtnWidget extends StatelessWidget {
   final String title;
-  IconData? icon;
+  final IconData? icon;
   CustomBackBtnWidget({
     required this.title,
     this.icon,
@@ -156,7 +153,7 @@ class CustomCopyBtnWidget extends StatelessWidget {
   final String label;
   final IconData topIcon;
   final description;
-  VoidCallback action;
+  final VoidCallback action;
   CustomCopyBtnWidget(
       {super.key,
       required this.color,

@@ -8,9 +8,11 @@ import 'package:intl/intl.dart' as dateFormater;
 
 import '../../../constant/colors.dart';
 
-class AccountMoveRowWidget extends StatelessWidget {
+class DetailsRowWidget extends StatelessWidget {
   final Journal journal;
-  const AccountMoveRowWidget({super.key, required this.journal});
+  final String accountMoney;
+  const DetailsRowWidget(
+      {super.key, required this.journal, required this.accountMoney});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,21 @@ class AccountMoveRowWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
+          SizedBox(
+            width: Get.width / 6,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                accountMoney,
+                style: myTextStyles.title2.copyWith(
+                  color: MyColors.blackColor,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
           SizedBox(
             width: Get.width / 7,
             child: Text(
@@ -43,23 +60,21 @@ class AccountMoveRowWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: journal.credit < journal.debit
-                  ? MyColors.debetColor
-                  : MyColors.creditColor,
+                  ? MyColors.creditColor.withOpacity(0.8)
+                  : MyColors.debetColor.withOpacity(0.8),
             ),
           ),
           SizedBox(
-            width: 10,
+            width: 5,
           ),
           SizedBox(
-            width: Get.width / 4,
+            width: Get.width / 6,
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
                 (journal.debit - journal.credit).abs().toString(),
                 style: myTextStyles.title2.copyWith(
-                  color: journal.credit < journal.debit
-                      ? MyColors.debetColor
-                      : MyColors.creditColor,
+                  color: MyColors.lessBlackColor,
                 ),
               ),
             ),
