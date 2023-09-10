@@ -27,9 +27,13 @@ class AllAccGroupReportScreen extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
-              child: ReportHeaderWidget(),
+              child: ReportHeaderWidget(
+                action: () {
+                  //TODO: pdf print
+                },
+              ),
             ),
             const SizedBox(
               height: 10,

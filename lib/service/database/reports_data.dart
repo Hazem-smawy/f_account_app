@@ -10,7 +10,7 @@ class ReportsData {
     final db = await DatabaseService().database;
 
     final result = await db.rawQuery(
-        "SELECT j.id as jId  ,j.details as desc,cac.id as cacId , j.debit as debit, j.credit as credit ,j.createdAt as date,ca.name as name, accG.name as accName, cur.symbol  FROM journal as j join customeraccount as cac on j.customerAccountId = cac.id join customer as ca on cac.customerId = ca.id  join accgroup as accG on cac.accgroupId = accG.id join curency  as cur on cac.curencyId = cur.id  WHERE cur.id = ? AND j.createdAt BETWEEN ? AND ?  order by j.createdAt desc",
+        "SELECT j.id as jId  ,j.details as desc,cac.id as cacId , j.debit as debit, j.credit as credit ,j.createdAt as date,ca.name as name, accG.name as accName, cur.symbol ,cur.name as curencyName FROM journal as j join customeraccount as cac on j.customerAccountId = cac.id join customer as ca on cac.customerId = ca.id  join accgroup as accG on cac.accgroupId = accG.id join curency  as cur on cac.curencyId = cur.id  WHERE cur.id = ? AND j.createdAt BETWEEN ? AND ?  order by j.createdAt desc",
         [curencyId, from.toIso8601String(), to.toIso8601String()]);
     return result;
   }

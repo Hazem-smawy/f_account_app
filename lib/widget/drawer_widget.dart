@@ -158,7 +158,11 @@ class MyDrawerView extends StatelessWidget {
                                 actoin: () {
                                   CustomDialog.showDialog(
                                       action: () {
-                                        copyController.openDatabaseFile();
+                                        //  copyController.openDatabaseFile();
+                                        Platform.isAndroid
+                                            ? copyController.openDatabaseFile()
+                                            : copyController
+                                                .openDatabaseFileIos();
 
                                         Get.back();
                                       },

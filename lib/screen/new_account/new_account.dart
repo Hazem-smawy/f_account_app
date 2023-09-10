@@ -363,6 +363,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                         clipBehavior: Clip.none,
                         children: [
                           Container(
+                            height: Get.height / 6.4,
                             padding: const EdgeInsets.only(top: 3),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),

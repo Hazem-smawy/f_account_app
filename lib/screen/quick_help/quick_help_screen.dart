@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:account_app/controller/pdf_controller.dart';
 import 'package:account_app/screen/all_reports/accgroup_reports/accgroup_reportsScreen.dart';
 import 'package:account_app/screen/all_reports/account_move/account_move_screen.dart';
 import 'package:account_app/screen/all_reports/all_accgroup_reports/all_accgroup_reports.dart';
@@ -14,6 +15,7 @@ import 'package:get/get.dart';
 
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:open_file/open_file.dart';
 
 class HomeReportsScreen extends StatelessWidget {
   const HomeReportsScreen({super.key});
@@ -121,8 +123,16 @@ class HomeReportsScreen extends StatelessWidget {
                   color: MyColors.bg,
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    GestureDetector(
+                      onTap: () async {},
+                      child: FaIcon(
+                        FontAwesomeIcons.filePdf,
+                        size: 17,
+                        color: MyColors.secondaryTextColor,
+                      ),
+                    ),
+                    Spacer(),
                     Text(
                       "العمليات الحد يثة",
                       style: myTextStyles.subTitle,

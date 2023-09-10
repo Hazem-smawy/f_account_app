@@ -89,3 +89,15 @@ flutter:
       - asset: assets/fonts/Cairo-Bold.ttf
       - asset: assets/fonts/Cairo-Light.ttf
       - asset: assets/fonts/Cairo-Medium.ttf
+  - family: ScheherazadeNew
+    fonts:
+      - asset: assets/fonts/ScheherazadeNew-Regular.ttf
+      - asset: assets/fonts/ScheherazadeNew-Bold.ttf
+  - family: Rubik
+    fonts:
+      - asset: assets/fonts/Rubik-Regular.ttf
+
+
+
+       
+

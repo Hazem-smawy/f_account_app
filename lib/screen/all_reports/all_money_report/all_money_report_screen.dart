@@ -24,7 +24,11 @@ class AllMoenyReportScreen extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: ReportHeaderWidget(),
+              child: ReportHeaderWidget(
+                action: () {
+                  //TODO: pdf print
+                },
+              ),
             ),
             SizedBox(
               height: 10,

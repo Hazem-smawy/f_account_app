@@ -4,8 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class ReportHeaderWidget extends StatelessWidget {
+  final VoidCallback action;
   const ReportHeaderWidget({
     super.key,
+    required this.action,
   });
 
   @override
@@ -17,12 +19,17 @@ class ReportHeaderWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-            child: FaIcon(
-              FontAwesomeIcons.filePdf,
-              size: 20,
-              color: MyColors.containerColor,
+          GestureDetector(
+            onTap: () {
+              action();
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+              child: FaIcon(
+                FontAwesomeIcons.filePdf,
+                size: 20,
+                color: MyColors.containerColor,
+              ),
             ),
           ),
           Spacer(),

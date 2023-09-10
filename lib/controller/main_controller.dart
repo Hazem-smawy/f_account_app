@@ -36,7 +36,7 @@ class MainController extends GetxController {
     Get.put(NewAccountController());
 
     Get.put(PersonalController());
-    Get.put(PdfApi());
+
     Get.put(CopyController());
     Get.put(SittingController());
     Get.put(ImageController());

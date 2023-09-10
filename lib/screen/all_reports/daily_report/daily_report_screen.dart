@@ -3,6 +3,7 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/daily_report_controller.dart';
+import 'package:account_app/controller/pdf_controller.dart';
 import 'package:account_app/screen/all_reports/reports_widget/dialy_sammary_widget.dart';
 import 'package:account_app/screen/all_reports/reports_widget/empyt_report.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_headers.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as dateFormater;
+import 'package:open_file/open_file.dart';
 
 class DailyReportScreen extends StatelessWidget {
   final DailyReportsController reportsController =
@@ -32,7 +34,13 @@ class DailyReportScreen extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    ReportHeaderWidget(),
+                    //TODO: pdf print
+                    ReportHeaderWidget(
+                      action: () async {
+                        final file = await PdfApi.generateDailyReportPdf();
+                        OpenFile.open(file.path);
+                      },
+                    ),
 
                     //filters
                     SizedBox(

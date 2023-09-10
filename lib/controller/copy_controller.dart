@@ -284,38 +284,92 @@ class CopyController extends GetxController {
 
   // ios
 
-  Future<void> copyDatabaseToFolderIos(String selectedFolderPath) async {
-    String databasePath = await databaseService.fullPath;
-    try {
-      if (await io.File(databasePath).exists()) {
-        final bytes = await io.File(databasePath).readAsBytes();
-        String targetPath = p.join(selectedFolderPath,
-            'account_app_copy_${DateTime.now().toIso8601String()}.db');
-        io.File targetDatabase = io.File(targetPath);
+  // Future<void> copyDatabaseToFolderIos(String selectedFolderPath) async {
+  //   String databasePath = await databaseService.fullPath;
 
-        await targetDatabase.writeAsBytes(bytes);
-        print("copy database to $selectedFolderPath");
+  //   if (await io.File(databasePath).exists()) {
+  //     final bytes = await io.File(databasePath).readAsBytes();
+  //     String targetPath = p.join(selectedFolderPath,
+  //         'account_app_copy_${DateTime.now().toIso8601String()}.db');
+  //     io.File targetDatabase = io.File(targetPath);
+
+  //     await targetDatabase.writeAsBytes(bytes);
+  //   }
+  // }
+
+  // Future<void> selectFolderIos() async {
+  //   try {
+  //     String? result = await FilePicker.platform.getDirectoryPath();
+  //     if (result != null) {
+  //       CustomDialog.loadingProgress();
+  //       await copyDatabaseToFolderIos(result);
+  //       Get.back();
+  //       CustomDialog.customSnackBar(
+  //           "تم حفظ النسخة بنجاح", SnackPosition.BOTTOM);
+  //     }
+  //   } catch (e) {}
+  // }
+
+  Future<void> copyDatabaseToFolderIosFunc(String selectedFolderPath) async {
+    String databasePath = await databaseService.fullPath;
+
+    if (await io.File(databasePath).exists()) {
+      final bytes = await io.File(databasePath).readAsBytes();
+      String targetPath = p.join(selectedFolderPath, 'account_app_copy.db');
+      io.File targetDatabase = io.File(targetPath);
+
+      try {
+        targetDatabase.writeAsBytes(bytes);
+        print("Database copied to $selectedFolderPath");
+      } catch (e) {
+        print("Error copying database: $e");
       }
-    } catch (e) {
-      print(e);
     }
   }
 
   Future<void> selectFolderIos() async {
     try {
       String? result = await FilePicker.platform.getDirectoryPath();
-      io.Directory documents = await getApplicationDocumentsDirectory();
-
       if (result != null) {
-        print(documents.path);
         CustomDialog.loadingProgress();
-        await copyDatabaseToFolderIos(documents.path);
+        await copyDatabaseToFolderIosFunc(result);
         Get.back();
         CustomDialog.customSnackBar(
             "تم حفظ النسخة بنجاح", SnackPosition.BOTTOM);
       }
     } catch (e) {
-      print(e);
+      print("error open filepicker : $e");
     }
+  }
+
+  Future<void> copyDatabaseFromFolderIos(String selectedFolderPath) async {
+    String databasePath = await databaseService.fullPath;
+
+    print("delete database ------------");
+
+    await deleteDatabase(databasePath);
+    //await DatabaseService.instance.database.obs;
+    print("create new database ------------");
+    await io.File(databasePath).openWrite();
+    io.File(selectedFolderPath).copy(databasePath);
+
+    print("end new database ------------");
+  }
+
+  Future<void> openDatabaseFileIos() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      if (result != null) {
+        PlatformFile file = result.files.first;
+        if (file.path != null) {
+          CustomDialog.loadingProgress();
+
+          await copyDatabaseFromFolderIos(file.path!);
+          restoreSucess();
+        }
+      } else {
+        // User canceled the picker
+      }
+    } catch (e) {}
   }
 }

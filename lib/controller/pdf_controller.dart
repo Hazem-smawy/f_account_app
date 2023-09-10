@@ -1,9 +1,17 @@
 // import 'package:account_app/models/home_model.dart';
 // import 'package:flutter/material.dart';
 
+import 'package:account_app/controller/copy_controller.dart';
+import 'package:account_app/controller/daily_report_controller.dart';
+import 'package:account_app/models/customer_account.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:open_file/open_file.dart';
+import 'package:intl/intl.dart' as DateFormater;
+
 import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+
+import 'package:external_path/external_path.dart' as ex;
 // import 'package:path_provider/path_provider.dart';
 // import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'dart:io';
@@ -77,7 +85,7 @@ class PdfApi extends GetxController {
   //   );
   // }
   */
-
+/*
   static Future<File> generateCenterdText(String text) async {
     final pdf = Document();
 
@@ -108,5 +116,189 @@ class PdfApi extends GetxController {
   static Future openFile(File file) async {
     final url = file.path;
     await OpenFile.open(url);
+  }
+  */
+  /*
+
+ ? Header
+ ? UrlLink
+ ? footer
+
+
+
+ */
+  static Font? globalCustomFont;
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+  }
+
+  static DailyReportsController dailyReportsController = Get.find();
+
+  static Future<File> saveDocument(
+      {required String name, required Document pdf}) async {
+    final bytes = await pdf.save();
+    if (Platform.isAndroid) {
+      String path = await ex.ExternalPath.getExternalStoragePublicDirectory(
+          ex.ExternalPath.DIRECTORY_DOWNLOADS);
+      final file = File('${path}/$name');
+      await file.writeAsBytes(bytes);
+
+      return file;
+    } else {
+      final path = await getApplicationDocumentsDirectory();
+      final file = File('${path.path}/$name');
+      await file.writeAsBytes(bytes);
+      return file;
+    }
+  }
+
+  static Widget buildTitle(String title) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("CustomerAccounts"),
+          Text("hello from customerAccounts"),
+          SizedBox(height: 0.8 * PdfPageFormat.cm),
+        ],
+      );
+
+  static Widget buildTable() {
+    final headers = ["description", 'date', 'Quantity'];
+    List arr = [1, 1, 3];
+    final data = arr.map((item) {
+      return [
+        "descrip",
+        "date here",
+        10,
+      ];
+    }).toList();
+
+    return TableHelper.fromTextArray(
+        headers: headers,
+        data: data,
+        border: null,
+        headerStyle: TextStyle(fontWeight: FontWeight.bold),
+        headerDecoration: const BoxDecoration(
+          color: PdfColors.grey300,
+        ),
+        cellHeight: 30,
+        cellAlignments: {
+          0: Alignment.centerLeft,
+          1: Alignment.centerRight,
+          2: Alignment.centerRight,
+        });
+  }
+
+  static Future<File> generateDailyReportPdf() async {
+    CopyController copyController = Get.find();
+    if (Platform.isAndroid) {
+      copyController.requestPermission();
+    }
+
+    final pdf = Document();
+    final customFont =
+        Font.ttf(await rootBundle.load('assets/fonts/Rubik-Regular.ttf'));
+    // final customFont2 = Font.ttf(
+    //     await rootBundle.load('assets/fonts/ScheherazadeNew-Regular.ttf'));
+    final customFont3 =
+        Font.ttf(await rootBundle.load('assets/fonts/Cairo-Regular.ttf'));
+    pdf.addPage(
+      MultiPage(
+        textDirection: TextDirection.rtl,
+        theme: ThemeData.withFont(
+          base: customFont3,
+          fontFallback: [
+            customFont,
+            customFont3,
+          ],
+        ),
+        build: (context) => [
+          buildTitle("title"),
+          buildDailyTableReport(customFont3),
+        ],
+        footer: (context) => Column(children: [Divider(), Text("footer here")]),
+      ),
+    );
+    return PdfApi.saveDocument(name: 'mycustomerAccounts.pdf', pdf: pdf);
+  }
+
+  static Widget buildDailyTableReport(Font font) {
+    final headers = ["التأريخ", "لك", "العملة", "المبلغ", "الأسم"];
+
+    return Table(tableWidth: TableWidth.max, children: [
+      TableRow(
+        decoration: BoxDecoration(color: PdfColors.grey300),
+        children: headers
+            .map(
+              (e) => paddedHeadingTextCell(e, font),
+            )
+            .toList(),
+      ),
+      ...dailyReportsController.journalsReports.map((e) {
+        return TableRow(children: [
+          paddedHeadingTextCell(
+              DateFormater.DateFormat.yMd().format(
+                DateTime.parse(e['date']),
+              ),
+              font),
+          Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.all(4),
+              child: Center(
+                child: Container(
+                  //  margin: EdgeInsets.only(top: 10),
+
+                  width: 10,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    // borderRadius: BorderRadius.all(Radius.circular(10)),
+                    color: e['credit'] > e['debit']
+                        ? PdfColors.green500
+                        : PdfColors.red500,
+                  ),
+                ),
+              ),
+            ),
+          ]),
+          paddedHeadingTextCell(e['curencyName'], font),
+          paddedHeadingTextCell('${e['credit'] - e['debit']}', font),
+          paddedHeadingTextCell('${e['name']}', font)
+        ]);
+      }).toList()
+    ]);
+
+    // return TableHelper.fromTextArray(
+    //     headers: headers,
+    //     data: data,
+    //     border: null,
+    //     headerStyle: TextStyle(fontWeight: FontWeight.bold),
+    //     headerDecoration: const BoxDecoration(
+    //       color: PdfColors.grey300,
+    //     ),
+    //     cellHeight: 30,
+    //     cellAlignments: {
+    //       0: Alignment.centerLeft,
+    //       1: Alignment.centerRight,
+    //       2: Alignment.centerRight,
+    //     });
+  }
+
+  static Padding paddedHeadingTextCell(String textContent, Font? font) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Column(children: [
+        Row(children: [
+          Text(
+            textContent,
+            overflow: TextOverflow.visible,
+            style: TextStyle(
+              fontSize: 10,
+            ),
+          ),
+        ]),
+      ]),
+    );
   }
 }
