@@ -2,7 +2,8 @@
 
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
-import 'package:account_app/controller/reports/all_accgroup_report_controller.dart';
+import 'package:account_app/controller/reports/accgroups_report_controller.dart';
+import 'package:account_app/controller/reports_pdf_controller/customer_accounts_in_accgroup_pdf_controller.dart';
 import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_crency_filter.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_footer.dart';
@@ -11,11 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/accgroup_controller.dart';
+import '../../../controller/reports_pdf_controller/accgroups_pdf_controller.dart';
 
-class AllAccGroupReportScreen extends StatelessWidget {
-  AllAccGroupReportScreen({super.key});
-  final AllAccGroupReportsController allAccGroupReportController =
-      Get.put(AllAccGroupReportsController());
+class AccGroupsReportScreen extends StatelessWidget {
+  AccGroupsReportScreen({super.key});
+  final AccGroupsReportController allAccGroupReportController =
+      Get.put(AccGroupsReportController());
   final AccGroupController accGroupController = Get.find();
 
   @override
@@ -32,6 +34,7 @@ class AllAccGroupReportScreen extends StatelessWidget {
               child: ReportHeaderWidget(
                 action: () {
                   //TODO: pdf print
+                  AccGroupsPdfContoller.generateAllAccGroupPdfReports();
                 },
               ),
             ),
@@ -83,7 +86,7 @@ class AllAccGroupReportScreen extends StatelessWidget {
 class AccGroupReportWidget extends StatelessWidget {
   final AccGroup accGroup;
   AccGroupReportWidget({super.key, required this.accGroup});
-  final AllAccGroupReportsController accGroupReportsController = Get.find();
+  final AccGroupsReportController accGroupReportsController = Get.find();
 
   @override
   Widget build(BuildContext context) {

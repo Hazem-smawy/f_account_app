@@ -3,6 +3,7 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/reports/accgourp_report_controller.dart';
+import 'package:account_app/controller/reports_pdf_controller/customer_accounts_in_accgroup_pdf_controller.dart';
 import 'package:account_app/screen/all_reports/customer_account_reports/customer_account_report.dart';
 import 'package:account_app/screen/all_reports/customer_account_reports/row.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_crency_filter.dart';
@@ -14,10 +15,10 @@ import 'package:get/get.dart';
 
 import '../../../controller/accgroup_controller.dart';
 
-class AccGroupReportScreen extends StatelessWidget {
-  AccGroupReportScreen({super.key});
-  final AccGroupReportController accGroupReportController =
-      Get.put(AccGroupReportController());
+class CustomerAccountsInAccGroupReportScreen extends StatelessWidget {
+  CustomerAccountsInAccGroupReportScreen({super.key});
+  final CustomerAccountsInAccGroupReportController accGroupReportController =
+      Get.put(CustomerAccountsInAccGroupReportController());
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,11 @@ class AccGroupReportScreen extends StatelessWidget {
               child: ReportHeaderWidget(
                 action: () {
                   //TODO: pdf print
+                  if (accGroupReportController
+                      .allCustomerAccountsRow.isNotEmpty) {
+                    CustomerAccountsInAccGroupPdfController
+                        .generateAccGroupPdfReports();
+                  }
                 },
               ),
             ),
@@ -146,7 +152,8 @@ class AccGroupReportScreen extends StatelessWidget {
 
 class ReportAccGroupFilterWidget extends StatelessWidget {
   final AccGroupController accGroupController = Get.find();
-  final AccGroupReportController accGroupReportController = Get.find();
+  final CustomerAccountsInAccGroupReportController accGroupReportController =
+      Get.find();
 
   ReportAccGroupFilterWidget({
     super.key,

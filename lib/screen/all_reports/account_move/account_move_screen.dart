@@ -2,6 +2,7 @@
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
+import 'package:account_app/controller/reports_pdf_controller/mony_movements_pdf_controller.dart';
 import 'package:account_app/screen/all_reports/account_move/account_movement_acc_group_list_widget.dart';
 import 'package:account_app/screen/all_reports/account_move/row.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_footer.dart';
@@ -57,10 +58,20 @@ class AccountMoveScreen extends StatelessWidget {
                                   horizontal: 10, vertical: 5),
                               child: Row(
                                 children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.filePdf,
-                                    color: MyColors.secondaryTextColor,
-                                    size: 20,
+                                  GestureDetector(
+                                    onTap: () {
+                                      if (accountMovemoentController
+                                          .customerAccountsJournals
+                                          .isNotEmpty) {
+                                        MoneyMovementPdfController
+                                            .generateMoneyMovementReportPdf();
+                                      }
+                                    },
+                                    child: FaIcon(
+                                      FontAwesomeIcons.filePdf,
+                                      color: MyColors.secondaryTextColor,
+                                      size: 20,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: 10,

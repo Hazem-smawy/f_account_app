@@ -1,8 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/controller/pdf_controller.dart';
-import 'package:account_app/screen/all_reports/accgroup_reports/accgroup_reportsScreen.dart';
+import 'package:account_app/controller/reports_pdf_controller/new_journals_pdf_controller.dart';
+import 'package:account_app/screen/all_reports/customer_accounts_in_accgroup_screen/customer_accounts_in_accgroup_screen.dart';
 import 'package:account_app/screen/all_reports/account_move/account_move_screen.dart';
-import 'package:account_app/screen/all_reports/all_accgroup_reports/all_accgroup_reports.dart';
+import 'package:account_app/screen/all_reports/accgroups_report_screen/accgroups_report_screen.dart';
 import 'package:account_app/screen/all_reports/customer_account_reports/customer_account_report.dart';
 import 'package:account_app/screen/customer_account/customer_account.dart';
 import 'package:account_app/screen/all_reports/daily_report/daily_report_screen.dart';
@@ -18,7 +20,8 @@ import 'package:account_app/constant/text_styles.dart';
 import 'package:open_file/open_file.dart';
 
 class HomeReportsScreen extends StatelessWidget {
-  const HomeReportsScreen({super.key});
+  HomeReportsScreen({super.key});
+  HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -84,13 +87,14 @@ class HomeReportsScreen extends StatelessWidget {
                         ),
                         ReportItemWidget(
                           action: () {
-                            Get.to(() => AccGroupReportScreen());
+                            Get.to(
+                                () => CustomerAccountsInAccGroupReportScreen());
                           },
                           title: " إجمالي المبالغ حسب التصنيف",
                         ),
                         ReportItemWidget(
                           action: () {
-                            Get.to(() => AllAccGroupReportScreen());
+                            Get.to(() => AccGroupsReportScreen());
                           },
                           title: " إجمالي التصنيفات",
                         ),
@@ -125,7 +129,11 @@ class HomeReportsScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: () async {},
+                      onTap: () async {
+                        if (homeController.todaysJournals.isNotEmpty) {
+                          NewDailyPdfController.generateTodayDailyReportPdf();
+                        }
+                      },
                       child: FaIcon(
                         FontAwesomeIcons.filePdf,
                         size: 17,

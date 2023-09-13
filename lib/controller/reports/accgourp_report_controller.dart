@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/service/database/reports_data.dart';
 
-class AccGroupReportController extends GetxController {
+class CustomerAccountsInAccGroupReportController extends GetxController {
   CustomerAccountController customerAccountController =
       Get.put(CustomerAccountController());
 

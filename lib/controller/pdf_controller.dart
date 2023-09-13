@@ -1,15 +1,14 @@
 // import 'package:account_app/models/home_model.dart';
 // import 'package:flutter/material.dart';
 
-import 'package:account_app/controller/copy_controller.dart';
-import 'package:account_app/controller/daily_report_controller.dart';
-import 'package:account_app/models/customer_account.dart';
+import 'package:account_app/controller/image_controller.dart';
+import 'package:account_app/controller/personal_controller.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as DateFormater;
 
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
+import 'package:intl/intl.dart' as date_formater;
 
 import 'package:external_path/external_path.dart' as ex;
 // import 'package:path_provider/path_provider.dart';
@@ -127,14 +126,19 @@ class PdfApi extends GetxController {
 
 
  */
-  static Font? globalCustomFont;
-  @override
-  void onInit() {
+  static late Font globalCustomFont;
+  static late Font enFont;
+
+  static PersonalController personalController = Get.find();
+  static ImageController imageController = Get.find();
+  void onInit() async {
     // TODO: implement onInit
     super.onInit();
+    globalCustomFont =
+        Font.ttf(await rootBundle.load('assets/fonts/DroidKufi-Regular.ttf'));
+    enFont =
+        Font.ttf(await rootBundle.load('assets/fonts/Tajawal-Regular.ttf'));
   }
-
-  static DailyReportsController dailyReportsController = Get.find();
 
   static Future<File> saveDocument(
       {required String name, required Document pdf}) async {
@@ -154,151 +158,276 @@ class PdfApi extends GetxController {
     }
   }
 
-  static Widget buildTitle(String title) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("CustomerAccounts"),
-          Text("hello from customerAccounts"),
-          SizedBox(height: 0.8 * PdfPageFormat.cm),
-        ],
-      );
+  // static Widget buildTable() {
+  //   final headers = ["description", 'date', 'Quantity'];
+  //   List arr = [1, 1, 3];
+  //   final data = arr.map((item) {
+  //     return [
+  //       "descrip",
+  //       "date here",
+  //       10,
+  //     ];
+  //   }).toList();
 
-  static Widget buildTable() {
-    final headers = ["description", 'date', 'Quantity'];
-    List arr = [1, 1, 3];
-    final data = arr.map((item) {
-      return [
-        "descrip",
-        "date here",
-        10,
-      ];
-    }).toList();
+  //   return TableHelper.fromTextArray(
+  //       headers: headers,
+  //       data: data,
+  //       border: null,
+  //       headerStyle: TextStyle(fontWeight: FontWeight.bold),
+  //       headerDecoration: const BoxDecoration(
+  //         color: PdfColors.grey300,
+  //       ),
+  //       cellHeight: 30,
+  //       cellAlignments: {
+  //         0: Alignment.centerLeft,
+  //         1: Alignment.centerRight,
+  //         2: Alignment.centerRight,
+  //       });
+  // }
 
-    return TableHelper.fromTextArray(
-        headers: headers,
-        data: data,
-        border: null,
-        headerStyle: TextStyle(fontWeight: FontWeight.bold),
-        headerDecoration: const BoxDecoration(
-          color: PdfColors.grey300,
-        ),
-        cellHeight: 30,
-        cellAlignments: {
-          0: Alignment.centerLeft,
-          1: Alignment.centerRight,
-          2: Alignment.centerRight,
-        });
-  }
-
-  static Future<File> generateDailyReportPdf() async {
-    CopyController copyController = Get.find();
-    if (Platform.isAndroid) {
-      copyController.requestPermission();
-    }
-
-    final pdf = Document();
-    final customFont =
-        Font.ttf(await rootBundle.load('assets/fonts/Rubik-Regular.ttf'));
-    // final customFont2 = Font.ttf(
-    //     await rootBundle.load('assets/fonts/ScheherazadeNew-Regular.ttf'));
-    final customFont3 =
-        Font.ttf(await rootBundle.load('assets/fonts/Cairo-Regular.ttf'));
-    pdf.addPage(
-      MultiPage(
-        textDirection: TextDirection.rtl,
-        theme: ThemeData.withFont(
-          base: customFont3,
-          fontFallback: [
-            customFont,
-            customFont3,
-          ],
-        ),
-        build: (context) => [
-          buildTitle("title"),
-          buildDailyTableReport(customFont3),
-        ],
-        footer: (context) => Column(children: [Divider(), Text("footer here")]),
-      ),
+  static Padding paddedHeadingTextEnglishCell(String textContent) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        SizedBox(height: 0.2 * PdfPageFormat.cm),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Directionality(
+                textDirection: TextDirection.ltr,
+                child: Text(textContent,
+                    style: TextStyle(
+                      font: enFont,
+                    )),
+              )
+            ]),
+      ]),
     );
-    return PdfApi.saveDocument(name: 'mycustomerAccounts.pdf', pdf: pdf);
   }
 
-  static Widget buildDailyTableReport(Font font) {
-    final headers = ["التأريخ", "لك", "العملة", "المبلغ", "الأسم"];
-
-    return Table(tableWidth: TableWidth.max, children: [
-      TableRow(
-        decoration: BoxDecoration(color: PdfColors.grey300),
-        children: headers
-            .map(
-              (e) => paddedHeadingTextCell(e, font),
-            )
-            .toList(),
-      ),
-      ...dailyReportsController.journalsReports.map((e) {
-        return TableRow(children: [
-          paddedHeadingTextCell(
-              DateFormater.DateFormat.yMd().format(
-                DateTime.parse(e['date']),
-              ),
-              font),
-          Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-            SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.all(4),
-              child: Center(
-                child: Container(
-                  //  margin: EdgeInsets.only(top: 10),
-
-                  width: 10,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    // borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: e['credit'] > e['debit']
-                        ? PdfColors.green500
-                        : PdfColors.red500,
-                  ),
-                ),
-              ),
-            ),
-          ]),
-          paddedHeadingTextCell(e['curencyName'], font),
-          paddedHeadingTextCell('${e['credit'] - e['debit']}', font),
-          paddedHeadingTextCell('${e['name']}', font)
-        ]);
-      }).toList()
-    ]);
-
-    // return TableHelper.fromTextArray(
-    //     headers: headers,
-    //     data: data,
-    //     border: null,
-    //     headerStyle: TextStyle(fontWeight: FontWeight.bold),
-    //     headerDecoration: const BoxDecoration(
-    //       color: PdfColors.grey300,
-    //     ),
-    //     cellHeight: 30,
-    //     cellAlignments: {
-    //       0: Alignment.centerLeft,
-    //       1: Alignment.centerRight,
-    //       2: Alignment.centerRight,
-    //     });
+  static List<Widget> buildHeader(List headers) {
+    return headers
+        .map(
+          (e) => paddedHeadingTextCellHeader(e),
+        )
+        .toList();
   }
 
-  static Padding paddedHeadingTextCell(String textContent, Font? font) {
+  static Padding paddedHeadingTextArabicCell(String textContent) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Column(children: [
-        Row(children: [
-          Text(
-            textContent,
-            overflow: TextOverflow.visible,
-            style: TextStyle(
-              fontSize: 10,
-            ),
-          ),
-        ]),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Directionality(
+                textDirection: TextDirection.rtl,
+                child: Text(
+                  textContent,
+                  style: TextStyle(
+                    font: globalCustomFont,
+                    fontFallback: [enFont],
+                    fontSize: 10,
+                  ),
+                ),
+              )
+            ]),
       ]),
     );
+  }
+
+  static Widget debitOrCreditView(bool forYou) =>
+      Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+        SizedBox(height: 7),
+        Padding(
+          padding: const EdgeInsets.all(4),
+          child: Center(
+            child: Container(
+              //  margin: EdgeInsets.only(top: 10),
+
+              width: 15,
+              height: 3,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(2),
+                color: forYou ? PdfColors.green500 : PdfColors.red500,
+              ),
+            ),
+          ),
+        )
+      ]);
+
+  static Padding paddedHeadingTextCellHeader(String textContent) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 5),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: Text(
+                textContent,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    font: globalCustomFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
+                    fontFallback: [enFont]),
+              ),
+            )
+          ]),
+    );
+  }
+
+  static Padding coloredText(String textContent, PdfColor color) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        SizedBox(height: 0.2 * PdfPageFormat.cm),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Directionality(
+                textDirection: TextDirection.ltr,
+                child: Text(textContent,
+                    style: TextStyle(
+                      color: color,
+                      font: enFont,
+                    )),
+              )
+            ]),
+      ]),
+    );
+  }
+
+  static Widget documentHeader() {
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 10),
+            Text(
+              "العمليات الحديثة",
+              style: TextStyle(
+                font: globalCustomFont,
+                fontSize: 14,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              date_formater.DateFormat.yMd().format(DateTime.now()),
+              style: TextStyle(
+                font: enFont,
+                fontSize: 14,
+                color: PdfColors.grey700,
+              ),
+            ),
+            SizedBox(height: 30),
+          ],
+        ),
+      )
+    ]);
+  }
+
+  static Widget documentFooter(String page) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            date_formater.DateFormat.yMd().format(DateTime.now()),
+            style: TextStyle(
+              font: enFont,
+              color: PdfColors.grey900,
+            ),
+          ),
+          Text(page),
+          Column(children: [
+            paddedHeadingTextEnglishCell('e-smart'),
+          ])
+        ],
+      ),
+    );
+  }
+
+  static Widget companyInfHeader() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          if (imageController.customImage['image'] != null)
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: MemoryImage(imageController.customImage['image']),
+                ),
+                shape: BoxShape.circle,
+              ),
+
+              // child: Image(
+              //   MemoryImage(imageController.customImage['image']),
+              //   fit: BoxFit.cover,
+              // ),
+            ),
+          Spacer(),
+          Column(children: [
+            paddedHeadingTextCellHeader(
+                personalController.newPersonal['name'] ?? ""),
+            Text(
+              personalController.newPersonal['email'] ?? "",
+              style: TextStyle(
+                font: enFont,
+                color: PdfColors.grey,
+                fontSize: 10,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              personalController.newPersonal['address'] ?? "",
+              style: TextStyle(
+                  font: globalCustomFont,
+                  color: PdfColors.grey,
+                  fontSize: 10,
+                  fontFallback: [enFont]),
+            ),
+            Text(
+              personalController.newPersonal['phone'] ?? "",
+              style: TextStyle(
+                font: enFont,
+                color: PdfColors.grey,
+                fontSize: 10,
+              ),
+            ),
+          ])
+        ],
+      ),
+    );
+  }
+
+  static Widget sammaryFooterMoney(
+      {required double credit, required double debit}) {
+    return Container(
+        margin: EdgeInsets.only(top: 30),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: PdfColors.grey300,
+          ),
+        ),
+        child: Column(children: [
+          Row(mainAxisSize: MainAxisSize.min, children: [
+            coloredText(credit.toString(), PdfColors.green),
+            SizedBox(width: 20),
+            coloredText(debit.toString(), PdfColors.red),
+          ]),
+          Divider(color: PdfColors.green100, height: 1),
+          coloredText((credit - debit).toString(),
+              credit > debit ? PdfColors.green : PdfColors.red)
+        ]));
   }
 }

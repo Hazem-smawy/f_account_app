@@ -42,7 +42,7 @@ class AccountMoveRowWidget extends StatelessWidget {
             height: 5,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: journal.credit < journal.debit
+              color: journal.credit > journal.debit
                   ? MyColors.debetColor
                   : MyColors.creditColor,
             ),
@@ -57,7 +57,7 @@ class AccountMoveRowWidget extends StatelessWidget {
               child: Text(
                 (journal.debit - journal.credit).abs().toString(),
                 style: myTextStyles.title2.copyWith(
-                  color: journal.credit < journal.debit
+                  color: journal.credit > journal.debit
                       ? MyColors.debetColor
                       : MyColors.creditColor,
                 ),

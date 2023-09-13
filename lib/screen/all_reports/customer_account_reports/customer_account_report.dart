@@ -3,6 +3,7 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/reports/customer_accounts_report_controller.dart';
+import 'package:account_app/controller/reports_pdf_controller/customer_accounts_pdf_controller.dart';
 import 'package:account_app/screen/all_reports/customer_account_reports/row.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_crency_filter.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_footer.dart';
@@ -33,6 +34,11 @@ class CustomerAccountsReportScreen extends StatelessWidget {
               child: ReportHeaderWidget(
                 action: () {
                   //TODO: pdf print
+                  if (customerAccountReportController
+                      .allCustomerAccountsRow.isNotEmpty) {
+                    CustomerAccountPdfController
+                        .generateCustomerAccountPdfReports();
+                  }
                 },
               ),
             ),

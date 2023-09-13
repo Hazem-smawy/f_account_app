@@ -133,7 +133,7 @@ class MyMainScreen extends StatelessWidget {
                                       curency: curencyController.allCurency.firstWhereOrNull((element) => element.id == accCurIds.curencyId)),
                                 );
                               } else {
-                                return const HomeReportsScreen();
+                                return HomeReportsScreen();
                               }
                             }),
                       ),

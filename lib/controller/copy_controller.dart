@@ -314,8 +314,10 @@ class CopyController extends GetxController {
     String databasePath = await databaseService.fullPath;
 
     if (await io.File(databasePath).exists()) {
+      print("database exist");
       final bytes = await io.File(databasePath).readAsBytes();
-      String targetPath = p.join(selectedFolderPath, 'account_app_copy.db');
+      String targetPath = p.join(selectedFolderPath,
+          '${DateTime.now().toIso8601String()}_account_app_copy.db');
       io.File targetDatabase = io.File(targetPath);
 
       try {
@@ -329,14 +331,13 @@ class CopyController extends GetxController {
 
   Future<void> selectFolderIos() async {
     try {
-      String? result = await FilePicker.platform.getDirectoryPath();
-      if (result != null) {
-        CustomDialog.loadingProgress();
-        await copyDatabaseToFolderIosFunc(result);
-        Get.back();
-        CustomDialog.customSnackBar(
-            "تم حفظ النسخة بنجاح", SnackPosition.BOTTOM);
-      }
+      io.Directory? result = await getApplicationDocumentsDirectory();
+
+      CustomDialog.loadingProgress();
+      await copyDatabaseToFolderIosFunc(result.absolute.path);
+      Get.back();
+      CustomDialog.customSnackBar(
+          "  تم حفظ النسخة بنجاح الي ${result.path}", SnackPosition.BOTTOM);
     } catch (e) {
       print("error open filepicker : $e");
     }
@@ -350,7 +351,7 @@ class CopyController extends GetxController {
     await deleteDatabase(databasePath);
     //await DatabaseService.instance.database.obs;
     print("create new database ------------");
-    await io.File(databasePath).openWrite();
+    io.File(databasePath).openWrite();
     io.File(selectedFolderPath).copy(databasePath);
 
     print("end new database ------------");

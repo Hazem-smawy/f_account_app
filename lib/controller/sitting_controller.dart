@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/models/sitting_model.dart';
 import 'package:account_app/service/database/sitting_data.dart';
+import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:get/get.dart';
 
@@ -53,10 +54,13 @@ class SittingController extends GetxController {
   Future<void> toogleIsCopyOn(bool isOn) async {
     toggleAsyncGoogleDrive.value = isOn;
     await updateSitting(toggleAsyncGoogleDrive.value, every.value);
+
     if (isOn) {
-      setCopyToGoogleDriveEvery();
+      BackgroundFetch.start().then((int status) {}).catchError((e) {
+        print("erro happend");
+      });
     } else {
-      FlutterBackgroundService().invoke("stopService");
+      BackgroundFetch.stop();
     }
   }
 

@@ -3,7 +3,7 @@ import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/service/database/reports_data.dart';
 import 'package:get/get.dart';
 
-class AllAccGroupReportsController extends GetxController {
+class AccGroupsReportController extends GetxController {
   ReportsData reportsData = ReportsData();
   var totalDebit = 0.0.obs;
   var totalCredit = 0.0.obs;

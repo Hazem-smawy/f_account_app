@@ -2,8 +2,9 @@
 
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
-import 'package:account_app/controller/daily_report_controller.dart';
+import 'package:account_app/controller/reports/daily_report_controller.dart';
 import 'package:account_app/controller/pdf_controller.dart';
+import 'package:account_app/controller/reports_pdf_controller/daily_pdf_controller.dart';
 import 'package:account_app/screen/all_reports/reports_widget/dialy_sammary_widget.dart';
 import 'package:account_app/screen/all_reports/reports_widget/empyt_report.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_headers.dart';
@@ -37,7 +38,8 @@ class DailyReportScreen extends StatelessWidget {
                     //TODO: pdf print
                     ReportHeaderWidget(
                       action: () async {
-                        final file = await PdfApi.generateDailyReportPdf();
+                        final file =
+                            await DailyPdfController.generateDailyReportPdf();
                         OpenFile.open(file.path);
                       },
                     ),
