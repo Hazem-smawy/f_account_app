@@ -23,7 +23,7 @@ class ErrorShowWidget extends StatelessWidget {
           Text(
             CEC.errorMessage.value,
             textAlign: TextAlign.right,
-            style: myTextStyles.subTitle.copyWith(
+            style: MyTextStyles.subTitle.copyWith(
               color: Colors.red,
               fontWeight: FontWeight.normal,
             ),
@@ -61,7 +61,7 @@ class CorrectShowWidget extends StatelessWidget {
           Text(
             "there is some eror",
             textAlign: TextAlign.right,
-            style: myTextStyles.body.copyWith(color: Colors.green),
+            style: MyTextStyles.body.copyWith(color: Colors.green),
           ),
           const SizedBox(width: 10),
           const FaIcon(

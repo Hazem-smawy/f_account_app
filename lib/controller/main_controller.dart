@@ -12,7 +12,6 @@ import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/controller/intro_controller.dart';
 import 'package:account_app/controller/journal_controller.dart';
 import 'package:account_app/controller/new_account_controller.dart';
-import 'package:account_app/controller/pdf_controller.dart';
 import 'package:account_app/controller/personal_controller.dart';
 
 class MainController extends GetxController {

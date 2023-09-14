@@ -41,12 +41,12 @@ class DetailsSammaryWidget extends StatelessWidget {
                   size: 10,
                   color: color,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Text(
                   curencyController.selectedCurency['symbol'],
-                  style: myTextStyles.body,
+                  style: MyTextStyles.body,
                 ),
                 const SizedBox(
                   width: 5,
@@ -57,7 +57,7 @@ class DetailsSammaryWidget extends StatelessWidget {
                     fit: BoxFit.scaleDown,
                     child: Text(
                       "$title ",
-                      style: myTextStyles.subTitle.copyWith(
+                      style: MyTextStyles.subTitle.copyWith(
                         color: MyColors.lessBlackColor,
                       ),
                       textAlign: TextAlign.left,
@@ -67,7 +67,7 @@ class DetailsSammaryWidget extends StatelessWidget {
                 const SizedBox(width: 5),
                 Text(
                   ": $subTitle ",
-                  style: myTextStyles.body,
+                  style: MyTextStyles.body,
                 )
               ],
             ),

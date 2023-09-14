@@ -55,7 +55,7 @@ class CurencyShowWidget extends StatelessWidget {
 }
 
 class CurencyShowItem extends StatelessWidget {
-  CurencyShowItem(
+  const CurencyShowItem(
       {super.key,
       required this.action,
       required this.isSelected,
@@ -75,7 +75,7 @@ class CurencyShowItem extends StatelessWidget {
           ),
           Text(
             lable,
-            style: myTextStyles.body.copyWith(
+            style: MyTextStyles.body.copyWith(
               color: isSelected
                   ? MyColors.primaryColor
                   : MyColors.secondaryTextColor,

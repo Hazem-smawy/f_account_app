@@ -32,8 +32,8 @@ class CustomerAccountsInAccGroupReportScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: ReportHeaderWidget(
+                title: 'إجمالي المبالغ حسب التصنيف',
                 action: () {
-                  //TODO: pdf print
                   if (accGroupReportController
                       .allCustomerAccountsRow.isNotEmpty) {
                     CustomerAccountsInAccGroupPdfController
@@ -73,27 +73,31 @@ class CustomerAccountsInAccGroupReportScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               Text("الكل",
-                                  style: myTextStyles.subTitle.copyWith(
-                                    fontWeight:
-                                        accGroupReportController.accGroupId == 0
-                                            ? FontWeight.bold
-                                            : FontWeight.normal,
-                                    color:
-                                        accGroupReportController.accGroupId == 0
-                                            ? Colors.green
-                                            : MyColors.secondaryTextColor,
+                                  style: MyTextStyles.subTitle.copyWith(
+                                    fontWeight: accGroupReportController
+                                                .accGroupId.value ==
+                                            0
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                    color: accGroupReportController
+                                                .accGroupId.value ==
+                                            0
+                                        ? Colors.green
+                                        : MyColors.secondaryTextColor,
                                   )),
                               SizedBox(
                                 width: 6,
                               ),
                               FaIcon(
-                                accGroupReportController.accGroupId == 0
+                                accGroupReportController.accGroupId.value == 0
                                     ? FontAwesomeIcons.circleCheck
                                     : FontAwesomeIcons.circle,
                                 size: 15,
-                                color: accGroupReportController.accGroupId == 0
-                                    ? Colors.green
-                                    : MyColors.secondaryTextColor,
+                                color:
+                                    accGroupReportController.accGroupId.value ==
+                                            0
+                                        ? Colors.green
+                                        : MyColors.secondaryTextColor,
                               ),
                             ],
                           ),
@@ -196,8 +200,9 @@ class ReportAccGroupFilterWidget extends StatelessWidget {
   }
 }
 
+// ignore: camel_case_types
 class accGroupFilterItem extends StatelessWidget {
-  accGroupFilterItem(
+  const accGroupFilterItem(
       {super.key,
       required this.action,
       required this.isSelected,
@@ -218,7 +223,7 @@ class accGroupFilterItem extends StatelessWidget {
           ),
           Text(
             lable,
-            style: myTextStyles.body.copyWith(
+            style: MyTextStyles.body.copyWith(
               color: isSelected
                   ? MyColors.primaryColor
                   : MyColors.secondaryTextColor,

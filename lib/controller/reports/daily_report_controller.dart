@@ -36,10 +36,10 @@ class DailyReportsController extends GetxController {
         curencyId: curencyId.value);
 
     if (journalsReports.isNotEmpty) {
-      journalsReports.forEach((element) {
+      for (var element in journalsReports) {
         totalCredit.value += element['credit'];
         totalDebit.value += element['debit'];
-      });
+      }
     }
     isLoadding.value = false;
   }

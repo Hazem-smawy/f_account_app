@@ -2,6 +2,7 @@ import 'package:account_app/constant/colors.dart';
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/journal_controller.dart';
+import 'package:account_app/controller/reports_pdf_controller/details_journals_pdf_controller.dart';
 import 'package:account_app/models/home_model.dart';
 import 'package:account_app/models/journal_model.dart';
 import 'package:account_app/screen/details/details_row.dart';
@@ -21,7 +22,7 @@ class DetailsScreen extends StatefulWidget {
   final HomeModel homeModel;
 
   final bool accGoupStatus;
-  DetailsScreen(
+  const DetailsScreen(
       {super.key, required this.homeModel, required this.accGoupStatus});
 
   @override
@@ -36,7 +37,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getAllJournals();
   }
@@ -93,6 +93,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 child: Column(
                   children: [
                     CustomBackBtnWidget(
+                      action: () {
+                        if (journals.isNotEmpty) {
+                          JournalPdfControls.generateJournlsPdfReports(
+                              journals: journals,
+                              totalCredit: onYou,
+                              totalDebit: onHem,
+                              customerId: widget.homeModel.caId ?? 0,
+                              curencyId: widget.homeModel.curId ?? 0,
+                              accGroupId: widget.homeModel.accGId ?? 0);
+                        }
+                      },
                       icon: FontAwesomeIcons.solidFilePdf,
                       title: customerController.allCustomers
                           .firstWhere(
@@ -115,7 +126,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             child: Text(
                               'الحساب',
                               textAlign: TextAlign.center,
-                              style: myTextStyles.subTitle.copyWith(
+                              style: MyTextStyles.subTitle.copyWith(
                                 color: MyColors.bg,
                               ),
                             ),
@@ -125,7 +136,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             child: Text(
                               'التأريخ',
                               textAlign: TextAlign.center,
-                              style: myTextStyles.subTitle.copyWith(
+                              style: MyTextStyles.subTitle.copyWith(
                                 color: MyColors.bg,
                               ),
                             ),
@@ -154,11 +165,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             width: Get.width / 6,
                             child: Text('المبلغ',
                                 textAlign: TextAlign.center,
-                                style: myTextStyles.subTitle.copyWith(
+                                style: MyTextStyles.subTitle.copyWith(
                                   color: MyColors.bg,
                                 )),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           SizedBox(
@@ -166,7 +177,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               child: Text(
                                 ' التفاصيل',
                                 textAlign: TextAlign.center,
-                                style: myTextStyles.subTitle.copyWith(
+                                style: MyTextStyles.subTitle.copyWith(
                                   color: MyColors.bg,
                                 ),
                               )),
@@ -200,7 +211,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         },
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     // ClipRRect(
@@ -392,14 +403,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           //     ],
                           //   ),
                           // ),
-                          SizedBox(
+                          const SizedBox(
                             width: 20,
                           ),
                           Row(
                             children: [
                               Text(
                                 curencyController.selectedCurency['symbol'],
-                                style: myTextStyles.body,
+                                style: MyTextStyles.body,
                               ),
                               const SizedBox(
                                 width: 5,
@@ -407,7 +418,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               FittedBox(
                                 child: Text(
                                   resultMoney.abs().toString(),
-                                  style: myTextStyles.subTitle.copyWith(
+                                  style: MyTextStyles.subTitle.copyWith(
                                     color: MyColors.lessBlackColor,
                                   ),
                                 ),
@@ -417,7 +428,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               ),
                               Text(
                                 resultMoney < 0 ? "علية" : "لة",
-                                style: myTextStyles.subTitle,
+                                style: MyTextStyles.subTitle,
                               ),
                               const SizedBox(
                                 width: 10,
@@ -445,7 +456,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 40,
                               ),
                             ],

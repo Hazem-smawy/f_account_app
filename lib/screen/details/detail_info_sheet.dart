@@ -6,14 +6,14 @@ import 'package:get/get.dart';
 
 import '../../constant/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart' as DateFormater;
+import 'package:intl/intl.dart' as date_formater;
 
 class DetialInfoSheet extends StatelessWidget {
-  final name;
+  final String name;
   final Journal detailsRows;
   final Curency curency;
 
-  DetialInfoSheet(
+  const DetialInfoSheet(
       {super.key,
       required this.name,
       required this.detailsRows,
@@ -39,7 +39,7 @@ class DetialInfoSheet extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: myTextStyles.title2,
+                style: MyTextStyles.title2,
               ),
               //Divider(),
               const SizedBox(height: 25),
@@ -59,7 +59,7 @@ class DetialInfoSheet extends StatelessWidget {
                   const Spacer(),
                   Text(
                     "${detailsRows.credit - detailsRows.debit}",
-                    style: myTextStyles.subTitle
+                    style: MyTextStyles.subTitle
                         .copyWith(color: MyColors.blackColor),
                   ),
                   const Spacer(),
@@ -75,13 +75,13 @@ class DetialInfoSheet extends StatelessWidget {
                 children: [
                   Text(
                     curency.symbol,
-                    style: myTextStyles.subTitle.copyWith(
+                    style: MyTextStyles.subTitle.copyWith(
                         color: MyColors.blackColor,
                         fontWeight: FontWeight.normal),
                   ),
                   Text(
                     curency.name,
-                    style: myTextStyles.subTitle.copyWith(
+                    style: MyTextStyles.subTitle.copyWith(
                       fontWeight: FontWeight.normal,
                       color: MyColors.blackColor,
                     ),
@@ -97,9 +97,9 @@ class DetialInfoSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    DateFormater.DateFormat.yMEd()
+                    date_formater.DateFormat.yMEd()
                         .format(detailsRows.registeredAt),
-                    style: myTextStyles.subTitle.copyWith(
+                    style: MyTextStyles.subTitle.copyWith(
                         color: MyColors.blackColor,
                         fontWeight: FontWeight.normal),
                   ),
@@ -114,8 +114,8 @@ class DetialInfoSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    DateFormater.DateFormat.Hm().format(detailsRows.createdAt),
-                    style: myTextStyles.subTitle.copyWith(
+                    date_formater.DateFormat.Hm().format(detailsRows.createdAt),
+                    style: MyTextStyles.subTitle.copyWith(
                         color: MyColors.blackColor,
                         fontWeight: FontWeight.normal),
                   ),
@@ -130,9 +130,9 @@ class DetialInfoSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    DateFormater.DateFormat.yMEd()
+                    date_formater.DateFormat.yMEd()
                         .format(detailsRows.createdAt),
-                    style: myTextStyles.subTitle.copyWith(
+                    style: MyTextStyles.subTitle.copyWith(
                         color: MyColors.blackColor,
                         fontWeight: FontWeight.normal),
                   ),
@@ -149,8 +149,8 @@ class DetialInfoSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    DateFormater.DateFormat.Hm().format(detailsRows.createdAt),
-                    style: myTextStyles.subTitle.copyWith(
+                    date_formater.DateFormat.Hm().format(detailsRows.createdAt),
+                    style: MyTextStyles.subTitle.copyWith(
                         color: MyColors.blackColor,
                         fontWeight: FontWeight.normal),
                   ),
@@ -167,7 +167,7 @@ class DetialInfoSheet extends StatelessWidget {
                 children: [
                   Text(
                     "التفاصيل",
-                    style: myTextStyles.subTitle.copyWith(
+                    style: MyTextStyles.subTitle.copyWith(
                       color: MyColors.blackColor,
                       fontWeight: FontWeight.normal,
                     ),
@@ -184,7 +184,7 @@ class DetialInfoSheet extends StatelessWidget {
                       detailsRows.details,
                       textAlign: TextAlign.center,
                       maxLines: 4,
-                      style: myTextStyles.subTitle.copyWith(
+                      style: MyTextStyles.subTitle.copyWith(
                           fontWeight: FontWeight.normal,
                           color: MyColors.lessBlackColor),
                     ),
@@ -208,7 +208,7 @@ class DetialInfoSheet extends StatelessWidget {
                   child: Text(
                     "إلغاء",
                     textAlign: TextAlign.center,
-                    style: myTextStyles.subTitle.copyWith(color: MyColors.bg),
+                    style: MyTextStyles.subTitle.copyWith(color: MyColors.bg),
                   ),
                 ),
               ),
@@ -236,7 +236,7 @@ class InfoTitleWidget extends StatelessWidget {
       children: [
         Text(
           title,
-          style: myTextStyles.subTitle.copyWith(fontWeight: FontWeight.normal),
+          style: MyTextStyles.subTitle.copyWith(fontWeight: FontWeight.normal),
         ),
         const SizedBox(width: 7),
         Container(

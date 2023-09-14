@@ -7,10 +7,11 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import '../../../constant/colors.dart';
 
 class ReportFooterWidget extends StatelessWidget {
-  ReportFooterWidget({
+  const ReportFooterWidget({
     super.key,
     this.controller,
   });
+  // ignore: prefer_typing_uninitialized_variables
   final controller;
 
   @override
@@ -30,7 +31,7 @@ class ReportFooterWidget extends StatelessWidget {
                   color: MyColors.debetColor,
                   curencyId: controller.curencyId.value,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 2,
                 ),
                 ReportSammaryWidget(
@@ -51,7 +52,7 @@ class ReportFooterWidget extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   FaIcon(
                     controller.totalDebit.value < controller.totalCredit.value
                         ? FontAwesomeIcons.arrowUp
@@ -67,16 +68,16 @@ class ReportFooterWidget extends StatelessWidget {
                     (controller.totalDebit.value - controller.totalCredit.value)
                         .abs()
                         .toString(),
-                    style: myTextStyles.title1,
+                    style: MyTextStyles.title1,
                   ),
                   const SizedBox(width: 5),
                   Text(
                     controller.totalDebit.value < controller.totalCredit.value
                         ? "لة"
                         : 'علية',
-                    style: myTextStyles.body,
+                    style: MyTextStyles.body,
                   ),
-                  Spacer(),
+                  const Spacer(),
                 ],
               ),
             )

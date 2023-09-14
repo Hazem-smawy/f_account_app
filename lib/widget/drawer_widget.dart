@@ -94,13 +94,13 @@ class MyDrawerView extends StatelessWidget {
                                 const SizedBox(height: 10),
                                 Text(
                                   personalController.newPersonal['name'],
-                                  style: myTextStyles.title2.copyWith(
+                                  style: MyTextStyles.title2.copyWith(
                                     color: MyColors.bg,
                                   ),
                                 ),
                                 Text(
                                   personalController.newPersonal['email'],
-                                  style: myTextStyles.subTitle.copyWith(
+                                  style: MyTextStyles.subTitle.copyWith(
                                     color: MyColors.secondaryTextColor,
                                   ),
                                 ),
@@ -303,7 +303,7 @@ class MyDrawerView extends StatelessWidget {
                       title: Text(
                         "خروج",
                         textAlign: TextAlign.right,
-                        style: myTextStyles.title2.copyWith(
+                        style: MyTextStyles.title2.copyWith(
                           color: MyColors.secondaryTextColor,
                           fontWeight: FontWeight.normal,
                         ),
@@ -329,7 +329,8 @@ class MyDrawerView extends StatelessWidget {
 class ShortCutCopyWidget extends StatelessWidget {
   final VoidCallback actoin;
   final IconData icon;
-  ShortCutCopyWidget({super.key, required this.actoin, required this.icon});
+  const ShortCutCopyWidget(
+      {super.key, required this.actoin, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -346,7 +347,7 @@ class ShortCutCopyWidget extends StatelessWidget {
           children: [
             // Text(
             //   label,
-            //   style: myTextStyles.body.copyWith(
+            //   style: MyTextStyles.body.copyWith(
             //     color: MyColors.bg,
             //     fontWeight: FontWeight.bold,
             //   ),
@@ -394,7 +395,7 @@ class DrawerItemWidget extends StatelessWidget {
       title: Text(
         title,
         textAlign: TextAlign.right,
-        style: myTextStyles.title2.copyWith(
+        style: MyTextStyles.title2.copyWith(
           // color: MyColors.withOpacity(0.8),
           fontWeight: FontWeight.normal,
         ),

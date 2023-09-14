@@ -32,7 +32,7 @@ class CurencySettingScreen extends StatelessWidget {
                 CustomBackBtnWidget(title: "العملات"),
                 const SizedBox(height: 15),
                 if (curencyController.allCurency.isEmpty)
-                  EmptyWidget(
+                  const EmptyWidget(
                     imageName: 'assets/images/curency2.png',
                     label: "لاتوجد اي عملات , قم بإضافة بعض العملات",
                   ),
@@ -55,12 +55,12 @@ class CurencySettingScreen extends StatelessWidget {
                               }),
                               columnSpacing: 10,
                               headingRowHeight: 50,
-                              headingTextStyle: myTextStyles.title2.copyWith(
+                              headingTextStyle: MyTextStyles.title2.copyWith(
                                 color: MyColors.bg,
                                 fontSize: 12,
                                 fontWeight: FontWeight.normal,
                               ),
-                              dataTextStyle: myTextStyles.subTitle.copyWith(
+                              dataTextStyle: MyTextStyles.subTitle.copyWith(
                                 fontSize: 12,
                                 fontWeight: FontWeight.normal,
                               ),
@@ -121,14 +121,14 @@ class CurencySettingScreen extends StatelessWidget {
                                     RichText(
                                         text: TextSpan(
                                             text: element.name,
-                                            style: myTextStyles.subTitle)),
+                                            style: MyTextStyles.subTitle)),
                                   ),
                                   DataCell(RichText(
                                       textAlign: TextAlign.center,
                                       textDirection: TextDirection.ltr,
                                       text: TextSpan(
                                         text: element.symbol,
-                                        style: myTextStyles.title2,
+                                        style: MyTextStyles.title2,
                                       ))),
                                   DataCell(Text(
                                     '${customerAccountController.allCustomerAccounts.where((p0) => p0.accgroupId == element.id).toList().length}',
@@ -181,7 +181,7 @@ class NewCurencySheet extends StatelessWidget {
     return Obx(
       () => AnimatedContainer(
         //margin: const EdgeInsets.only(top: 50),
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -201,14 +201,14 @@ class NewCurencySheet extends StatelessWidget {
             const SizedBox(height: 7),
             Text(
               isEdding ? " تعد يل" : "إضافة ",
-              style: myTextStyles.title1
+              style: MyTextStyles.title1
                   .copyWith(color: MyColors.secondaryTextColor),
             ),
             const SizedBox(height: 20),
             if (CEC.errorMessage.isNotEmpty)
-              Column(
+              const Column(
                 children: [
-                  const ErrorShowWidget(),
+                  ErrorShowWidget(),
                   SizedBox(
                     height: 10,
                   ),
@@ -237,7 +237,7 @@ class NewCurencySheet extends StatelessWidget {
                     }),
                 Text(
                   "الحالة ",
-                  style: myTextStyles.subTitle,
+                  style: MyTextStyles.subTitle,
                 )
               ],
             ),
@@ -346,7 +346,10 @@ class NewCurencySheet extends StatelessWidget {
 
                         return;
                       }
-                    } catch (e) {}
+                    } catch (e) {
+                      CustomDialog.customSnackBar(
+                          "حدث خطأ", SnackPosition.BOTTOM);
+                    }
                   },
                 ))
               ],

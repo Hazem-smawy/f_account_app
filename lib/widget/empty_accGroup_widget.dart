@@ -28,7 +28,7 @@ class EmptyAccGroupsWidget extends StatelessWidget {
               ),
               Text(
                 "قم بإضافة بعض التصنيفات ",
-                style: myTextStyles.title1.copyWith(
+                style: MyTextStyles.title1.copyWith(
                   fontWeight: FontWeight.normal,
                 ),
               ),
@@ -41,8 +41,8 @@ class EmptyAccGroupsWidget extends StatelessWidget {
                   await homeController
                       .addDefaultAccGroupsAndCurency()
                       .then((value) => {
-                            Future.delayed(Duration(milliseconds: 200)).then(
-                                (value) =>
+                            Future.delayed(const Duration(milliseconds: 200))
+                                .then((value) =>
                                     {Get.offAll(() => ShowMyMainScreen())})
                           });
                 },
@@ -57,7 +57,7 @@ class EmptyAccGroupsWidget extends StatelessWidget {
                   child: Text(
                     "إضافة التصنيفات الإ فتراضية",
                     textAlign: TextAlign.center,
-                    style: myTextStyles.body.copyWith(
+                    style: MyTextStyles.body.copyWith(
                       color: MyColors.bg,
                       fontWeight: FontWeight.normal,
                     ),
@@ -84,7 +84,7 @@ class EmptyAccGroupsWidget extends StatelessWidget {
                   child: Text(
                     "إضافة",
                     textAlign: TextAlign.center,
-                    style: myTextStyles.body.copyWith(
+                    style: MyTextStyles.body.copyWith(
                       color: MyColors.lessBlackColor,
                       fontWeight: FontWeight.normal,
                     ),

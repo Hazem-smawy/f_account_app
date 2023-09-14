@@ -7,13 +7,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class PersonalTextFieldWidget extends StatelessWidget {
   final String textHint;
   final IconData icon;
-  Function(String)? action;
-  String? placeHolder;
-  PersonalTextFieldWidget(
+  final bool isNumber;
+  final Function(String)? action;
+  final String? placeHolder;
+  const PersonalTextFieldWidget(
       {super.key,
       required this.icon,
       required this.textHint,
       this.placeHolder = "",
+      required this.isNumber,
       required this.action});
 
   @override
@@ -31,10 +33,12 @@ class PersonalTextFieldWidget extends StatelessWidget {
         children: [
           Expanded(
             child: TextFormField(
+              keyboardType:
+                  isNumber ? TextInputType.number : TextInputType.name,
               initialValue: placeHolder ?? "",
               textAlign: TextAlign.right,
               textDirection: TextDirection.rtl,
-              style: myTextStyles.subTitle.copyWith(
+              style: MyTextStyles.subTitle.copyWith(
                   color: MyColors.blackColor, fontWeight: FontWeight.bold),
               onChanged: (value) {
                 action!(value);
@@ -44,7 +48,7 @@ class PersonalTextFieldWidget extends StatelessWidget {
                 border: InputBorder.none,
                 hintText: textHint,
                 hintStyle:
-                    myTextStyles.body.copyWith(fontWeight: FontWeight.normal),
+                    MyTextStyles.body.copyWith(fontWeight: FontWeight.normal),
               ),
             ),
           ),

@@ -85,7 +85,7 @@ class _ShowAllFilesState extends State<ShowAllFiles> {
                                   );
                                 },
                               )
-                            : EmptyWidget(
+                            : const EmptyWidget(
                                 imageName: 'assets/images/accGroup.png',
                                 label: "لاتوجد أي نسخة ",
                               ),

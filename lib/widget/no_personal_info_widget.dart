@@ -43,7 +43,7 @@ class NoPersonalInfoWidget extends StatelessWidget {
             " للحصول علي جميع خدماتنا \nقم بإدخال معلوماتك الشخصية من هنا ",
             textAlign: TextAlign.center,
             textDirection: TextDirection.rtl,
-            style: myTextStyles.body.copyWith(
+            style: MyTextStyles.body.copyWith(
               color:
                   isDrawer ? MyColors.containerColor : MyColors.lessBlackColor,
               fontWeight: FontWeight.normal,
@@ -65,7 +65,7 @@ class NoPersonalInfoWidget extends StatelessWidget {
               ),
               child: Text(
                 "إضافة",
-                style: myTextStyles.title2.copyWith(
+                style: MyTextStyles.title2.copyWith(
                   fontWeight: FontWeight.normal,
                   color: isDrawer
                       ? MyColors.containerColor

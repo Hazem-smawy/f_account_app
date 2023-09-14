@@ -62,7 +62,7 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                     ),
                     Text(
                       "النسخ الإ حتياطي الى جوجل درايف",
-                      style: myTextStyles.subTitle,
+                      style: MyTextStyles.subTitle,
                     )
                   ],
                 ),
@@ -90,7 +90,7 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                         }),
                     Text(
                       "تفعيل النسخ الى جوجل درايف",
-                      style: myTextStyles.subTitle.copyWith(
+                      style: MyTextStyles.subTitle.copyWith(
                           color: contorller.googleUser == null
                               ? Colors.red
                               : Colors.green),
@@ -114,7 +114,7 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                     ),
                     CustomDriveCopyBtnWidget(
                       topIcon: FontAwesomeIcons.upload,
-                      color: Color.fromARGB(197, 170, 18, 18),
+                      color: const Color.fromARGB(197, 170, 18, 18),
                       icon: FontAwesomeIcons.upload,
                       label: "فتح أخر نسخة ",
                       //  action: () {},
@@ -127,12 +127,12 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Divider(),
-                    SizedBox(
+                    const Divider(),
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
                       child: Row(
                         children: [
                           Obx(
@@ -169,7 +169,7 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                           const Spacer(),
                           Text(
                             "المزامنة مع جوجل درايف",
-                            style: myTextStyles.subTitle,
+                            style: MyTextStyles.subTitle,
                           ),
                           const SizedBox(
                             width: 10,
@@ -196,17 +196,17 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                     ),
                     Obx(
                       () => AnimatedContainer(
-                        duration: Duration(milliseconds: 200),
+                        duration: const Duration(milliseconds: 200),
                         child: Column(
                           children: [
                             if (sittingController.toggleAsyncGoogleDrive.value)
                               Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     right: 30, left: 40, top: 10),
                                 child: Text(
                                   "سيقوم البرنامج بعمل نسخة إحتياطية كل يوم الساعة 12 منتصف الليل",
                                   textAlign: TextAlign.right,
-                                  style: myTextStyles.body,
+                                  style: MyTextStyles.body,
                                 ),
                               ),
                             // if (sittingController.toggleAsyncGoogleDrive.value)
@@ -253,7 +253,7 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                                 ),
                                 Text(
                                   "الحساب المتصل بجوجل درايف",
-                                  style: myTextStyles.body.copyWith(
+                                  style: MyTextStyles.body.copyWith(
                                     fontWeight: FontWeight.normal,
                                     fontSize: 10,
                                   ),
@@ -267,7 +267,7 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                               contorller.googleUser == null
                                   ? "لايوجد حساب"
                                   : contorller.googleUser?.email ?? "",
-                              style: myTextStyles.title2,
+                              style: MyTextStyles.title2,
                             )
                           ]),
                     ),
@@ -291,10 +291,10 @@ class CustomDriveCopyBtnWidget extends StatelessWidget {
   final Color color;
   final IconData icon;
   final String label;
-  final description;
+  final String description;
   final VoidCallback action;
   final IconData topIcon;
-  CustomDriveCopyBtnWidget(
+  const CustomDriveCopyBtnWidget(
       {super.key,
       required this.color,
       required this.icon,
@@ -335,7 +335,7 @@ class CustomDriveCopyBtnWidget extends StatelessWidget {
             child: Text(
               description,
               textAlign: TextAlign.center,
-              style: myTextStyles.body,
+              style: MyTextStyles.body,
             ),
           ),
           const SizedBox(
@@ -375,7 +375,7 @@ class CustomDriveCopyBtnWidget extends StatelessWidget {
                               ),
                               Text(
                                 "عرض كل الملفات",
-                                style: myTextStyles.subTitle.copyWith(
+                                style: MyTextStyles.subTitle.copyWith(
                                   color: MyColors.bg,
                                   fontWeight: FontWeight.normal,
                                 ),
@@ -388,7 +388,7 @@ class CustomDriveCopyBtnWidget extends StatelessWidget {
                                 color: MyColors.bg,
                                 size: 17,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                             ],
@@ -420,7 +420,7 @@ class CustomDriveCopyBtnWidget extends StatelessWidget {
                               ),
                               Text(
                                 label,
-                                style: myTextStyles.subTitle.copyWith(
+                                style: MyTextStyles.subTitle.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal,
                                 ),
@@ -433,7 +433,7 @@ class CustomDriveCopyBtnWidget extends StatelessWidget {
                                 size: 15,
                                 color: Colors.white,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                             ],

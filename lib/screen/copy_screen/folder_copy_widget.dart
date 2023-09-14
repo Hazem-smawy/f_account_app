@@ -38,7 +38,7 @@ class _FolderCopyWidgetState extends State<FolderCopyWidget> {
                   ),
                   Text(
                     "النسخ الإحتياطي الى الملفات",
-                    style: myTextStyles.title2,
+                    style: MyTextStyles.title2,
                   )
                 ],
               ),

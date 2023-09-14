@@ -48,7 +48,7 @@ class ReportSammaryWidget extends StatelessWidget {
                   curencyController.allCurency
                       .firstWhere((element) => element.id == curencyId)
                       .symbol,
-                  style: myTextStyles.body,
+                  style: MyTextStyles.body,
                 ),
                 const SizedBox(
                   width: 5,
@@ -57,13 +57,13 @@ class ReportSammaryWidget extends StatelessWidget {
                   fit: BoxFit.scaleDown,
                   child: Text(
                     title,
-                    style: myTextStyles.title2,
+                    style: MyTextStyles.title2,
                   ),
                 ),
                 const SizedBox(width: 5),
                 Text(
                   ": $subTitle",
-                  style: myTextStyles.body,
+                  style: MyTextStyles.body,
                 )
               ],
             ),

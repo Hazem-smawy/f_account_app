@@ -29,7 +29,7 @@ class AccGroupSettingScreen extends StatelessWidget {
                 CustomBackBtnWidget(title: "التصنيفات"),
                 const SizedBox(height: 15),
                 if (accGroupController.allAccGroups.isEmpty)
-                  EmptyWidget(
+                  const EmptyWidget(
                     imageName: 'assets/images/accGroup.png',
                     label: "لايوجد أي تصنيف , قم بالإضافة",
                   ),
@@ -52,12 +52,12 @@ class AccGroupSettingScreen extends StatelessWidget {
                                 }),
                                 columnSpacing: 10,
                                 headingRowHeight: 50,
-                                headingTextStyle: myTextStyles.title2.copyWith(
+                                headingTextStyle: MyTextStyles.title2.copyWith(
                                   color: MyColors.bg,
                                   fontSize: 14,
                                   fontWeight: FontWeight.normal,
                                 ),
-                                dataTextStyle: myTextStyles.subTitle.copyWith(
+                                dataTextStyle: MyTextStyles.subTitle.copyWith(
                                   fontSize: 14,
                                   fontWeight: FontWeight.normal,
                                 ),
@@ -115,7 +115,7 @@ class AccGroupSettingScreen extends StatelessWidget {
                                       )),
                                       DataCell(Text(
                                         element.name,
-                                        style: myTextStyles.title2,
+                                        style: MyTextStyles.title2,
                                       )),
                                       DataCell(Text(
                                         "${customerAccountController.allCustomerAccounts.where((p0) => p0.accgroupId == element.id).toList().length}",
@@ -191,7 +191,7 @@ class NewAccGroupSheet extends StatelessWidget {
               const SizedBox(height: 7),
               Text(
                 isEditing ? "تعد يل " : "اضافه ",
-                style: myTextStyles.title1
+                style: MyTextStyles.title1
                     .copyWith(color: MyColors.secondaryTextColor),
               ),
               const SizedBox(height: 20),
@@ -217,7 +217,7 @@ class NewAccGroupSheet extends StatelessWidget {
                       }),
                   Text(
                     "الحالة ",
-                    style: myTextStyles.subTitle,
+                    style: MyTextStyles.subTitle,
                   )
                 ],
               ),
@@ -321,8 +321,7 @@ class NewAccGroupSheet extends StatelessWidget {
                           await accGroupCurencyController
                               .getAllAccGroupAndCurency();
                           await accGroupController.readAllAccGroup();
-                          print(
-                              accGroupCurencyController.allAccgroupsAndCurency);
+
                           Get.back();
                           Get.back();
                         });

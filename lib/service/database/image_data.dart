@@ -1,6 +1,9 @@
 import 'package:account_app/service/database/helper/database_helper.dart';
 import 'package:account_app/service/database/helper/database_service.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:sqflite/sqflite.dart';
+
+import '../../widget/custom_dialog.dart';
 
 class ImageData {
   Future<void> createTable(Database db) async {
@@ -23,10 +26,9 @@ class ImageData {
         await db.database.transaction((txn) async {
           await txn.insert('images', {'image': bytes});
         });
-        print("image inseted");
       }
     } catch (e) {
-      print("error for creatting");
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
     }
   }
 
@@ -37,7 +39,7 @@ class ImageData {
       final value = result.first;
       return value;
     } catch (e) {
-      print(e);
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
       return null;
     }
   }
@@ -54,10 +56,10 @@ class ImageData {
           return res;
         });
       } else {
-        print("image is null");
+        CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
       }
     } catch (e) {
-      print("error for update image");
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
     }
   }
 }

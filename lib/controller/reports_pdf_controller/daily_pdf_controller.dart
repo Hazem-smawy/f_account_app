@@ -41,24 +41,35 @@ class DailyPdfController {
         ],
         footer: (context) => Column(children: [
           Divider(),
-          PdfApi.documentFooter('${context.pageNumber / context.pagesCount}')
+          PdfApi.documentFooter(
+              '${context.pageNumber}  /  ${context.pagesCount}')
         ]),
       ),
     );
     return PdfApi.saveDocument(
-        name: 'dialy_reports_${DateTime.now().toIso8601String()}.pdf',
-        pdf: pdf);
+      name:
+          'E-smart_${date_formater.DateFormat.yMMMEd().format(DateTime.now())}_report.pdf',
+      pdf: pdf,
+    );
   }
 
   static Widget buildDailyTableReport() {
-    final headers = ["التأريخ", "لك", "العملة", "المبلغ", "الأسم", 'التصنيف'];
+    final headers = [
+      "التأريخ",
+      "لك",
+      "العملة",
+      "المبلغ",
+      'التفاصيل',
+      "الأسم",
+      'التصنيف',
+    ];
 
     return Table(
         border: TableBorder.all(color: PdfColors.grey300),
         tableWidth: TableWidth.max,
         children: [
           TableRow(
-              decoration: BoxDecoration(color: PdfColors.grey200),
+              decoration: const BoxDecoration(color: PdfColors.grey200),
               children: PdfApi.buildHeader(headers)),
           ...dailyReportsController.journalsReports.map((e) {
             return TableRow(children: [
@@ -71,6 +82,7 @@ class DailyPdfController {
               PdfApi.paddedHeadingTextArabicCell(e['curencyName']),
               PdfApi.paddedHeadingTextEnglishCell(
                   '${e['credit'] - e['debit']}'),
+              PdfApi.paddedHeadingTextArabicCell('${e['details']}'),
               PdfApi.paddedHeadingTextArabicCell('${e['name']}'),
               PdfApi.paddedHeadingTextArabicCell('${e['accName']}'),
             ]);

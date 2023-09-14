@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 
 class CustomTextFieldWidget extends StatefulWidget {
   final String textHint;
-  Function(String)? action;
-  String? placeHolder;
+  final Function(String)? action;
+  final String? placeHolder;
   final VoidCallback? onTap;
 
-  CustomTextFieldWidget({
+  const CustomTextFieldWidget({
     required this.textHint,
     this.action,
     this.placeHolder = "",
@@ -37,7 +37,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
         initialValue: widget.placeHolder ?? "",
         textAlign: TextAlign.right,
         textDirection: TextDirection.rtl,
-        style: myTextStyles.subTitle.copyWith(
+        style: MyTextStyles.subTitle.copyWith(
           color: MyColors.blackColor,
           fontWeight: FontWeight.bold,
         ),
@@ -56,7 +56,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
             border: InputBorder.none,
             hintText: widget.textHint,
             hintStyle:
-                myTextStyles.body.copyWith(fontWeight: FontWeight.normal),
+                MyTextStyles.body.copyWith(fontWeight: FontWeight.normal),
             contentPadding: const EdgeInsets.symmetric(horizontal: 10)),
       ),
     );
@@ -69,7 +69,7 @@ class CustomNumberFieldWidget extends StatefulWidget {
   final String? placeHolder;
   final VoidCallback? onTap;
 
-  CustomNumberFieldWidget({
+  const CustomNumberFieldWidget({
     required this.textHint,
     this.action,
     this.placeHolder = "",
@@ -98,7 +98,7 @@ class _CustomNumberFieldWidgetState extends State<CustomNumberFieldWidget> {
         initialValue: widget.placeHolder ?? "",
         textAlign: TextAlign.right,
         textDirection: TextDirection.rtl,
-        style: myTextStyles.subTitle
+        style: MyTextStyles.subTitle
             .copyWith(color: MyColors.blackColor, fontWeight: FontWeight.bold),
         onChanged: (value) {
           if (widget.action != null) {
@@ -115,7 +115,7 @@ class _CustomNumberFieldWidgetState extends State<CustomNumberFieldWidget> {
             border: InputBorder.none,
             hintText: widget.textHint,
             hintStyle:
-                myTextStyles.body.copyWith(fontWeight: FontWeight.normal),
+                MyTextStyles.body.copyWith(fontWeight: FontWeight.normal),
             contentPadding: const EdgeInsets.symmetric(horizontal: 10)),
       ),
     );
@@ -124,12 +124,12 @@ class _CustomNumberFieldWidgetState extends State<CustomNumberFieldWidget> {
 
 class DetailTextFieldWidget extends StatefulWidget {
   final String textHint;
-  Function(String)? action;
-  String? placeHolder;
+  final Function(String)? action;
+  final String? placeHolder;
   final VoidCallback? onTap;
-  TextEditingController controller;
+  final TextEditingController controller;
 
-  DetailTextFieldWidget(
+  const DetailTextFieldWidget(
       {required this.textHint,
       this.action,
       this.placeHolder = "",
@@ -156,7 +156,7 @@ class _DetailTextFieldWidgetState extends State<DetailTextFieldWidget> {
         controller: widget.controller,
         textAlign: TextAlign.right,
         textDirection: TextDirection.rtl,
-        style: myTextStyles.subTitle.copyWith(
+        style: MyTextStyles.subTitle.copyWith(
           color: MyColors.blackColor,
           fontWeight: FontWeight.bold,
         ),
@@ -175,7 +175,7 @@ class _DetailTextFieldWidgetState extends State<DetailTextFieldWidget> {
             border: InputBorder.none,
             hintText: widget.textHint,
             hintStyle:
-                myTextStyles.body.copyWith(fontWeight: FontWeight.normal),
+                MyTextStyles.body.copyWith(fontWeight: FontWeight.normal),
             contentPadding: const EdgeInsets.symmetric(horizontal: 10)),
       ),
     );

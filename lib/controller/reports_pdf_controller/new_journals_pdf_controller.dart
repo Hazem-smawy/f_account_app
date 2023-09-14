@@ -1,15 +1,14 @@
 import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
-import 'package:account_app/controller/reports/daily_report_controller.dart';
 
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as date_formater;
 import 'package:open_file/open_file.dart';
 
 import 'package:pdf/pdf.dart';
 
 // import 'package:path_provider/path_provider.dart';
 // import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:intl/intl.dart' as date_formater;
 import 'dart:io';
 import 'package:pdf/widgets.dart';
 
@@ -45,7 +44,8 @@ class NewDailyPdfController {
           }),
     );
     File file = await PdfApi.saveDocument(
-      name: 'dialy_reports_${DateTime.now().toIso8601String()}.pdf',
+      name:
+          'E-smart_${date_formater.DateFormat.yMMMEd().format(DateTime.now())}_report.pdf',
       pdf: pdf,
     );
 

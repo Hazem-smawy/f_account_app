@@ -1,6 +1,9 @@
 import 'package:account_app/service/database/helper/database_helper.dart';
 import 'package:account_app/service/database/helper/database_service.dart';
+import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
+
+import '../../widget/custom_dialog.dart';
 
 class IntroData {
   Future<void> createTable(Database db) async {
@@ -19,7 +22,7 @@ class IntroData {
       final db = await DatabaseService().database;
       await db.insert('intro', {"id": 1, "isShow": 0});
     } catch (e) {
-      print("error for creatting");
+      // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
     }
   }
 
@@ -28,10 +31,10 @@ class IntroData {
       final db = await DatabaseService().database;
       final result = await db.query('intro');
       final value = result.first['isShow'];
-      print(value);
+
       return value == 1;
     } catch (e) {
-      print(e);
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
       return false;
     }
   }
@@ -40,10 +43,10 @@ class IntroData {
     try {
       final db = await DatabaseService().database;
       final result = await db.update('intro', {"id": 1, "isShow": 1});
-      print("updated: $result");
+
       return result;
     } catch (e) {
-      print("error for update");
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
       return 0;
     }
   }

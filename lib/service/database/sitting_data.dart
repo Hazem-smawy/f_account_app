@@ -1,7 +1,10 @@
 import 'package:account_app/models/sitting_model.dart';
 import 'package:account_app/service/database/helper/database_helper.dart';
 import 'package:account_app/service/database/helper/database_service.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:sqflite/sqflite.dart';
+
+import '../../widget/custom_dialog.dart';
 
 class SittingData {
   Future<void> createTable(Database db) async {
@@ -37,7 +40,7 @@ class SittingData {
         return null;
       }
     } catch (e) {
-      print("no erro");
+      // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
       return null;
     }
   }
@@ -50,7 +53,9 @@ class SittingData {
           where: 'id= ?', whereArgs: [sittingModel.id]);
 
       return upOb;
-    } catch (e) {}
+    } catch (e) {
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+    }
     return null;
   }
 

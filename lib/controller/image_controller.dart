@@ -15,7 +15,6 @@ class ImageController extends GetxController {
   var customImage = {}.obs;
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     readImage();
   }
@@ -38,7 +37,7 @@ class ImageController extends GetxController {
         readImage();
       }
     } catch (e) {
-      print(e);
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
     }
   }
 
@@ -75,7 +74,7 @@ class ImageController extends GetxController {
         Get.back();
       }
     } catch (e) {
-      print(e);
+      // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
     }
   }
 }

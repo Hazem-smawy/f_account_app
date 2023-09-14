@@ -1,7 +1,9 @@
 import 'dart:io' as io;
 
 import 'package:account_app/service/http_service/google_drive_data_auth.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 
@@ -89,7 +91,7 @@ class GoogleDriveAppData {
     try {
       await driveApi.files.delete(driveFile.id!);
     } catch (e) {
-      print("error for delet : $e");
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
     }
   }
 

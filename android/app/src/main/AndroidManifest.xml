@@ -15,7 +15,7 @@
     <application
      tools:replace="android:label"
         android:requestLegacyExternalStorage="true"
-        android:label="account_app"
+        android:label="E-Smart"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true"

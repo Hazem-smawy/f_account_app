@@ -111,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(width: 10),
                         Text(
                           curency?.symbol ?? " ",
-                          style: myTextStyles.body.copyWith(
+                          style: MyTextStyles.body.copyWith(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
                             color: MyColors.lessBlackColor,
@@ -129,7 +129,7 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(width: 10),
                         Text(
                           curency?.name ?? "",
-                          style: myTextStyles.body.copyWith(
+                          style: MyTextStyles.body.copyWith(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
                             color: MyColors.lessBlackColor,

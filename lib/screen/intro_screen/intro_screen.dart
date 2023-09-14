@@ -90,7 +90,7 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                                       children: [
                                         Text(
                                           "رجوع",
-                                          style: myTextStyles.subTitle,
+                                          style: MyTextStyles.subTitle,
                                         ),
                                         const SizedBox(
                                           width: 10,
@@ -110,8 +110,6 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                           page: pages[index],
                         ),
                         const Spacer(),
-
-                        //TODO: download copy btns
                         if (index == pages.length - 1)
                           Column(
                             children: [
@@ -146,7 +144,7 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                                       ),
                                       Text(
                                         "الصفحة الرئيسية",
-                                        style: myTextStyles.title2.copyWith(
+                                        style: MyTextStyles.title2.copyWith(
                                           color: MyColors.bg,
                                           fontWeight: FontWeight.normal,
                                         ),
@@ -366,8 +364,9 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
 }
 
 class FirstPage extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final page;
-  FirstPage({super.key, required this.page, required this.lastPage});
+  const FirstPage({super.key, required this.page, required this.lastPage});
   final bool lastPage;
 
   @override
@@ -393,7 +392,7 @@ class FirstPage extends StatelessWidget {
           // if (!lastPage)
           Text(
             page['title'],
-            style: myTextStyles.title2.copyWith(
+            style: MyTextStyles.title2.copyWith(
               color: MyColors.containerColor,
               fontWeight: FontWeight.normal,
               fontSize: 23,
@@ -408,7 +407,7 @@ class FirstPage extends StatelessWidget {
               child: Text(
                 page['desc'],
                 textAlign: TextAlign.center,
-                style: myTextStyles.body.copyWith(
+                style: MyTextStyles.body.copyWith(
                   color: MyColors.containerSecondColor,
                   fontWeight: FontWeight.normal,
                 ),

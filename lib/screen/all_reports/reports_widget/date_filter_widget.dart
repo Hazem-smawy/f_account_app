@@ -4,12 +4,14 @@ import 'package:account_app/constant/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as dateFormater;
+import 'package:intl/intl.dart' as date_formater;
 
 class DateFilterWidget extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final controller;
   final VoidCallback action;
-  DateFilterWidget({key, required this.controller, required this.action});
+  const DateFilterWidget(
+      {super.key, required this.controller, required this.action});
   Future _selectFromDate(BuildContext ctx) async {
     final DateTime? picked = await showDatePicker(
         context: ctx,
@@ -44,7 +46,7 @@ class DateFilterWidget extends StatelessWidget {
     return Obx(
       () => Row(
         children: [
-          Spacer(),
+          const Spacer(),
           GestureDetector(
             onTap: () {
               _selectToDate(context);
@@ -57,7 +59,7 @@ class DateFilterWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               "الى",
-              style: myTextStyles.subTitle.copyWith(
+              style: MyTextStyles.subTitle.copyWith(
                 color: MyColors.blackColor,
               ),
             ),
@@ -78,7 +80,7 @@ class DateFilterWidget extends StatelessWidget {
 
 class DateFileterItemWidget extends StatelessWidget {
   final DateTime date;
-  DateFileterItemWidget({super.key, required this.date});
+  const DateFileterItemWidget({super.key, required this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +93,8 @@ class DateFileterItemWidget extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            dateFormater.DateFormat.yMd().format(date),
-            style: myTextStyles.body.copyWith(
+            date_formater.DateFormat.yMd().format(date),
+            style: MyTextStyles.body.copyWith(
               color: MyColors.secondaryTextColor,
             ),
           ),

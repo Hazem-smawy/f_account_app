@@ -59,6 +59,7 @@ class MyMainScreen extends StatelessWidget {
                                   .allAccgroupsAndCurency.isNotEmpty
                               ? accGroupController.allAccGroups
                                       .firstWhereOrNull((element) =>
+                                          // ignore: unrelated_type_equality_checks
                                           element.id ==
                                           accGroupCurencyController
                                                   .allAccgroupsAndCurency[
@@ -211,7 +212,8 @@ class MyMainScreen extends StatelessWidget {
                                           const Duration(milliseconds: 200),
                                       curve: Curves.linear);
                                 } catch (e) {
-                                  print(e);
+                                  CustomDialog.customSnackBar(
+                                      "حدث خطأ", SnackPosition.BOTTOM);
                                 }
                               }
                             });

@@ -8,9 +8,11 @@ import 'package:get/get.dart';
 class CustomBackBtnWidget extends StatelessWidget {
   final String title;
   final IconData? icon;
+  VoidCallback? action;
   CustomBackBtnWidget({
     required this.title,
     this.icon,
+    this.action,
     super.key,
   });
 
@@ -34,10 +36,15 @@ class CustomBackBtnWidget extends StatelessWidget {
 
                   Get.back();
                 },
-                child: const FaIcon(
-                  FontAwesomeIcons.filePdf,
-                  size: 20,
-                  color: MyColors.lessBlackColor,
+                child: GestureDetector(
+                  onTap: () {
+                    action!();
+                  },
+                  child: const FaIcon(
+                    FontAwesomeIcons.filePdf,
+                    size: 20,
+                    color: MyColors.lessBlackColor,
+                  ),
                 ),
               ),
             ),
@@ -46,7 +53,7 @@ class CustomBackBtnWidget extends StatelessWidget {
               child: Center(
             child: Text(
               title,
-              style: myTextStyles.title2,
+              style: MyTextStyles.title2,
             ),
           )),
           GestureDetector(
@@ -86,7 +93,7 @@ class CustomDeleteBtnWidget extends StatelessWidget {
       },
       child: Text(
         lable,
-        style: myTextStyles.title1.copyWith(
+        style: MyTextStyles.title1.copyWith(
           fontWeight: FontWeight.bold,
           color: Colors.red,
         ),
@@ -140,7 +147,7 @@ class CustomBtnWidget extends StatelessWidget {
         onPressed: () => action(),
         child: Text(
           label,
-          style: myTextStyles.subTitle.copyWith(
+          style: MyTextStyles.subTitle.copyWith(
             color: MyColors.background,
           ),
         ));
@@ -152,9 +159,10 @@ class CustomCopyBtnWidget extends StatelessWidget {
   final IconData icon;
   final String label;
   final IconData topIcon;
+  // ignore: prefer_typing_uninitialized_variables
   final description;
   final VoidCallback action;
-  CustomCopyBtnWidget(
+  const CustomCopyBtnWidget(
       {super.key,
       required this.color,
       required this.icon,
@@ -195,7 +203,7 @@ class CustomCopyBtnWidget extends StatelessWidget {
             child: Text(
               description,
               textAlign: TextAlign.center,
-              style: myTextStyles.body,
+              style: MyTextStyles.body,
             ),
           ),
           const SizedBox(
@@ -218,7 +226,7 @@ class CustomCopyBtnWidget extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    style: myTextStyles.subTitle.copyWith(
+                    style: MyTextStyles.subTitle.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.normal,
                     ),

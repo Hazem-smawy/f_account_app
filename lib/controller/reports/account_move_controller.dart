@@ -65,9 +65,9 @@ class AccountMovemoentController extends GetxController {
     } else {
       customerAccountsJournals.clear();
     }
-    customerAccountsJournals.forEach((element) {
+    for (var element in customerAccountsJournals) {
       totalCredit.value += element.credit;
       totalDebit.value += element.debit;
-    });
+    }
   }
 }

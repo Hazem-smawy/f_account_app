@@ -41,7 +41,7 @@ class CustomerAccountsView extends StatelessWidget {
                         // color: MyColors.bg,
                       ),
                       child: TextField(
-                        style: myTextStyles.subTitle,
+                        style: MyTextStyles.subTitle,
 
                         onChanged: (value) {
                           var customerList = customerController.allCustomers
@@ -71,7 +71,7 @@ class CustomerAccountsView extends StatelessWidget {
                             vertical: 0,
                           ),
                           hintText: "بحث في حسابات العملاء",
-                          hintStyle: myTextStyles.body,
+                          hintStyle: MyTextStyles.body,
                         ),
                         // style: myTextStyles.subTitle,
                       ),
@@ -112,7 +112,7 @@ class CustomerAccountsView extends StatelessWidget {
                             const SizedBox(height: 20),
                             Text(
                               "لاتوجد اي حسابات ",
-                              style: myTextStyles.title2,
+                              style: MyTextStyles.title2,
                             ),
                             const Spacer(),
                           ],
@@ -174,7 +174,7 @@ class CustomerAccountsView extends StatelessWidget {
                                       ),
                                       Text(
                                         "الحالة",
-                                        style: myTextStyles.body,
+                                        style: MyTextStyles.body,
                                       ),
                                       const Spacer(),
                                       const SizedBox(width: 10),
@@ -224,7 +224,7 @@ class CustomerAccountItem extends StatelessWidget {
   final String title;
   final IconData icon;
   final bool isCustomerName;
-  CustomerAccountItem(
+  const CustomerAccountItem(
       {super.key,
       required this.title,
       required this.icon,
@@ -241,7 +241,7 @@ class CustomerAccountItem extends StatelessWidget {
           title,
           textAlign: TextAlign.right,
           textDirection: TextDirection.rtl,
-          style: myTextStyles.body.copyWith(
+          style: MyTextStyles.body.copyWith(
             overflow: TextOverflow.clip,
             color: isCustomerName ? MyColors.lessBlackColor : null,
             fontWeight: isCustomerName ? FontWeight.bold : null,

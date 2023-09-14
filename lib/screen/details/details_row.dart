@@ -4,7 +4,7 @@ import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/models/journal_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as dateFormater;
+import 'package:intl/intl.dart' as date_formater;
 
 import '../../../constant/colors.dart';
 
@@ -31,7 +31,7 @@ class DetailsRowWidget extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 accountMoney,
-                style: myTextStyles.title2.copyWith(
+                style: MyTextStyles.title2.copyWith(
                   color: MyColors.blackColor,
                 ),
               ),
@@ -43,9 +43,9 @@ class DetailsRowWidget extends StatelessWidget {
           SizedBox(
             width: Get.width / 7,
             child: Text(
-              dateFormater.DateFormat.MEd().format(journal.registeredAt),
+              date_formater.DateFormat.MEd().format(journal.registeredAt),
               textDirection: TextDirection.ltr,
-              style: myTextStyles.body.copyWith(
+              style: MyTextStyles.body.copyWith(
                 fontWeight: FontWeight.normal,
               ),
             ),
@@ -73,7 +73,7 @@ class DetailsRowWidget extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 (journal.debit - journal.credit).abs().toString(),
-                style: myTextStyles.title2.copyWith(
+                style: MyTextStyles.title2.copyWith(
                   color: MyColors.lessBlackColor,
                 ),
               ),
@@ -100,7 +100,7 @@ class DetailsRowWidget extends StatelessWidget {
                         journal.details,
                         textDirection: TextDirection.rtl,
                         textAlign: TextAlign.right,
-                        style: myTextStyles.subTitle.copyWith(
+                        style: MyTextStyles.subTitle.copyWith(
                             fontWeight: FontWeight.normal,
                             overflow: TextOverflow.ellipsis),
                         overflow: TextOverflow.ellipsis,

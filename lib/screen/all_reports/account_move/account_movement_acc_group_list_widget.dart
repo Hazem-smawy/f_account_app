@@ -63,7 +63,7 @@ class AccountMovementAccGroupListWidget extends StatelessWidget {
 class AccountMovementAccGroupListItemWidget extends StatelessWidget {
   final AccGroup accGroup;
   final VoidCallback action;
-  AccountMovementAccGroupListItemWidget(
+  const AccountMovementAccGroupListItemWidget(
       {super.key, required this.accGroup, required this.action});
 
   @override
@@ -88,7 +88,7 @@ class AccountMovementAccGroupListItemWidget extends StatelessWidget {
               child: Text(
                 accGroup.name,
                 textAlign: TextAlign.right,
-                style: myTextStyles.subTitle,
+                style: MyTextStyles.subTitle,
               ),
             ),
             const Spacer(),

@@ -11,6 +11,7 @@ import 'package:pdf/pdf.dart';
 // import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'dart:io';
 import 'package:pdf/widgets.dart';
+import 'package:intl/intl.dart' as date_formater;
 
 import '../pdf_controller.dart';
 
@@ -49,7 +50,10 @@ class AccGroupsPdfContoller {
           }),
     );
     File file = await PdfApi.saveDocument(
-        name: 'reports_${DateTime.now().toIso8601String()}.pdf', pdf: pdf);
+      name:
+          'E-smart_${date_formater.DateFormat.yMMMEd().format(DateTime.now())}_report.pdf',
+      pdf: pdf,
+    );
     OpenFile.open(file.path);
   }
 
@@ -61,7 +65,7 @@ class AccGroupsPdfContoller {
         tableWidth: TableWidth.max,
         children: [
           TableRow(
-              decoration: BoxDecoration(color: PdfColors.grey200),
+              decoration: const BoxDecoration(color: PdfColors.grey200),
               children: PdfApi.buildHeader(headers)),
           ...accGroupController.allAccGroups.map((e) {
             return TableRow(children: [

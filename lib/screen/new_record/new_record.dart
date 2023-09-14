@@ -49,7 +49,6 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   TextEditingController detailsTextController = TextEditingController();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     newAccountController.newAccount.clear();
   }
@@ -94,35 +93,32 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                             borderRadius: BorderRadius.circular(10),
                             color: MyColors.lessBlackColor.withOpacity(0.9),
                           ),
-                          child: Container(
-                            child: Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  margin: const EdgeInsets.only(left: 10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    // color: MyColors.containerColor.withOpacity(0.5),
-                                  ),
-                                  child: Text(
-                                    curencyController.allCurency
-                                        .firstWhere((element) =>
-                                            element.id ==
-                                            widget.homeModel.curId)
-                                        .name,
-                                    style: myTextStyles.body
-                                        .copyWith(color: MyColors.bg),
-                                  ),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                margin: const EdgeInsets.only(left: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  // color: MyColors.containerColor.withOpacity(0.5),
                                 ),
-                                const Spacer(),
-                                Text(
-                                  widget.homeModel.name,
-                                  textAlign: TextAlign.right,
-                                  style: myTextStyles.subTitle
-                                      .copyWith(color: Colors.white),
+                                child: Text(
+                                  curencyController.allCurency
+                                      .firstWhere((element) =>
+                                          element.id == widget.homeModel.curId)
+                                      .name,
+                                  style: MyTextStyles.body
+                                      .copyWith(color: MyColors.bg),
                                 ),
-                              ],
-                            ),
+                              ),
+                              const Spacer(),
+                              Text(
+                                widget.homeModel.name,
+                                textAlign: TextAlign.right,
+                                style: MyTextStyles.subTitle
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -278,7 +274,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                   decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: Colors.white,
-                                      boxShadow: [myShadow.blackShadow]),
+                                      boxShadow: [MyShadow.blackShadow]),
                                   child: const FaIcon(
                                     FontAwesomeIcons.xmark,
                                     size: 13,
@@ -304,7 +300,6 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     if (newAccountController.newAccount['money'] == null ||
         newAccountController.newAccount['desc'] == null) {
       CEC.errorMessage.value = "no data to puplished";
-      print(newAccountController.newAccount['desc']);
       return;
     }
     if (newAccountController.newAccount['desc'].length < 2 ||

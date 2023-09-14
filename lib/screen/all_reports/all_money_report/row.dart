@@ -4,11 +4,12 @@ import 'package:account_app/constant/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as dateFormater;
+import 'package:intl/intl.dart' as date_formater;
 
 import '../../../constant/colors.dart';
 
 class AllMoneyRowWidget extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final allMoneyRow;
   const AllMoneyRowWidget({super.key, required this.allMoneyRow});
 
@@ -24,9 +25,9 @@ class AllMoneyRowWidget extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            dateFormater.DateFormat.MEd().format(DateTime.now()),
+            date_formater.DateFormat.MEd().format(DateTime.now()),
             textDirection: TextDirection.rtl,
-            style: myTextStyles.body.copyWith(
+            style: MyTextStyles.body.copyWith(
               fontWeight: FontWeight.normal,
             ),
           ),
@@ -44,7 +45,7 @@ class AllMoneyRowWidget extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 allMoneyRow['accName'],
-                style: myTextStyles.title2,
+                style: MyTextStyles.title2,
               ),
             ),
           ),
@@ -67,7 +68,7 @@ class AllMoneyRowWidget extends StatelessWidget {
                         allMoneyRow['accName'],
                         textDirection: TextDirection.rtl,
                         textAlign: TextAlign.right,
-                        style: myTextStyles.subTitle.copyWith(
+                        style: MyTextStyles.subTitle.copyWith(
                           fontWeight: FontWeight.normal,
                         ),
                       ),
@@ -103,7 +104,7 @@ class AllMoneyRowWidget extends StatelessWidget {
                         "hazem smawy",
                         textDirection: TextDirection.rtl,
                         textAlign: TextAlign.right,
-                        style: myTextStyles.subTitle
+                        style: MyTextStyles.subTitle
                             .copyWith(overflow: TextOverflow.ellipsis),
                         overflow: TextOverflow.ellipsis,
                       ),

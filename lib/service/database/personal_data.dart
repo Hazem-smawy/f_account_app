@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:account_app/service/database/helper/database_helper.dart';
 
+import '../../widget/custom_dialog.dart';
+
 class PersonalData {
   Future<void> createTable(Database db) async {
     await db.execute('''
@@ -42,7 +44,7 @@ class PersonalData {
         return PersonalModel.fromMap(maps.first);
       }
     } catch (e) {
-      print(e);
+      // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
       return null;
     }
     return null;
@@ -57,7 +59,9 @@ class PersonalData {
           where: '${PersonalField.id} = ?', whereArgs: [personalModel.id]);
       Get.back();
       return updatedObject;
-    } catch (e) {}
+    } catch (e) {
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+    }
     return null;
   }
 }

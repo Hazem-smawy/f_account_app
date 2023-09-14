@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class EmptyWidget extends StatelessWidget {
   final String imageName;
   final String label;
-  EmptyWidget({super.key, required this.imageName, required this.label});
+  const EmptyWidget({super.key, required this.imageName, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class EmptyWidget extends StatelessWidget {
           ),
           Text(
             label,
-            style: myTextStyles.title1.copyWith(
+            style: MyTextStyles.title1.copyWith(
               fontWeight: FontWeight.normal,
             ),
           )

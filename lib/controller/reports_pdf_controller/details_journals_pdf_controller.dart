@@ -1,5 +1,6 @@
 import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
+import 'package:account_app/models/journal_model.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as date_formater;
@@ -15,15 +16,19 @@ import 'package:pdf/widgets.dart';
 import '../accgroup_controller.dart';
 import '../curency_controller.dart';
 import '../pdf_controller.dart';
-import '../reports/account_move_controller.dart';
 
-class MoneyMovementPdfController {
-  static AccountMovemoentController accountMovemoentController = Get.find();
+class JournalPdfControls {
   static CustomerController customerController = Get.find();
   static AccGroupController accGourpController = Get.find();
   static CurencyController curencyController = Get.find();
 
-  static Future<void> generateMoneyMovementReportPdf() async {
+  static Future<void> generateJournlsPdfReports(
+      {required List<Journal> journals,
+      required double totalCredit,
+      required double totalDebit,
+      required int customerId,
+      required int accGroupId,
+      required int curencyId}) async {
     CopyController copyController = Get.find();
     if (Platform.isAndroid) {
       copyController.requestPermission();
@@ -41,11 +46,12 @@ class MoneyMovementPdfController {
         build: (context) => [
           PdfApi.companyInfHeader(),
           Divider(),
-          customerAccountTitle(),
-          buildMoneyMovementsTableReport(),
+          customerAccountTitle(customerId, accGroupId, curencyId),
+          buildMoneyMovementsTableReport(journals),
           PdfApi.sammaryFooterMoney(
-              credit: accountMovemoentController.totalCredit.value,
-              debit: accountMovemoentController.totalDebit.value),
+            credit: totalCredit,
+            debit: totalDebit,
+          ),
         ],
         footer: (context) => Column(children: [
           Divider(),
@@ -61,7 +67,7 @@ class MoneyMovementPdfController {
     OpenFile.open(file.path);
   }
 
-  static Widget buildMoneyMovementsTableReport() {
+  static Widget buildMoneyMovementsTableReport(final Journls) {
     final headers = ["التأريخ", "لك", "المبلغ", 'التفاصيل'];
 
     return Table(
@@ -71,7 +77,7 @@ class MoneyMovementPdfController {
           TableRow(
               decoration: const BoxDecoration(color: PdfColors.grey200),
               children: PdfApi.buildHeader(headers)),
-          ...accountMovemoentController.customerAccountsJournals.map((e) {
+          ...Journls.map((e) {
             return TableRow(children: [
               PdfApi.paddedHeadingTextEnglishCell(
                 date_formater.DateFormat.yMd().format(e.registeredAt),
@@ -84,7 +90,7 @@ class MoneyMovementPdfController {
         ]);
   }
 
-  static Widget customerAccountTitle() {
+  static Widget customerAccountTitle(cusId, accId, curId) {
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
       Container(
         child: Column(
@@ -93,8 +99,7 @@ class MoneyMovementPdfController {
             SizedBox(height: 10),
             Text(
               customerController.allCustomers
-                  .firstWhere((element) =>
-                      element.id == accountMovemoentController.customerId.value)
+                  .firstWhere((element) => element.id == cusId)
                   .name,
               style: TextStyle(
                 font: PdfApi.globalCustomFont,
@@ -105,8 +110,7 @@ class MoneyMovementPdfController {
             SizedBox(height: 10),
             Text(
               accGourpController.allAccGroups
-                  .firstWhere((element) =>
-                      element.id == accountMovemoentController.accGroupId.value)
+                  .firstWhere((element) => element.id == accId)
                   .name,
               style: TextStyle(
                   font: PdfApi.globalCustomFont,
@@ -116,8 +120,7 @@ class MoneyMovementPdfController {
             ),
             Text(
               curencyController.allCurency
-                  .firstWhere((element) =>
-                      element.id == accountMovemoentController.curencyId.value)
+                  .firstWhere((element) => element.id == curId)
                   .name,
               style: TextStyle(
                   font: PdfApi.globalCustomFont,

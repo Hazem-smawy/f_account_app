@@ -29,7 +29,7 @@ class MyAppBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var accGroupName = "";
-    print(accGroupCurencyController.pageViewCount.value);
+
     if (accGroupCurencyController.allAccgroupsAndCurency.isNotEmpty) {
       final accGroupId = accGroupCurencyController
           .allAccgroupsAndCurency[accGroupCurencyController.pageViewCount.value]
@@ -91,7 +91,7 @@ class MyAppBarWidget extends StatelessWidget {
                   ? "مساعدة سريعة"
                   : accGroupName,
               style:
-                  myTextStyles.title2.copyWith(color: MyColors.containerColor),
+                  MyTextStyles.title2.copyWith(color: MyColors.containerColor),
             ),
             const SizedBox(width: 15),
             GestureDetector(
@@ -138,7 +138,7 @@ class AccGroupCurencyListWidget extends StatelessWidget {
         children: [
           Text(
             "كل التصنيفات",
-            style: myTextStyles.title2,
+            style: MyTextStyles.title2,
           ),
           const SizedBox(height: 10),
           ListView.builder(
@@ -199,7 +199,7 @@ class AccGroupCurencyListWidget extends StatelessWidget {
                   Text(
                     "اضافه",
                     textAlign: TextAlign.right,
-                    style: myTextStyles.subTitle.copyWith(
+                    style: MyTextStyles.subTitle.copyWith(
                       color: MyColors.containerColor,
                     ),
                   ),
@@ -216,7 +216,7 @@ class AccGroupCurencyListWidget extends StatelessWidget {
 class AccGroupCurencyListItemWidget extends StatelessWidget {
   final AccGroup accGroup;
   final Curency? curency;
-  AccGroupCurencyListItemWidget({
+  const AccGroupCurencyListItemWidget({
     super.key,
     required this.accGroup,
     required this.curency,
@@ -241,7 +241,7 @@ class AccGroupCurencyListItemWidget extends StatelessWidget {
             child: Text(
               accGroup.name,
               textAlign: TextAlign.right,
-              style: myTextStyles.subTitle,
+              style: MyTextStyles.subTitle,
             ),
           ),
           const Spacer(),
@@ -250,7 +250,7 @@ class AccGroupCurencyListItemWidget extends StatelessWidget {
               curency?.symbol ?? "",
               textAlign: TextAlign.right,
               textDirection: TextDirection.rtl,
-              style: myTextStyles.subTitle.copyWith(
+              style: MyTextStyles.subTitle.copyWith(
                 fontWeight: FontWeight.normal,
                 color: MyColors.blackColor,
               ),

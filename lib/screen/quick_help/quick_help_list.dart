@@ -47,7 +47,7 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                   ),
                   Text(
                     "لا توجد أي عمليات اليوم",
-                    style: myTextStyles.subTitle,
+                    style: MyTextStyles.subTitle,
                   )
                 ],
               ))
@@ -82,7 +82,7 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                       ),
                       Text(
                         homeController.todaysJournals[index]['symbol'],
-                        style: myTextStyles.body,
+                        style: MyTextStyles.body,
                       ),
                       const SizedBox(
                         width: 5,
@@ -97,7 +97,7 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                                         ['credit'])
                                 .abs()
                                 .toString(),
-                            style: myTextStyles.title2,
+                            style: MyTextStyles.title2,
                           ),
                         ),
                       ),
@@ -121,7 +121,7 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                                         ['accName'],
                                     textDirection: TextDirection.rtl,
                                     textAlign: TextAlign.right,
-                                    style: myTextStyles.subTitle.copyWith(
+                                    style: MyTextStyles.subTitle.copyWith(
                                       fontWeight: FontWeight.normal,
                                     ),
                                   ),
@@ -158,7 +158,7 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                                         ['name'],
                                     textDirection: TextDirection.rtl,
                                     textAlign: TextAlign.right,
-                                    style: myTextStyles.subTitle.copyWith(
+                                    style: MyTextStyles.subTitle.copyWith(
                                         overflow: TextOverflow.ellipsis),
                                     overflow: TextOverflow.ellipsis,
                                   ),

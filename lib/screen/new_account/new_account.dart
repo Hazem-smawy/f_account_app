@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_typing_uninitialized_variables
 
 import 'package:account_app/constant/shadows.dart';
 import 'package:account_app/constant/text_styles.dart';
@@ -41,7 +41,6 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   Customer? selectionCustomer;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     newAccountController.newAccount.clear();
   }
@@ -98,17 +97,18 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   //   }
   // }
 
-  Future<PermissionStatus> _getContactPermission() async {
-    PermissionStatus permission = await Permission.contacts.status;
-    if (permission != PermissionStatus.granted &&
-        permission != PermissionStatus.permanentlyDenied) {
-      PermissionStatus permissionStatus = await Permission.contacts.request();
-      return permissionStatus;
-    } else {
-      return permission;
-    }
-  }
+  // Future<PermissionStatus> _getContactPermission() async {
+  //   PermissionStatus permission = await Permission.contacts.status;
+  //   if (permission != PermissionStatus.granted &&
+  //       permission != PermissionStatus.permanentlyDenied) {
+  //     PermissionStatus permissionStatus = await Permission.contacts.request();
+  //     return permissionStatus;
+  //   } else {
+  //     return permission;
+  //   }
+  // }
 
+  // ignore: unused_element
   void _handleInvalidPermissions(PermissionStatus permissionStatus) {
     if (permissionStatus == PermissionStatus.denied) {
       const snackBar = SnackBar(content: Text('Access to contact data denied'));
@@ -201,7 +201,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                       controller: nameController,
                                       textAlign: TextAlign.right,
                                       textDirection: TextDirection.rtl,
-                                      style: myTextStyles.subTitle.copyWith(
+                                      style: MyTextStyles.subTitle.copyWith(
                                           color: MyColors.blackColor,
                                           fontWeight: FontWeight.bold),
                                       onTap: () {
@@ -236,7 +236,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintText: "الاسم",
-                                          hintStyle: myTextStyles.body.copyWith(
+                                          hintStyle: MyTextStyles.body.copyWith(
                                               fontWeight: FontWeight.normal),
                                           contentPadding:
                                               const EdgeInsets.symmetric(
@@ -270,7 +270,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                             const SizedBox(width: 10),
                             Expanded(
                                 child: DetailTextFieldWidget(
-                              key: Key("newAccount"),
+                              key: const Key("newAccount"),
                               textHint: "التفاصل",
                               controller: detailsTextController,
                               action: (p0) {
@@ -407,7 +407,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                   decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: Colors.white,
-                                      boxShadow: [myShadow.blackShadow]),
+                                      boxShadow: [MyShadow.blackShadow]),
                                   child: const FaIcon(
                                     FontAwesomeIcons.xmark,
                                     size: 13,
@@ -562,7 +562,7 @@ class ExitCustomerItemWidget extends StatelessWidget {
   final Customer customer;
   final VoidCallback action;
 
-  ExitCustomerItemWidget(
+  const ExitCustomerItemWidget(
       {super.key, required this.customer, required this.action});
 
   @override
@@ -583,7 +583,7 @@ class ExitCustomerItemWidget extends StatelessWidget {
         child: Text(
           customer.name,
           textAlign: TextAlign.right,
-          style: myTextStyles.subTitle.copyWith(
+          style: MyTextStyles.subTitle.copyWith(
             fontWeight: FontWeight.bold,
             color: MyColors.blackColor,
           ),
@@ -597,7 +597,8 @@ class DetailListItemWidet extends StatelessWidget {
   final String body;
   final VoidCallback action;
 
-  DetailListItemWidet({super.key, required this.body, required this.action});
+  const DetailListItemWidet(
+      {super.key, required this.body, required this.action});
 
   @override
   Widget build(BuildContext context) {
@@ -618,7 +619,7 @@ class DetailListItemWidet extends StatelessWidget {
           child: Text(
             body,
             textAlign: TextAlign.right,
-            style: myTextStyles.subTitle.copyWith(
+            style: MyTextStyles.subTitle.copyWith(
               fontWeight: FontWeight.bold,
               color: MyColors.blackColor,
             ),
@@ -638,7 +639,7 @@ class NewCustomerSheet extends StatelessWidget {
       padding: const EdgeInsets.only(top: 5),
       child: SafeArea(
         child: Container(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
             color: MyColors.bg,

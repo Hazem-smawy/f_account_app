@@ -18,7 +18,6 @@ class _CustomDropDownMenuState extends State<CustomDropDownMenu> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     homeController.setCurency(widget.curences.first);
   }
@@ -58,7 +57,7 @@ class _CustomDropDownMenuState extends State<CustomDropDownMenu> {
                                 const SizedBox(width: 5),
                                 Text(
                                   e.symbol,
-                                  style: myTextStyles.body.copyWith(
+                                  style: MyTextStyles.body.copyWith(
                                     fontSize: 10,
                                     fontWeight: FontWeight.bold,
                                     color: MyColors.lessBlackColor,
@@ -77,7 +76,7 @@ class _CustomDropDownMenuState extends State<CustomDropDownMenu> {
                                 const SizedBox(width: 5),
                                 Text(
                                   e.name,
-                                  style: myTextStyles.body.copyWith(
+                                  style: MyTextStyles.body.copyWith(
                                     fontSize: 10,
                                     fontWeight: FontWeight.bold,
                                     color: MyColors.lessBlackColor,
@@ -114,7 +113,7 @@ class _CustomDropDownMenuState extends State<CustomDropDownMenu> {
                     const SizedBox(width: 5),
                     Text(
                       homeController.curency['symbol'] ?? "",
-                      style: myTextStyles.body.copyWith(
+                      style: MyTextStyles.body.copyWith(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
                         color: MyColors.lessBlackColor,
@@ -132,7 +131,7 @@ class _CustomDropDownMenuState extends State<CustomDropDownMenu> {
                     const SizedBox(width: 5),
                     Text(
                       homeController.curency['name'] ?? "",
-                      style: myTextStyles.body.copyWith(
+                      style: MyTextStyles.body.copyWith(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
                         color: MyColors.lessBlackColor,

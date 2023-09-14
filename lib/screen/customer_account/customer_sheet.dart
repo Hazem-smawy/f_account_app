@@ -11,11 +11,11 @@ import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as DateFormater;
+import 'package:intl/intl.dart' as date_formater;
 
 class CustomerAccountDetailsSheet extends StatefulWidget {
   final CustomerAccount customerAccount;
-  CustomerAccountDetailsSheet({super.key, required this.customerAccount});
+  const CustomerAccountDetailsSheet({super.key, required this.customerAccount});
 
   @override
   State<CustomerAccountDetailsSheet> createState() =>
@@ -71,7 +71,7 @@ class _CustomerAccountDetailsSheetState
               const Spacer(),
               Text(
                 "الحالة",
-                style: myTextStyles.subTitle
+                style: MyTextStyles.subTitle
                     .copyWith(color: status ? Colors.green : Colors.red),
               )
             ],
@@ -90,7 +90,7 @@ class _CustomerAccountDetailsSheetState
                     children: [
                       Text(
                         widget.customerAccount.totalCredit.toString(),
-                        style: myTextStyles.title2,
+                        style: MyTextStyles.title2,
                       ),
                       const SizedBox(width: 10),
                       const FaIcon(
@@ -101,7 +101,7 @@ class _CustomerAccountDetailsSheetState
                       const SizedBox(width: 5),
                       Text(
                         ": لة",
-                        style: myTextStyles.body
+                        style: MyTextStyles.body
                             .copyWith(color: MyColors.blackColor),
                       )
                     ],
@@ -120,7 +120,7 @@ class _CustomerAccountDetailsSheetState
                     children: [
                       Text(
                         widget.customerAccount.totalDebit.toString(),
-                        style: myTextStyles.title2,
+                        style: MyTextStyles.title2,
                       ),
                       const SizedBox(width: 10),
                       const FaIcon(
@@ -131,7 +131,7 @@ class _CustomerAccountDetailsSheetState
                       const SizedBox(width: 5),
                       Text(
                         ": علية",
-                        style: myTextStyles.body
+                        style: MyTextStyles.body
                             .copyWith(color: MyColors.blackColor),
                       )
                     ],
@@ -170,14 +170,14 @@ class _CustomerAccountDetailsSheetState
           const Divider(),
           SheetItem(
             label: "التأريخ",
-            value: DateFormater.DateFormat.yMMMMd()
+            value: date_formater.DateFormat.yMMMMd()
                 .format(widget.customerAccount.createdAt),
             icon: FontAwesomeIcons.calendar,
           ),
           const Divider(),
           SheetItem(
             label: "الوقت",
-            value: DateFormater.DateFormat.Hms()
+            value: date_formater.DateFormat.Hms()
                 .format(widget.customerAccount.createdAt),
             icon: FontAwesomeIcons.clock,
           ),
@@ -198,7 +198,7 @@ class _CustomerAccountDetailsSheetState
                   color: MyColors.primaryColor.withOpacity(0.9)),
               child: Text(
                 "تحد يث",
-                style: myTextStyles.title2.copyWith(
+                style: MyTextStyles.title2.copyWith(
                   color: MyColors.bg,
                 ),
               ),
@@ -229,12 +229,12 @@ class SheetItem extends StatelessWidget {
       children: [
         Text(
           value,
-          style: myTextStyles.subTitle.copyWith(color: MyColors.blackColor),
+          style: MyTextStyles.subTitle.copyWith(color: MyColors.blackColor),
         ),
         const Spacer(),
         Text(
           label,
-          style: myTextStyles.subTitle.copyWith(fontWeight: FontWeight.normal),
+          style: MyTextStyles.subTitle.copyWith(fontWeight: FontWeight.normal),
         ),
         const SizedBox(width: 10),
         FaIcon(

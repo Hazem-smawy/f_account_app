@@ -3,6 +3,7 @@
 
 import 'package:account_app/controller/image_controller.dart';
 import 'package:account_app/controller/personal_controller.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -131,8 +132,8 @@ class PdfApi extends GetxController {
 
   static PersonalController personalController = Get.find();
   static ImageController imageController = Get.find();
+  @override
   void onInit() async {
-    // TODO: implement onInit
     super.onInit();
     globalCustomFont =
         Font.ttf(await rootBundle.load('assets/fonts/DroidKufi-Regular.ttf'));
@@ -142,18 +143,23 @@ class PdfApi extends GetxController {
 
   static Future<File> saveDocument(
       {required String name, required Document pdf}) async {
+    CustomDialog.customSnackBar(
+        " تم حفظ الملف في ملف التنزيلات ", SnackPosition.TOP);
+
     final bytes = await pdf.save();
     if (Platform.isAndroid) {
       String path = await ex.ExternalPath.getExternalStoragePublicDirectory(
           ex.ExternalPath.DIRECTORY_DOWNLOADS);
-      final file = File('${path}/$name');
+      final file = File('$path/$name');
       await file.writeAsBytes(bytes);
+      Future.delayed(const Duration(milliseconds: 200));
 
       return file;
     } else {
       final path = await getApplicationDocumentsDirectory();
       final file = File('${path.path}/$name');
       await file.writeAsBytes(bytes);
+      Get.back();
       return file;
     }
   }
@@ -387,7 +393,6 @@ class PdfApi extends GetxController {
                 fontSize: 10,
               ),
             ),
-            SizedBox(height: 10),
             Text(
               personalController.newPersonal['address'] ?? "",
               style: TextStyle(
@@ -413,7 +418,7 @@ class PdfApi extends GetxController {
   static Widget sammaryFooterMoney(
       {required double credit, required double debit}) {
     return Container(
-        margin: EdgeInsets.only(top: 30),
+        margin: const EdgeInsets.only(top: 30),
         decoration: BoxDecoration(
           border: Border.all(
             color: PdfColors.grey300,
@@ -423,11 +428,20 @@ class PdfApi extends GetxController {
           Row(mainAxisSize: MainAxisSize.min, children: [
             coloredText(credit.toString(), PdfColors.green),
             SizedBox(width: 20),
+            Container(
+                width: 2,
+                height: 20,
+                decoration: const BoxDecoration(color: PdfColors.grey300)),
+            SizedBox(width: 20),
             coloredText(debit.toString(), PdfColors.red),
           ]),
           Divider(color: PdfColors.green100, height: 1),
-          coloredText((credit - debit).toString(),
-              credit > debit ? PdfColors.green : PdfColors.red)
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            coloredText((credit - debit).toString(),
+                credit > debit ? PdfColors.green : PdfColors.red),
+            SizedBox(width: 10),
+            paddedHeadingTextArabicCell("الا جمالي :"),
+          ]),
         ]));
   }
 }

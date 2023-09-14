@@ -4,8 +4,9 @@ import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/models/sitting_model.dart';
 import 'package:account_app/service/database/sitting_data.dart';
 import 'package:background_fetch/background_fetch.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:get/get.dart';
+
+import '../widget/custom_dialog.dart';
 
 class SittingController extends GetxController {
   final every = 0.obs;
@@ -16,7 +17,6 @@ class SittingController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     readSitting();
     // toogleIsCopyOn(toggleAsyncGoogleDrive.value);
@@ -27,7 +27,7 @@ class SittingController extends GetxController {
     try {
       await sittingData.create(sittingModel);
     } catch (e) {
-      print("error for create");
+      // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
     }
   }
 
@@ -57,7 +57,7 @@ class SittingController extends GetxController {
 
     if (isOn) {
       BackgroundFetch.start().then((int status) {}).catchError((e) {
-        print("erro happend");
+        // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
       });
     } else {
       BackgroundFetch.stop();
@@ -66,7 +66,7 @@ class SittingController extends GetxController {
 
   Future<void> setEvery() async {
     await updateSitting(toggleAsyncGoogleDrive.value, every.value);
-    setCopyToGoogleDriveEvery();
+    //setCopyToGoogleDriveEvery();
   }
 
   // Future<void> increemint() async {
@@ -97,12 +97,12 @@ class SittingController extends GetxController {
   //   }
   // }
 
-  void setCopyToGoogleDriveEvery() {
-    FlutterBackgroundService().invoke("stopService");
-    Future.delayed(const Duration(seconds: 3)).then(
-      (value) {
-        FlutterBackgroundService().startService();
-      },
-    );
-  }
+  // void setCopyToGoogleDriveEvery() {
+  //   FlutterBackgroundService().invoke("stopService");
+  //   Future.delayed(const Duration(seconds: 3)).then(
+  //     (value) {
+  //       FlutterBackgroundService().startService();
+  //     },
+  //   );
+  // }
 }

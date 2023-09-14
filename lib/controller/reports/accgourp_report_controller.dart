@@ -39,10 +39,10 @@ class CustomerAccountsInAccGroupReportController extends GetxController {
         .where((p0) => p0.curencyId == curencyId.value)
         .toList();
 
-    allCustomerAccountsRow.forEach((element) {
+    for (var element in allCustomerAccountsRow) {
       totalCredit.value += element.totalCredit;
       totalDebit.value += element.totalDebit;
-    });
+    }
 
     isLoadding.value = false;
   }
@@ -59,10 +59,10 @@ class CustomerAccountsInAccGroupReportController extends GetxController {
               p0.accgroupId == accGroupId.value)
           .toList();
 
-      allCustomerAccountsRow.forEach((element) {
+      for (var element in allCustomerAccountsRow) {
         totalCredit.value += element.totalCredit;
         totalDebit.value += element.totalDebit;
-      });
+      }
 
       isLoadding.value = false;
     } else {

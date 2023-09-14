@@ -33,7 +33,7 @@ class CustomerAccountReportRowWidget extends StatelessWidget {
               child: Text(
                 cac.totalDebit.toString(),
                 style:
-                    myTextStyles.title2.copyWith(color: MyColors.creditColor),
+                    MyTextStyles.title2.copyWith(color: MyColors.creditColor),
               ),
             ),
           ),
@@ -48,7 +48,7 @@ class CustomerAccountReportRowWidget extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 cac.totalCredit.toString(),
-                style: myTextStyles.title2.copyWith(color: MyColors.debetColor),
+                style: MyTextStyles.title2.copyWith(color: MyColors.debetColor),
               ),
             ),
           ),
@@ -74,7 +74,7 @@ class CustomerAccountReportRowWidget extends StatelessWidget {
                             .name,
                         textDirection: TextDirection.rtl,
                         textAlign: TextAlign.right,
-                        style: myTextStyles.subTitle.copyWith(
+                        style: MyTextStyles.subTitle.copyWith(
                           fontWeight: FontWeight.normal,
                         ),
                       ),
@@ -113,7 +113,7 @@ class CustomerAccountReportRowWidget extends StatelessWidget {
                             .name,
                         textDirection: TextDirection.rtl,
                         textAlign: TextAlign.right,
-                        style: myTextStyles.subTitle
+                        style: MyTextStyles.subTitle
                             .copyWith(overflow: TextOverflow.ellipsis),
                         overflow: TextOverflow.ellipsis,
                       ),

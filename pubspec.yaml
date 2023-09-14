@@ -33,14 +33,14 @@ dependencies:
 
   google_sign_in: any
   googleapis: 
-  syncfusion_flutter_pdf: ^22.2.10
+ 
   open_file:
   external_path: ^1.0.3
  # fluttercontactpicker: ^4.7.0
   permission_handler: any
   path: ^1.8.2
   device_info_plus: ^9.0.3
-  flutter_background_service: any
+  
   flutter_local_notifications: any
   pdf: ^3.10.4
   image_picker: ^1.0.4
@@ -56,10 +56,15 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  # remove_alpha_ios: true
-  image_path: "assets/images/logo1.png"
+  remove_alpha_ios: true
+ 
+  background_color: "#ffffff"
+  image_path: "assets/images/logo.png"
+
   adaptive_icon_background: "#ffffff"
-  adaptive_icon_foreground: "assets/images/logo1.png"
+  adaptive_icon_foreground: "assets/images/logo.png"
+
+ 
 
   #min_sdk_android: 21 # android min sdk min:16, default 21
 

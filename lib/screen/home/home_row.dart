@@ -56,7 +56,7 @@ class HomeRowView extends StatelessWidget {
                       .abs()
                       .toString(),
                   textAlign: TextAlign.left,
-                  style: myTextStyles.title2.copyWith(
+                  style: MyTextStyles.title2.copyWith(
                     //   fontWeight: FontWeight.bold,
                     color: homeModel.totalCredit > homeModel.totalDebit
                         ? MyColors.debetColor
@@ -79,7 +79,7 @@ class HomeRowView extends StatelessWidget {
               child: Text(
                 homeModel.name,
                 textAlign: TextAlign.right,
-                style: myTextStyles.subTitle
+                style: MyTextStyles.subTitle
                     .copyWith(color: MyColors.secondaryTextColor),
               ),
             ),

@@ -13,6 +13,7 @@ import '../curency_controller.dart';
 import '../customers_controller.dart';
 import '../pdf_controller.dart';
 import '../reports/customer_accounts_report_controller.dart';
+import 'package:intl/intl.dart' as date_formater;
 
 class CustomerAccountPdfController {
   static CustomerAccountReportController customerAccountReportController =
@@ -54,8 +55,10 @@ class CustomerAccountPdfController {
       ),
     );
     File file = await PdfApi.saveDocument(
-        name: 'dialy_reports_${DateTime.now().toIso8601String()}.pdf',
-        pdf: pdf);
+      name:
+          'E-smart_${date_formater.DateFormat.yMMMEd().format(DateTime.now())}_report.pdf',
+      pdf: pdf,
+    );
     OpenFile.open(file.path);
   }
 

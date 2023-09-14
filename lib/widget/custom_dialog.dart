@@ -14,7 +14,7 @@ class CustomDialog {
       messageText: Text(
         description,
         textAlign: TextAlign.right,
-        style: myTextStyles.subTitle.copyWith(
+        style: MyTextStyles.subTitle.copyWith(
           color: Colors.white,
           fontSize: 12,
           fontWeight: FontWeight.normal,
@@ -44,7 +44,7 @@ class CustomDialog {
     //     titleText: Text(
     //       "جميع المعاملات المالية ",
     //       textAlign: TextAlign.right,
-    //       style: myTextStyles.subTitle.copyWith(
+    //       style: MyTextStyles.subTitle.copyWith(
     //         color: Colors.white,
     //       ),
     //     ),
@@ -52,7 +52,7 @@ class CustomDialog {
     //       padding: const EdgeInsets.only(bottom: 5),
     //       child: Text("تعني المحاسبة تتبع جميع المعاملات المالية   ",
     //           textAlign: TextAlign.right,
-    //           style: myTextStyles.body.copyWith(
+    //           style: MyTextStyles.body.copyWith(
     //             color: MyColors.containerColor,
     //           )),
     //     ),
@@ -71,8 +71,8 @@ class CustomDialog {
   static void showDialog({title, description, icon, color, action}) {
     Get.defaultDialog(
       title: "",
-      titleStyle: myTextStyles.title1,
-      middleTextStyle: myTextStyles.subTitle,
+      titleStyle: MyTextStyles.title1,
+      middleTextStyle: MyTextStyles.subTitle,
       contentPadding: const EdgeInsets.all(20),
       middleText:
           "تعني المحاسبة تتبع جميع المعاملات المالية المتعلقة بالعمل، والتي تتضمن تبويب المدخلات وتسجيلها وتلخيصها وتحليلها وإبلاغ ",
@@ -88,7 +88,7 @@ class CustomDialog {
           const SizedBox(height: 20),
           Text(title,
               textAlign: TextAlign.center,
-              style: myTextStyles.title1.copyWith(
+              style: MyTextStyles.title1.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 22,
                 color: color,
@@ -99,7 +99,7 @@ class CustomDialog {
             child: Text(
               description,
               textAlign: TextAlign.center,
-              style: myTextStyles.body,
+              style: MyTextStyles.body,
             ),
           ),
           const SizedBox(height: 15),
@@ -119,7 +119,7 @@ class CustomDialog {
           },
           child: Text(
             "موافق",
-            style: myTextStyles.title1.copyWith(color: Colors.white),
+            style: MyTextStyles.title1.copyWith(color: Colors.white),
           )),
       confirm: Padding(
         padding: const EdgeInsets.only(bottom: 20, top: 3),
@@ -127,7 +127,7 @@ class CustomDialog {
           onTap: () => Get.back(),
           child: Text(
             "الغاء",
-            style: myTextStyles.subTitle.copyWith(
+            style: MyTextStyles.subTitle.copyWith(
               color: MyColors.secondaryTextColor,
               fontWeight: FontWeight.normal,
             ),
@@ -141,7 +141,7 @@ class CustomDialog {
     Get.defaultDialog(
       title: "...يرجي الإ نتضار",
       middleText: "",
-      titleStyle: myTextStyles.subTitle,
+      titleStyle: MyTextStyles.subTitle,
       barrierDismissible: false,
       radius: 15,
       titlePadding: const EdgeInsets.all(10),

@@ -221,7 +221,7 @@ class CopyController extends GetxController {
         //  }
       } catch (e) {
         Get.back();
-        print("error open filepicker : $e");
+        CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
       }
     }
   }
@@ -314,7 +314,6 @@ class CopyController extends GetxController {
     String databasePath = await databaseService.fullPath;
 
     if (await io.File(databasePath).exists()) {
-      print("database exist");
       final bytes = await io.File(databasePath).readAsBytes();
       String targetPath = p.join(selectedFolderPath,
           '${DateTime.now().toIso8601String()}_account_app_copy.db');
@@ -322,9 +321,8 @@ class CopyController extends GetxController {
 
       try {
         targetDatabase.writeAsBytes(bytes);
-        print("Database copied to $selectedFolderPath");
       } catch (e) {
-        print("Error copying database: $e");
+        CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
       }
     }
   }
@@ -339,22 +337,17 @@ class CopyController extends GetxController {
       CustomDialog.customSnackBar(
           "  تم حفظ النسخة بنجاح الي ${result.path}", SnackPosition.BOTTOM);
     } catch (e) {
-      print("error open filepicker : $e");
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
     }
   }
 
   Future<void> copyDatabaseFromFolderIos(String selectedFolderPath) async {
     String databasePath = await databaseService.fullPath;
 
-    print("delete database ------------");
-
     await deleteDatabase(databasePath);
     //await DatabaseService.instance.database.obs;
-    print("create new database ------------");
     io.File(databasePath).openWrite();
     io.File(selectedFolderPath).copy(databasePath);
-
-    print("end new database ------------");
   }
 
   Future<void> openDatabaseFileIos() async {
@@ -371,6 +364,8 @@ class CopyController extends GetxController {
       } else {
         // User canceled the picker
       }
-    } catch (e) {}
+    } catch (e) {
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+    }
   }
 }

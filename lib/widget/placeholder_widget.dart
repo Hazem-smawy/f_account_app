@@ -38,7 +38,7 @@ class PlaceHolderWidget extends StatelessWidget {
                     ),
                     Text(
                       "قم بإضافة بعض العملات ",
-                      style: myTextStyles.title1.copyWith(
+                      style: MyTextStyles.title1.copyWith(
                         color: MyColors.lessBlackColor,
                         fontWeight: FontWeight.normal,
                       ),
@@ -62,7 +62,7 @@ class PlaceHolderWidget extends StatelessWidget {
                         child: Text(
                           "إضافة",
                           textAlign: TextAlign.center,
-                          style: myTextStyles.title1.copyWith(
+                          style: MyTextStyles.title1.copyWith(
                             color: MyColors.lessBlackColor,
                             fontWeight: FontWeight.bold,
                           ),
@@ -98,14 +98,14 @@ class PlaceHolderWidget extends StatelessWidget {
                       const SizedBox(height: 30),
                       Text(
                         "ليس هناك أي حسابات في هذا التصنيف ",
-                        style: myTextStyles.title2,
+                        style: MyTextStyles.title2,
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
                         "للإضافه إضغط زر الإضافة",
-                        style: myTextStyles.subTitle.copyWith(
+                        style: MyTextStyles.subTitle.copyWith(
                           fontWeight: FontWeight.normal,
                           color: MyColors.lessBlackColor,
                         ),

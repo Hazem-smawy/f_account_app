@@ -6,7 +6,6 @@ class ReportsData {
       {required DateTime from,
       required DateTime to,
       required int curencyId}) async {
-    print("$from --- $to --- $curencyId");
     final db = await DatabaseService().database;
 
     final result = await db.rawQuery(

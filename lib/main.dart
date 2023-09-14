@@ -41,11 +41,10 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
   if (isTimeout) {
     // This task has exceeded its allowed running-time.
     // You must stop what you're doing and immediately .finish(taskId)
-    print("[BackgroundFetch] Headless task timed-out: $taskId");
+
     BackgroundFetch.finish(taskId);
     return;
   }
-  print('[BackgroundFetch] Headless event received.');
   // Do your work here...
   BackgroundFetch.finish(taskId);
 }
@@ -65,7 +64,7 @@ void main() async {
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
 
-  runApp(MyApp());
+  runApp(const MyApp());
 
   BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
@@ -117,7 +116,7 @@ Future<void> _doCopyToGoogleDrive() async {
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -134,9 +133,9 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> initPlatformState() async {
     // Configure BackgroundFetch.
-    int status = await BackgroundFetch.configure(
+    await BackgroundFetch.configure(
         BackgroundFetchConfig(
-            minimumFetchInterval: 15,
+            minimumFetchInterval: 60,
             stopOnTerminate: false,
             enableHeadless: true,
             requiresBatteryNotLow: false,
@@ -144,7 +143,9 @@ class _MyAppState extends State<MyApp> {
             requiresStorageNotLow: false,
             requiresDeviceIdle: false,
             requiredNetworkType: NetworkType.NONE), (String taskId) async {
-      await _doCopyToGoogleDrive();
+      if (DateTime.now().hour == 23) {
+        await _doCopyToGoogleDrive();
+      }
 
       BackgroundFetch.finish(taskId);
     }, (String taskId) async {
@@ -157,7 +158,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'e-smart',
       theme: ThemeData(
         primarySwatch: Colors.green,
         scaffoldBackgroundColor: MyColors.containerColor,

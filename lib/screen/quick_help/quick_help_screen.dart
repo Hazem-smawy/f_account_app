@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:account_app/controller/home_controller.dart';
-import 'package:account_app/controller/pdf_controller.dart';
 import 'package:account_app/controller/reports_pdf_controller/new_journals_pdf_controller.dart';
 import 'package:account_app/screen/all_reports/customer_accounts_in_accgroup_screen/customer_accounts_in_accgroup_screen.dart';
 import 'package:account_app/screen/all_reports/account_move/account_move_screen.dart';
@@ -17,11 +16,10 @@ import 'package:get/get.dart';
 
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
-import 'package:open_file/open_file.dart';
 
 class HomeReportsScreen extends StatelessWidget {
   HomeReportsScreen({super.key});
-  HomeController homeController = Get.find();
+  final HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +58,7 @@ class HomeReportsScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "التقارير",
-                        style: myTextStyles.title2,
+                        style: MyTextStyles.title2,
                       ),
                     ),
                     const SizedBox(
@@ -134,16 +132,16 @@ class HomeReportsScreen extends StatelessWidget {
                           NewDailyPdfController.generateTodayDailyReportPdf();
                         }
                       },
-                      child: FaIcon(
+                      child: const FaIcon(
                         FontAwesomeIcons.filePdf,
                         size: 17,
                         color: MyColors.secondaryTextColor,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(
                       "العمليات الحد يثة",
-                      style: myTextStyles.subTitle,
+                      style: MyTextStyles.subTitle,
                     ),
                     const SizedBox(
                       width: 15,
@@ -253,7 +251,7 @@ class ReportItemWidget extends StatelessWidget {
           children: [
             Text(
               title,
-              style: myTextStyles.subTitle,
+              style: MyTextStyles.subTitle,
             ),
             const SizedBox(
               width: 10,
@@ -274,7 +272,7 @@ class HomeReportFooterWidget extends StatelessWidget {
   final String title;
   final IconData icon;
   final VoidCallback action;
-  HomeReportFooterWidget({
+  const HomeReportFooterWidget({
     Key? key,
     required this.title,
     required this.icon,
@@ -295,7 +293,7 @@ class HomeReportFooterWidget extends StatelessWidget {
           children: [
             Text(
               title,
-              style: myTextStyles.subTitle.copyWith(
+              style: MyTextStyles.subTitle.copyWith(
                 color: MyColors.containerColor,
               ),
             ),

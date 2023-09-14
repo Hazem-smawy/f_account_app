@@ -31,7 +31,7 @@ class CustomerSettingScreen extends StatelessWidget {
                 CustomBackBtnWidget(title: "العملاء"),
                 const SizedBox(height: 20),
                 if (customerController.allCustomers.isEmpty)
-                  EmptyWidget(
+                  const EmptyWidget(
                     imageName: 'assets/images/customer.png',
                     label: "قم بإضافة بعض العملاء",
                   ),
@@ -80,7 +80,7 @@ class CustomerSettingItemWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           color: MyColors.bg,
           boxShadow: [
-            myShadow.blackShadow,
+            MyShadow.blackShadow,
           ]),
       child: Column(
         children: [
@@ -95,7 +95,7 @@ class CustomerSettingItemWidget extends StatelessWidget {
                   customer.name,
                   textAlign: TextAlign.right,
                   textDirection: TextDirection.rtl,
-                  style: myTextStyles.title2,
+                  style: MyTextStyles.title2,
                 ),
               ),
               const SizedBox(width: 10),
@@ -112,7 +112,7 @@ class CustomerSettingItemWidget extends StatelessWidget {
               const Spacer(),
               Text(
                 customer.phone,
-                style: myTextStyles.title2.copyWith(
+                style: MyTextStyles.title2.copyWith(
                   color: MyColors.secondaryTextColor,
                   fontWeight: FontWeight.normal,
                 ),
@@ -173,7 +173,7 @@ class CustomerSettingItemWidget extends StatelessWidget {
               const Spacer(),
               Text(
                 customer.address,
-                style: myTextStyles.title2.copyWith(
+                style: MyTextStyles.title2.copyWith(
                   color: MyColors.secondaryTextColor,
                   fontWeight: FontWeight.normal,
                 ),
@@ -226,7 +226,7 @@ class NewCustomerSheet extends StatelessWidget {
             const SizedBox(height: 7),
             Text(
               isEditing ? "تعد يل" : "اضافة عميل",
-              style: myTextStyles.title1
+              style: MyTextStyles.title1
                   .copyWith(color: MyColors.secondaryTextColor),
             ),
             const SizedBox(height: 20),
@@ -254,7 +254,7 @@ class NewCustomerSheet extends StatelessWidget {
                     }),
                 Text(
                   "حالة العميل",
-                  style: myTextStyles.subTitle,
+                  style: MyTextStyles.subTitle,
                 )
               ],
             ),

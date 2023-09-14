@@ -3,7 +3,6 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/reports/accgroups_report_controller.dart';
-import 'package:account_app/controller/reports_pdf_controller/customer_accounts_in_accgroup_pdf_controller.dart';
 import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_crency_filter.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_footer.dart';
@@ -32,8 +31,8 @@ class AccGroupsReportScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: ReportHeaderWidget(
+                title: " إجمالي التصنيفات",
                 action: () {
-                  //TODO: pdf print
                   AccGroupsPdfContoller.generateAllAccGroupPdfReports();
                 },
               ),
@@ -111,7 +110,7 @@ class AccGroupReportWidget extends StatelessWidget {
                               .$1)
                       .abs()
                       .toString(),
-                  style: myTextStyles.subTitle.copyWith(
+                  style: MyTextStyles.subTitle.copyWith(
                     color: accGroupReportsController
                                 .getTotalDebit(accGroup.id!)
                                 .$1 <
@@ -136,7 +135,7 @@ class AccGroupReportWidget extends StatelessWidget {
                       .getTotalDebit(accGroup.id!)
                       .$2
                       .toString(),
-                  style: myTextStyles.subTitle
+                  style: MyTextStyles.subTitle
                       .copyWith(color: MyColors.creditColor),
                 ),
               ),
@@ -154,7 +153,7 @@ class AccGroupReportWidget extends StatelessWidget {
                       .$1
                       .toString(),
                   textAlign: TextAlign.right,
-                  style: myTextStyles.subTitle
+                  style: MyTextStyles.subTitle
                       .copyWith(color: MyColors.debetColor),
                 ),
               ),
@@ -167,7 +166,7 @@ class AccGroupReportWidget extends StatelessWidget {
               child: Text(
                 accGroup.name,
                 textAlign: TextAlign.right,
-                style: myTextStyles.title2,
+                style: MyTextStyles.title2,
               ),
             ),
           ],

@@ -6,7 +6,7 @@ import '../../../constant/colors.dart';
 
 class EmptyReportListWidget extends StatelessWidget {
   final bool? isCustomerMovementAccount;
-  EmptyReportListWidget({super.key, this.isCustomerMovementAccount});
+  const EmptyReportListWidget({super.key, this.isCustomerMovementAccount});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class EmptyReportListWidget extends StatelessWidget {
             ),
             Text(
               "لا توجد أي عمليات ",
-              style: myTextStyles.subTitle,
+              style: MyTextStyles.subTitle,
             )
           ],
         ));

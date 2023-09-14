@@ -71,7 +71,7 @@ class GoogleDriveAveryList extends StatelessWidget {
 }
 
 class GoogleDriveAveryListItem extends StatelessWidget {
-  GoogleDriveAveryListItem(
+  const GoogleDriveAveryListItem(
       {super.key,
       required this.action,
       required this.isSelected,
@@ -92,7 +92,7 @@ class GoogleDriveAveryListItem extends StatelessWidget {
           ),
           Text(
             lable,
-            style: myTextStyles.body.copyWith(
+            style: MyTextStyles.body.copyWith(
               color: isSelected
                   ? MyColors.primaryColor
                   : MyColors.secondaryTextColor,

@@ -3,7 +3,6 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/reports/daily_report_controller.dart';
-import 'package:account_app/controller/pdf_controller.dart';
 import 'package:account_app/controller/reports_pdf_controller/daily_pdf_controller.dart';
 import 'package:account_app/screen/all_reports/reports_widget/dialy_sammary_widget.dart';
 import 'package:account_app/screen/all_reports/reports_widget/empyt_report.dart';
@@ -13,12 +12,14 @@ import 'package:account_app/screen/all_reports/reports_widget/report_crency_filt
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as dateFormater;
+import 'package:intl/intl.dart' as date_formater;
 import 'package:open_file/open_file.dart';
 
 class DailyReportScreen extends StatelessWidget {
-  final DailyReportsController reportsController =
+  final DailyReportsController dailyReportsController =
       Get.put(DailyReportsController());
+
+  DailyReportScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +36,15 @@ class DailyReportScreen extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    //TODO: pdf print
                     ReportHeaderWidget(
+                      title: "القيود اليومية",
                       action: () async {
-                        final file =
-                            await DailyPdfController.generateDailyReportPdf();
-                        OpenFile.open(file.path);
+                        if (dailyReportsController.journalsReports.isNotEmpty) {
+                          final file =
+                              await DailyPdfController.generateDailyReportPdf();
+
+                          OpenFile.open(file.path);
+                        }
                       },
                     ),
 
@@ -62,10 +66,10 @@ class DailyReportScreen extends StatelessWidget {
                             height: 10,
                           ),
                           ReportCurenyFilterWidget(
-                            controller: reportsController,
-                            curencyId: reportsController.curencyId.value,
+                            controller: dailyReportsController,
+                            curencyId: dailyReportsController.curencyId.value,
                             action: () {
-                              reportsController.getJournalReport();
+                              dailyReportsController.getJournalReport();
                             },
                           )
                         ],
@@ -81,21 +85,21 @@ class DailyReportScreen extends StatelessWidget {
               Expanded(
                 child: Obx(
                   () => Container(
-                    child: reportsController.isLoadding.value
+                    child: dailyReportsController.isLoadding.value
                         ? SizedBox(
                             width: 50,
                             height: 50,
                             child: const CircularProgressIndicator.adaptive(),
                           )
-                        : reportsController.journalsReports.isEmpty
+                        : dailyReportsController.journalsReports.isEmpty
                             ? EmptyReportListWidget()
                             : Container(
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 child: ListView.builder(
                                   padding: const EdgeInsets.only(top: 5),
-                                  itemCount:
-                                      reportsController.journalsReports.length,
+                                  itemCount: dailyReportsController
+                                      .journalsReports.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return AnimatedContainer(
@@ -116,15 +120,15 @@ class DailyReportScreen extends StatelessWidget {
                                                 child: FittedBox(
                                                   fit: BoxFit.scaleDown,
                                                   child: Text(
-                                                    dateFormater.DateFormat
+                                                    date_formater.DateFormat
                                                             .MEd()
                                                         .format(DateTime.parse(
-                                                            reportsController
+                                                            dailyReportsController
                                                                     .journalsReports[
                                                                 index]['date'])),
                                                     textDirection:
                                                         TextDirection.ltr,
-                                                    style: myTextStyles.body
+                                                    style: MyTextStyles.body
                                                         .copyWith(
                                                       fontWeight:
                                                           FontWeight.normal,
@@ -142,11 +146,11 @@ class DailyReportScreen extends StatelessWidget {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10),
-                                                    color: reportsController
+                                                    color: dailyReportsController
                                                                         .journalsReports[
                                                                     index]
                                                                 ['debit'] >
-                                                            reportsController
+                                                            dailyReportsController
                                                                     .journalsReports[
                                                                 index]['credit']
                                                         ? MyColors.creditColor
@@ -156,10 +160,10 @@ class DailyReportScreen extends StatelessWidget {
                                                 width: 15,
                                               ),
                                               Text(
-                                                reportsController
+                                                dailyReportsController
                                                         .journalsReports[index]
                                                     ['symbol'],
-                                                style: myTextStyles.body,
+                                                style: MyTextStyles.body,
                                               ),
                                               const SizedBox(
                                                 width: 5,
@@ -169,15 +173,16 @@ class DailyReportScreen extends StatelessWidget {
                                                 child: FittedBox(
                                                   fit: BoxFit.scaleDown,
                                                   child: Text(
-                                                    (reportsController.journalsReports[
+                                                    (dailyReportsController
+                                                                        .journalsReports[
                                                                     index]
                                                                 ['debit'] -
-                                                            reportsController
+                                                            dailyReportsController
                                                                     .journalsReports[
                                                                 index]['credit'])
                                                         .abs()
                                                         .toString(),
-                                                    style: myTextStyles.title2,
+                                                    style: MyTextStyles.title2,
                                                   ),
                                                 ),
                                               ),
@@ -200,7 +205,7 @@ class DailyReportScreen extends StatelessWidget {
                                                           clipBehavior:
                                                               Clip.hardEdge,
                                                           child: Text(
-                                                            reportsController
+                                                            dailyReportsController
                                                                     .journalsReports[
                                                                 index]['accName'],
                                                             textDirection:
@@ -208,7 +213,7 @@ class DailyReportScreen extends StatelessWidget {
                                                                     .rtl,
                                                             textAlign:
                                                                 TextAlign.right,
-                                                            style: myTextStyles
+                                                            style: MyTextStyles
                                                                 .subTitle
                                                                 .copyWith(
                                                               fontWeight:
@@ -248,7 +253,7 @@ class DailyReportScreen extends StatelessWidget {
                                                         // width: Get.width / 2.7,
                                                         child: FittedBox(
                                                           child: Text(
-                                                            reportsController
+                                                            dailyReportsController
                                                                     .journalsReports[
                                                                 index]['name'],
                                                             textDirection:
@@ -256,7 +261,7 @@ class DailyReportScreen extends StatelessWidget {
                                                                     .rtl,
                                                             textAlign:
                                                                 TextAlign.right,
-                                                            style: myTextStyles
+                                                            style: MyTextStyles
                                                                 .subTitle
                                                                 .copyWith(
                                                                     color: MyColors
@@ -277,7 +282,7 @@ class DailyReportScreen extends StatelessWidget {
                                             ],
                                           ),
                                           Obx(
-                                            () => reportsController
+                                            () => dailyReportsController
                                                         .isAll.value ==
                                                     0
                                                 ? SizedBox()
@@ -289,14 +294,14 @@ class DailyReportScreen extends StatelessWidget {
                                                         Expanded(
                                                             flex: 2,
                                                             child: Text(
-                                                              reportsController
+                                                              dailyReportsController
                                                                       .journalsReports[
                                                                   index]['desc'],
                                                               textAlign:
                                                                   TextAlign
                                                                       .right,
                                                               style:
-                                                                  myTextStyles
+                                                                  MyTextStyles
                                                                       .body,
                                                             )),
                                                         // Expanded(child: Container())
@@ -315,7 +320,7 @@ class DailyReportScreen extends StatelessWidget {
               ),
 
               // footer here
-              if (reportsController.curencyId.value != 0)
+              if (dailyReportsController.curencyId.value != 0)
                 Container(
                   margin: EdgeInsets.all(10),
                   child: Column(
@@ -324,18 +329,19 @@ class DailyReportScreen extends StatelessWidget {
                         children: [
                           ReportSammaryWidget(
                             icon: FontAwesomeIcons.arrowUp,
-                            title: reportsController.totalCredit.toString(),
+                            title:
+                                dailyReportsController.totalCredit.toString(),
                             subTitle: "لة",
                             color: MyColors.debetColor,
-                            curencyId: reportsController.curencyId.value,
+                            curencyId: dailyReportsController.curencyId.value,
                           ),
                           SizedBox(
                             width: 2,
                           ),
                           ReportSammaryWidget(
-                            curencyId: reportsController.curencyId.value,
+                            curencyId: dailyReportsController.curencyId.value,
                             icon: FontAwesomeIcons.arrowDown,
-                            title: reportsController.totalDebit.toString(),
+                            title: dailyReportsController.totalDebit.toString(),
                             subTitle: "علية",
                             color: MyColors.creditColor,
                           )
@@ -353,31 +359,31 @@ class DailyReportScreen extends StatelessWidget {
                           children: [
                             Spacer(),
                             FaIcon(
-                              reportsController.totalDebit.value >=
-                                      reportsController.totalCredit.value
+                              dailyReportsController.totalDebit.value >=
+                                      dailyReportsController.totalCredit.value
                                   ? FontAwesomeIcons.arrowDown
                                   : FontAwesomeIcons.arrowUp,
                               size: 10,
-                              color: reportsController.totalDebit.value >
-                                      reportsController.totalCredit.value
+                              color: dailyReportsController.totalDebit.value >
+                                      dailyReportsController.totalCredit.value
                                   ? MyColors.creditColor
                                   : MyColors.debetColor,
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              (reportsController.totalDebit.value -
-                                      reportsController.totalCredit.value)
+                              (dailyReportsController.totalDebit.value -
+                                      dailyReportsController.totalCredit.value)
                                   .abs()
                                   .toString(),
-                              style: myTextStyles.title1,
+                              style: MyTextStyles.title1,
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              reportsController.totalDebit.value <
-                                      reportsController.totalCredit.value
+                              dailyReportsController.totalDebit.value <
+                                      dailyReportsController.totalCredit.value
                                   ? "لة"
                                   : "علية",
-                              style: myTextStyles.body,
+                              style: MyTextStyles.body,
                             ),
                             Spacer(),
                           ],
@@ -396,6 +402,8 @@ class DailyReportScreen extends StatelessWidget {
 
 class ReportFilterWidget extends StatelessWidget {
   final DailyReportsController reportsController = Get.find();
+
+  ReportFilterWidget({super.key});
   Future _selectFromDate(BuildContext ctx) async {
     final DateTime? picked = await showDatePicker(
         context: ctx,
@@ -443,7 +451,7 @@ class ReportFilterWidget extends StatelessWidget {
                 ),
                 Text(
                   "إجمالي",
-                  style: myTextStyles.subTitle.copyWith(
+                  style: MyTextStyles.subTitle.copyWith(
                     fontWeight: reportsController.isAll.value == 0
                         ? FontWeight.bold
                         : FontWeight.normal,
@@ -478,7 +486,7 @@ class ReportFilterWidget extends StatelessWidget {
               children: [
                 Text(
                   "تفصيلي",
-                  style: myTextStyles.subTitle.copyWith(
+                  style: MyTextStyles.subTitle.copyWith(
                     fontWeight: reportsController.isAll.value == 1
                         ? FontWeight.bold
                         : FontWeight.normal,
@@ -515,7 +523,7 @@ class ReportFilterWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               "الى",
-              style: myTextStyles.subTitle.copyWith(
+              style: MyTextStyles.subTitle.copyWith(
                 color: MyColors.blackColor,
               ),
             ),
@@ -536,7 +544,7 @@ class ReportFilterWidget extends StatelessWidget {
 
 class DateFileterItemWidget extends StatelessWidget {
   final DateTime date;
-  DateFileterItemWidget({super.key, required this.date});
+  const DateFileterItemWidget({super.key, required this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -549,8 +557,8 @@ class DateFileterItemWidget extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            dateFormater.DateFormat.yMd().format(date),
-            style: myTextStyles.body.copyWith(
+            date_formater.DateFormat.yMd().format(date),
+            style: MyTextStyles.body.copyWith(
               color: MyColors.secondaryTextColor,
             ),
           ),

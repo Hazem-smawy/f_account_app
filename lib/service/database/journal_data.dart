@@ -6,6 +6,8 @@ import 'package:account_app/service/database/helper/tables_helpers.dart';
 import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../../widget/custom_dialog.dart';
+
 class JournalData {
   Future<void> createTable(Database db) async {
     await db.execute('''
@@ -79,7 +81,9 @@ class JournalData {
           where: '${CustomerField.id} = ?', whereArgs: [journal.id]);
       Get.back();
       return updatedObject;
-    } catch (e) {}
+    } catch (e) {
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+    }
     return null;
   }
 

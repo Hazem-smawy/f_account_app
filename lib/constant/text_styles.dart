@@ -2,7 +2,7 @@ import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/responsve.dart';
 import 'package:flutter/material.dart';
 
-class myTextStyles {
+class MyTextStyles {
   static final title1 = TextStyle(
     fontFamily: 'Cairo',
     fontSize: Responsive.isMobile ? 14 : 23,

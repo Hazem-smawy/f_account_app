@@ -1,11 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:account_app/controller/curency_controller.dart';
-import 'package:account_app/controller/customer_account_controller.dart';
-import 'package:account_app/controller/customers_controller.dart';
-import 'package:account_app/controller/reports_pdf_controller/mony_movements_pdf_controller.dart';
-import 'package:account_app/screen/all_reports/account_move/account_movement_acc_group_list_widget.dart';
-import 'package:account_app/screen/all_reports/account_move/row.dart';
-import 'package:account_app/screen/all_reports/reports_widget/report_footer.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -14,10 +7,17 @@ import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/shadows.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
+import 'package:account_app/controller/curency_controller.dart';
+import 'package:account_app/controller/customer_account_controller.dart';
+import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/reports/account_move_controller.dart';
+import 'package:account_app/controller/reports_pdf_controller/mony_movements_pdf_controller.dart';
 import 'package:account_app/models/customer_model.dart';
+import 'package:account_app/screen/all_reports/account_move/account_movement_acc_group_list_widget.dart';
+import 'package:account_app/screen/all_reports/account_move/row.dart';
 import 'package:account_app/screen/all_reports/reports_widget/date_filter_widget.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_crency_filter.dart';
+import 'package:account_app/screen/all_reports/reports_widget/report_footer.dart';
 
 class AccountMoveScreen extends StatelessWidget {
   final AccountMovemoentController accountMovemoentController =
@@ -32,6 +32,8 @@ class AccountMoveScreen extends StatelessWidget {
   final TextEditingController textEditingController = TextEditingController();
   final DateTime fromDateTime = DateTime(2022, 1, 1);
   final DateTime toDateTime = DateTime.now();
+
+  AccountMoveScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +51,12 @@ class AccountMoveScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
                         child: Column(
                           children: [
                             Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 5),
                               child: Row(
                                 children: [
@@ -67,13 +69,13 @@ class AccountMoveScreen extends StatelessWidget {
                                             .generateMoneyMovementReportPdf();
                                       }
                                     },
-                                    child: FaIcon(
+                                    child: const FaIcon(
                                       FontAwesomeIcons.filePdf,
                                       color: MyColors.secondaryTextColor,
                                       size: 20,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Expanded(
@@ -86,7 +88,7 @@ class AccountMoveScreen extends StatelessWidget {
                                     ),
                                     child: TextFormField(
                                       controller: textEditingController,
-                                      style: myTextStyles.subTitle
+                                      style: MyTextStyles.subTitle
                                           .copyWith(color: MyColors.blackColor),
                                       onChanged: (value) {
                                         accountMovemoentController
@@ -103,7 +105,7 @@ class AccountMoveScreen extends StatelessWidget {
                                             .totalCredit.value = 0;
                                         accountMovemoentController
                                             .totalDebit.value = 0;
-                                        if (value.length > 0) {
+                                        if (value.isNotEmpty) {
                                           var customerList = customerController
                                               .allCustomers
                                               .where((p0) => p0.name
@@ -147,7 +149,7 @@ class AccountMoveScreen extends StatelessWidget {
                                           vertical: 0,
                                         ),
                                         hintText: "بحث في حسابات العملاء",
-                                        hintStyle: myTextStyles.body,
+                                        hintStyle: MyTextStyles.body,
                                       ),
                                       // style: myTextStyles.subTitle,
                                     ),
@@ -159,7 +161,7 @@ class AccountMoveScreen extends StatelessWidget {
                                     child: Container(
                                       padding: const EdgeInsets.only(
                                           left: 10, top: 5, bottom: 5),
-                                      child: FaIcon(
+                                      child: const FaIcon(
                                         FontAwesomeIcons.arrowRightLong,
                                         color: MyColors.secondaryTextColor,
                                         size: 20,
@@ -171,7 +173,7 @@ class AccountMoveScreen extends StatelessWidget {
                             ),
 
                             //filter
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Container(
@@ -196,7 +198,7 @@ class AccountMoveScreen extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 20,
                                   ),
                                   Expanded(
@@ -218,7 +220,7 @@ class AccountMoveScreen extends StatelessWidget {
                                         ));
                                       },
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             horizontal: 10, vertical: 3),
                                         decoration: BoxDecoration(
                                           borderRadius:
@@ -236,7 +238,7 @@ class AccountMoveScreen extends StatelessWidget {
                                                       accountMovemoentController
                                                           .accGroupId.value)
                                                   .name,
-                                              style: myTextStyles.subTitle
+                                              style: MyTextStyles.subTitle
                                                   .copyWith(
                                                 color: MyColors.lessBlackColor,
                                               ),
@@ -316,7 +318,7 @@ class AccountMoveScreen extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.only(top: 3),
-                        margin: EdgeInsets.symmetric(horizontal: 40),
+                        margin: const EdgeInsets.symmetric(horizontal: 40),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           color: MyColors.secondaryTextColor.withOpacity(0.3),
@@ -375,7 +377,7 @@ class AccountMoveScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Colors.white,
-                                  boxShadow: [myShadow.blackShadow]),
+                                  boxShadow: [MyShadow.blackShadow]),
                               child: const FaIcon(
                                 FontAwesomeIcons.xmark,
                                 size: 13,
@@ -397,7 +399,7 @@ class AccountMoveScreen extends StatelessWidget {
 // empyt account
 class EmptyCustomerAccountJournlsReport extends StatelessWidget {
   final bool? isCustomerMovementAccount;
-  EmptyCustomerAccountJournlsReport(
+  const EmptyCustomerAccountJournlsReport(
       {super.key, this.isCustomerMovementAccount});
 
   @override
@@ -420,7 +422,7 @@ class EmptyCustomerAccountJournlsReport extends StatelessWidget {
             ),
             Text(
               "قم بإختيار الحساب من نافذة البحث",
-              style: myTextStyles.subTitle,
+              style: MyTextStyles.subTitle,
             )
           ],
         ));
@@ -433,7 +435,7 @@ class CustomerAccountsSearchList extends StatelessWidget {
   final Customer customer;
   final VoidCallback action;
 
-  CustomerAccountsSearchList(
+  const CustomerAccountsSearchList(
       {super.key, required this.customer, required this.action});
 
   @override
@@ -451,7 +453,7 @@ class CustomerAccountsSearchList extends StatelessWidget {
         child: Text(
           customer.name,
           textAlign: TextAlign.right,
-          style: myTextStyles.subTitle.copyWith(
+          style: MyTextStyles.subTitle.copyWith(
             fontWeight: FontWeight.bold,
             color: MyColors.blackColor,
           ),
@@ -473,7 +475,7 @@ class CustomerAccountsSearchListItem extends StatelessWidget {
     required this.curencyId,
     required this.accGroupId,
     required this.action,
-  });
+  }) : super(key: key);
   final CustomerController customerController = Get.find();
   final CurencyController curencyController = Get.find();
   final AccGroupController accGroupController = Get.find();
@@ -504,7 +506,7 @@ class CustomerAccountsSearchListItem extends StatelessWidget {
                       .firstWhere((element) => element.id == curencyId)
                       .symbol,
                   textAlign: TextAlign.right,
-                  style: myTextStyles.body.copyWith(
+                  style: MyTextStyles.body.copyWith(
                     fontWeight: FontWeight.normal,
                     color: MyColors.blackColor,
                   ),
@@ -520,7 +522,7 @@ class CustomerAccountsSearchListItem extends StatelessWidget {
                       .firstWhere((element) => element.id == accGroupId)
                       .name,
                   textAlign: TextAlign.right,
-                  style: myTextStyles.body.copyWith(
+                  style: MyTextStyles.body.copyWith(
                     fontWeight: FontWeight.normal,
                     color: MyColors.blackColor,
                   ),
@@ -536,7 +538,7 @@ class CustomerAccountsSearchListItem extends StatelessWidget {
                       .firstWhere((element) => element.id == customerId)
                       .name,
                   textAlign: TextAlign.right,
-                  style: myTextStyles.subTitle.copyWith(
+                  style: MyTextStyles.subTitle.copyWith(
                     fontWeight: FontWeight.bold,
                     color: MyColors.blackColor,
                   ),

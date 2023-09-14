@@ -32,8 +32,8 @@ class CustomerAccountsReportScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: ReportHeaderWidget(
+                title: 'إجمالي المبالغ',
                 action: () {
-                  //TODO: pdf print
                   if (customerAccountReportController
                       .allCustomerAccountsRow.isNotEmpty) {
                     CustomerAccountPdfController
@@ -180,7 +180,7 @@ class AccGroupCurencyListWidget extends StatelessWidget {
                   Text(
                     "كل التصنيفات",
                     textAlign: TextAlign.right,
-                    style: myTextStyles.subTitle.copyWith(
+                    style: MyTextStyles.subTitle.copyWith(
                       color: MyColors.bg,
                       fontWeight: FontWeight.normal,
                     ),
@@ -227,7 +227,7 @@ class AccGroupReportListItemWidget extends StatelessWidget {
               child: Text(
                 accGroup.name,
                 textAlign: TextAlign.right,
-                style: myTextStyles.subTitle,
+                style: MyTextStyles.subTitle,
               ),
             ),
             const Spacer(),
@@ -245,7 +245,7 @@ class AccGroupReportListItemWidget extends StatelessWidget {
 
 // empyt account
 class EmptyCustomerAccountReport extends StatelessWidget {
-  EmptyCustomerAccountReport({
+  const EmptyCustomerAccountReport({
     super.key,
   });
 
@@ -267,7 +267,7 @@ class EmptyCustomerAccountReport extends StatelessWidget {
             ),
             Text(
               "لاتوجد حسابات هنا",
-              style: myTextStyles.subTitle,
+              style: MyTextStyles.subTitle,
             )
           ],
         ));

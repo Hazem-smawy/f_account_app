@@ -1,12 +1,12 @@
 import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/controller/curency_controller.dart';
-import 'package:account_app/models/curency_model.dart';
 
 import 'package:get/get.dart';
 
 import 'package:open_file/open_file.dart';
 
 import 'package:pdf/pdf.dart';
+import 'package:intl/intl.dart' as date_formater;
 
 // import 'package:path_provider/path_provider.dart';
 // import 'package:syncfusion_flutter_pdf/pdf.dart';
@@ -57,8 +57,10 @@ class CustomerAccountsInAccGroupPdfController {
       ),
     );
     File file = await PdfApi.saveDocument(
-        name: 'dialy_reports_${DateTime.now().toIso8601String()}.pdf',
-        pdf: pdf);
+      name:
+          'E-smart_${date_formater.DateFormat.yMMMEd().format(DateTime.now())}_report.pdf',
+      pdf: pdf,
+    );
     OpenFile.open(file.path);
   }
 
@@ -70,7 +72,7 @@ class CustomerAccountsInAccGroupPdfController {
         tableWidth: TableWidth.max,
         children: [
           TableRow(
-              decoration: BoxDecoration(color: PdfColors.grey200),
+              decoration: const BoxDecoration(color: PdfColors.grey200),
               children: PdfApi.buildHeader(headers)),
           ...accGroupReportController.allCustomerAccountsRow.map((e) {
             return TableRow(children: [

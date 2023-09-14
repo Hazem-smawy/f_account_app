@@ -25,7 +25,7 @@ class CustomerAccountReportController extends GetxController {
     fromDate.value = fromDateTime.toIso8601String();
     toDate.value = toDateTime.toIso8601String();
     curencyId.value = curencyController.allCurency.last.id ?? 0;
-    getCustomerAccountReports().then((value) => print(allCustomerAccountsRow));
+    getCustomerAccountReports();
   }
 
   Future<void> getCustomerAccountReports() async {
@@ -37,10 +37,10 @@ class CustomerAccountReportController extends GetxController {
         .where((p0) => p0.curencyId == curencyId.value)
         .toList();
 
-    allCustomerAccountsRow.forEach((element) {
+    for (var element in allCustomerAccountsRow) {
       totalCredit.value += element.totalCredit;
       totalDebit.value += element.totalDebit;
-    });
+    }
 
     isLoadding.value = false;
   }
@@ -55,10 +55,10 @@ class CustomerAccountReportController extends GetxController {
             p0.curencyId == curencyId.value && p0.accgroupId == accGroupId)
         .toList();
 
-    allCustomerAccountsRow.forEach((element) {
+    for (var element in allCustomerAccountsRow) {
       totalCredit.value += element.totalCredit;
       totalDebit.value += element.totalDebit;
-    });
+    }
 
     isLoadding.value = false;
   }

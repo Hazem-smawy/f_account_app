@@ -57,7 +57,7 @@ class HomeSammaryWidget extends StatelessWidget {
               children: [
                 Text(
                   curency.symbol,
-                  style: myTextStyles.body.copyWith(
+                  style: MyTextStyles.body.copyWith(
                     // color: MyColors.secondaryTextColor,
                     fontWeight: FontWeight.normal,
                   ),
@@ -68,7 +68,7 @@ class HomeSammaryWidget extends StatelessWidget {
                 FittedBox(
                   child: Text(
                     title,
-                    style: myTextStyles.title1,
+                    style: MyTextStyles.title1,
                   ),
                 ),
               ],
@@ -77,7 +77,7 @@ class HomeSammaryWidget extends StatelessWidget {
               padding: const EdgeInsets.only(right: 3),
               child: Text(
                 subTitle,
-                style: myTextStyles.body.copyWith(
+                style: MyTextStyles.body.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),

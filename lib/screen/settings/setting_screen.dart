@@ -53,7 +53,7 @@ class SettingScreen extends StatelessWidget {
                               child: Text(
                             "الا عدادات",
                             textAlign: TextAlign.center,
-                            style: myTextStyles.title1.copyWith(
+                            style: MyTextStyles.title1.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.normal,
                               // fontSize: 18,
@@ -110,7 +110,7 @@ class SettingScreen extends StatelessWidget {
                                         Text(
                                           personalController
                                               .newPersonal['name'],
-                                          style: myTextStyles.title1.copyWith(
+                                          style: MyTextStyles.title1.copyWith(
                                             // color: Colors.white,
                                             fontSize: 14,
                                             fontWeight: FontWeight.normal,
@@ -119,7 +119,7 @@ class SettingScreen extends StatelessWidget {
                                         Text(
                                           personalController
                                               .newPersonal['email'],
-                                          style: myTextStyles.title1.copyWith(
+                                          style: MyTextStyles.title1.copyWith(
                                             //  color: Colors.white54,
                                             fontSize: 10,
                                             fontWeight: FontWeight.normal,
@@ -221,7 +221,8 @@ class SettingScreen extends StatelessWidget {
                           title: "النسخ الإحتياطي",
                         ),
                         SettingItemWidget(
-                            onPress: () => Get.to(() => GoogleCopyScreen()),
+                            onPress: () =>
+                                Get.to(() => const GoogleCopyScreen()),
                             title: "النسخ الإحتياطي الى جوجل درايف",
                             icon: FontAwesomeIcons.googleDrive),
                         const SizedBox(height: 30),
@@ -240,7 +241,7 @@ class SettingScreen extends StatelessWidget {
                             ),
                             child: Text(
                               "خروج ",
-                              style: myTextStyles.subTitle,
+                              style: MyTextStyles.subTitle,
                             ),
                           ),
                         ),
@@ -517,7 +518,7 @@ class SettingItemWidget extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.right,
-              style: myTextStyles.title2.copyWith(
+              style: MyTextStyles.title2.copyWith(
                 //fontSize: 13,
                 fontWeight: FontWeight.normal,
               ),

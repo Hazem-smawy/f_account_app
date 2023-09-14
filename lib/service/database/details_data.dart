@@ -18,7 +18,9 @@ class DetailData {
     try {
       final db = await DatabaseService().database;
       await db.insert('detail', {"body": details.trim()});
-    } catch (e) {}
+    } catch (e) {
+      // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+    }
   }
 
   Future<List<Map<String, Object?>>?> readAll() async {

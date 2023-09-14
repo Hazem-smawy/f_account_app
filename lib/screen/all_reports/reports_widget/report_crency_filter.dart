@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 class ReportCurenyFilterWidget extends StatelessWidget {
   final CurencyController curencyController = Get.find();
+  // ignore: prefer_typing_uninitialized_variables
   final controller;
   final VoidCallback action;
   final int curencyId;
@@ -57,7 +58,7 @@ class ReportCurenyFilterWidget extends StatelessWidget {
 }
 
 class CurencyShowItem extends StatelessWidget {
-  CurencyShowItem(
+  const CurencyShowItem(
       {super.key,
       required this.action,
       required this.isSelected,
@@ -77,7 +78,7 @@ class CurencyShowItem extends StatelessWidget {
           ),
           Text(
             lable,
-            style: myTextStyles.body.copyWith(
+            style: MyTextStyles.body.copyWith(
               color: isSelected
                   ? MyColors.primaryColor
                   : MyColors.secondaryTextColor,
