@@ -3,6 +3,7 @@
 
 import 'package:account_app/controller/image_controller.dart';
 import 'package:account_app/controller/personal_controller.dart';
+import 'package:account_app/utility/curency_format.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -159,7 +160,7 @@ class PdfApi extends GetxController {
       final path = await getApplicationDocumentsDirectory();
       final file = File('${path.path}/$name');
       await file.writeAsBytes(bytes);
-      Get.back();
+
       return file;
     }
   }
@@ -382,7 +383,7 @@ class PdfApi extends GetxController {
               // ),
             ),
           Spacer(),
-          Column(children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
             paddedHeadingTextCellHeader(
                 personalController.newPersonal['name'] ?? ""),
             Text(
@@ -426,21 +427,24 @@ class PdfApi extends GetxController {
         ),
         child: Column(children: [
           Row(mainAxisSize: MainAxisSize.min, children: [
-            coloredText(credit.toString(), PdfColors.green),
+            coloredText(GlobalUtitlity.formatNumberDouble(number: credit),
+                PdfColors.green),
             SizedBox(width: 20),
             Container(
                 width: 2,
                 height: 20,
                 decoration: const BoxDecoration(color: PdfColors.grey300)),
             SizedBox(width: 20),
-            coloredText(debit.toString(), PdfColors.red),
+            coloredText(GlobalUtitlity.formatNumberDouble(number: debit),
+                PdfColors.red),
           ]),
-          Divider(color: PdfColors.green100, height: 1),
+          Divider(color: PdfColors.grey300, height: 1),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            coloredText((credit - debit).toString(),
+            coloredText(
+                GlobalUtitlity.formatNumberDouble(number: (credit - debit)),
                 credit > debit ? PdfColors.green : PdfColors.red),
             SizedBox(width: 10),
-            paddedHeadingTextArabicCell("الا جمالي :"),
+            paddedHeadingTextArabicCell("الإ جمالي :"),
           ]),
         ]));
   }

@@ -1,6 +1,7 @@
 import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/models/journal_model.dart';
+import 'package:account_app/utility/curency_format.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as date_formater;
@@ -22,13 +23,14 @@ class JournalPdfControls {
   static AccGroupController accGourpController = Get.find();
   static CurencyController curencyController = Get.find();
 
-  static Future<void> generateJournlsPdfReports(
+  static Future<File?> generateJournlsPdfReports(
       {required List<Journal> journals,
       required double totalCredit,
       required double totalDebit,
       required int customerId,
       required int accGroupId,
-      required int curencyId}) async {
+      required int curencyId,
+      required bool share}) async {
     CopyController copyController = Get.find();
     if (Platform.isAndroid) {
       copyController.requestPermission();
@@ -64,7 +66,12 @@ class JournalPdfControls {
         name:
             'E-smart_${date_formater.DateFormat.yMMMEd().format(DateTime.now())}_report.pdf',
         pdf: pdf);
-    OpenFile.open(file.path);
+    if (share) {
+      return file;
+    } else {
+      OpenFile.open(file.path);
+      return null;
+    }
   }
 
   static Widget buildMoneyMovementsTableReport(final Journls) {
@@ -83,7 +90,9 @@ class JournalPdfControls {
                 date_formater.DateFormat.yMd().format(e.registeredAt),
               ),
               PdfApi.debitOrCreditView(e.credit > e.debit),
-              PdfApi.paddedHeadingTextEnglishCell('${e.credit - e.debit}'),
+              PdfApi.paddedHeadingTextEnglishCell(
+                  GlobalUtitlity.formatNumberDouble(
+                      number: (e.credit - e.debit).abs())),
               PdfApi.paddedHeadingTextArabicCell(e.details),
             ]);
           }).toList()

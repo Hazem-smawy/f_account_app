@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:account_app/constant/colors.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' as intl;
 
 class HomeSammaryWidget extends StatelessWidget {
   final CurencyController curencyController = Get.find();
@@ -67,7 +68,8 @@ class HomeSammaryWidget extends StatelessWidget {
                 ),
                 FittedBox(
                   child: Text(
-                    title,
+                    intl.NumberFormat.currency(symbol: '', decimalDigits: 1)
+                        .format(double.parse(title)),
                     style: MyTextStyles.title1,
                   ),
                 ),

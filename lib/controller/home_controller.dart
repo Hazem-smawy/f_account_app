@@ -104,6 +104,6 @@ class HomeController extends GetxController {
 
     await accGroupCurencyController.getAllAccGroupAndCurency();
 
-    await Future.delayed(const Duration(milliseconds: 200));
+    // await Future.delayed(const Duration(milliseconds: 200));
   }
 }

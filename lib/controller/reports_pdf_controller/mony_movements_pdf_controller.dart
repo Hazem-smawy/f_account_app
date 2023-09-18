@@ -1,5 +1,6 @@
 import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
+import 'package:account_app/utility/curency_format.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as date_formater;
@@ -77,7 +78,9 @@ class MoneyMovementPdfController {
                 date_formater.DateFormat.yMd().format(e.registeredAt),
               ),
               PdfApi.debitOrCreditView(e.credit > e.debit),
-              PdfApi.paddedHeadingTextEnglishCell('${e.credit - e.debit}'),
+              PdfApi.paddedHeadingTextEnglishCell(
+                  GlobalUtitlity.formatNumberDouble(
+                      number: (e.credit - e.debit).abs())),
               PdfApi.paddedHeadingTextArabicCell(e.details),
             ]);
           }).toList()
@@ -85,7 +88,18 @@ class MoneyMovementPdfController {
   }
 
   static Widget customerAccountTitle() {
-    return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+    return Row(children: [
+      Text(date_formater.DateFormat.yMd()
+          .format(DateTime.parse(accountMovemoentController.toDate.value))),
+      SizedBox(width: 10),
+      PdfApi.paddedHeadingTextArabicCell("الي"),
+      SizedBox(width: 10),
+      Text(date_formater.DateFormat.yMd()
+          .format(DateTime.parse(accountMovemoentController.fromDate.value))),
+      SizedBox(width: 10),
+      PdfApi.paddedHeadingTextArabicCell("من تأريخ"),
+      SizedBox(width: 10),
+      Spacer(),
       Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -103,28 +117,35 @@ class MoneyMovementPdfController {
               ),
             ),
             SizedBox(height: 10),
-            Text(
-              accGourpController.allAccGroups
-                  .firstWhere((element) =>
-                      element.id == accountMovemoentController.accGroupId.value)
-                  .name,
-              style: TextStyle(
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Text(
+                curencyController.allCurency
+                    .firstWhere((element) =>
+                        element.id ==
+                        accountMovemoentController.curencyId.value)
+                    .name,
+                style: TextStyle(
                   font: PdfApi.globalCustomFont,
                   fontSize: 12,
                   fontFallback: [PdfApi.enFont],
-                  color: PdfColors.grey),
-            ),
-            Text(
-              curencyController.allCurency
-                  .firstWhere((element) =>
-                      element.id == accountMovemoentController.curencyId.value)
-                  .name,
-              style: TextStyle(
+                  color: PdfColors.blueGrey,
+                ),
+              ),
+              SizedBox(width: 10),
+              Text(
+                accGourpController.allAccGroups
+                    .firstWhere((element) =>
+                        element.id ==
+                        accountMovemoentController.accGroupId.value)
+                    .name,
+                style: TextStyle(
                   font: PdfApi.globalCustomFont,
                   fontSize: 12,
                   fontFallback: [PdfApi.enFont],
-                  color: PdfColors.grey),
-            ),
+                  color: PdfColors.black,
+                ),
+              ),
+            ]),
             SizedBox(height: 30),
           ],
         ),

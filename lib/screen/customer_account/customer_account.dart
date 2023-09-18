@@ -111,7 +111,7 @@ class CustomerAccountsView extends StatelessWidget {
                             ),
                             const SizedBox(height: 20),
                             Text(
-                              "لاتوجد اي حسابات ",
+                              "لايوجد اي حساب ",
                               style: MyTextStyles.title2,
                             ),
                             const Spacer(),

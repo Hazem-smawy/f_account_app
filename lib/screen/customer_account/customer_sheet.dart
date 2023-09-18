@@ -7,6 +7,7 @@ import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/models/customer_account.dart';
+import 'package:account_app/utility/curency_format.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -76,6 +77,7 @@ class _CustomerAccountDetailsSheetState
               )
             ],
           ),
+          Divider(),
           const SizedBox(height: 10),
           Row(
             children: [
@@ -89,7 +91,8 @@ class _CustomerAccountDetailsSheetState
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        widget.customerAccount.totalCredit.toString(),
+                        GlobalUtitlity.formatNumberDouble(
+                            number: widget.customerAccount.totalCredit),
                         style: MyTextStyles.title2,
                       ),
                       const SizedBox(width: 10),
@@ -119,7 +122,8 @@ class _CustomerAccountDetailsSheetState
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        widget.customerAccount.totalDebit.toString(),
+                        GlobalUtitlity.formatNumberDouble(
+                            number: widget.customerAccount.totalDebit),
                         style: MyTextStyles.title2,
                       ),
                       const SizedBox(width: 10),

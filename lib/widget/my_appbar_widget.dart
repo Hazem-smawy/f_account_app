@@ -11,7 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class MyAppBarWidget extends StatelessWidget {
-  final AccGroup accGroup;
+  final AccGroup? accGroup;
   final VoidCallback action;
   final VoidCallback reportsAction;
   MyAppBarWidget(
@@ -72,16 +72,17 @@ class MyAppBarWidget extends StatelessWidget {
             const SizedBox(
               width: 20,
             ),
-            GestureDetector(
-              onTap: () async {
-                reportsAction();
-              },
-              child: const FaIcon(
-                FontAwesomeIcons.solidFile,
-                size: 20,
-                color: MyColors.containerColor,
+            if (!accGroupCurencyController.homeReportShow.value)
+              GestureDetector(
+                onTap: () async {
+                  reportsAction();
+                },
+                child: const Icon(
+                  Icons.flash_on,
+                  size: 20,
+                  color: MyColors.bg,
+                ),
               ),
-            ),
             const SizedBox(
               width: 5,
             ),

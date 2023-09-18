@@ -39,7 +39,7 @@ class ImageData {
       final value = result.first;
       return value;
     } catch (e) {
-      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+      // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
       return null;
     }
   }
@@ -56,10 +56,10 @@ class ImageData {
           return res;
         });
       } else {
-        CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+        // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
       }
     } catch (e) {
-      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+      //CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
     }
   }
 }

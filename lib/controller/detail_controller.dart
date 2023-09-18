@@ -1,7 +1,7 @@
 import 'package:account_app/service/database/details_data.dart';
 import 'package:get/get.dart';
 
-import '../widget/custom_dialog.dart';
+// import '../widget/custom_dialog.dart';
 
 class DetailController extends GetxController {
   RxList allDetails = [].obs;

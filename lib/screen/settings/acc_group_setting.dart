@@ -316,13 +316,14 @@ class NewAccGroupSheet extends StatelessWidget {
                         color: Colors.red,
                         icon: FontAwesomeIcons.trashCan,
                         action: () async {
+                          Get.back();
+                          accGroupCurencyController.pageViewCount.value = 0;
+                          accGroupCurencyController.homeReportShow.value =
+                              false;
                           await accGroupController.deleteAccGroup(
                               accGroupController.newAccGroup[AccGroupField.id]);
                           await accGroupCurencyController
                               .getAllAccGroupAndCurency();
-                          await accGroupController.readAllAccGroup();
-
-                          Get.back();
                           Get.back();
                         });
                   },

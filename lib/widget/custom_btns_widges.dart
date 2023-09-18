@@ -9,10 +9,12 @@ class CustomBackBtnWidget extends StatelessWidget {
   final String title;
   final IconData? icon;
   VoidCallback? action;
+  VoidCallback? shareAction;
   CustomBackBtnWidget({
     required this.title,
     this.icon,
     this.action,
+    this.shareAction,
     super.key,
   });
 
@@ -28,25 +30,35 @@ class CustomBackBtnWidget extends StatelessWidget {
       child: Row(
         children: [
           if (icon != null)
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: GestureDetector(
-                onTap: () async {
-                  CustomDialog.loadingProgress();
-
-                  Get.back();
-                },
-                child: GestureDetector(
-                  onTap: () {
-                    action!();
-                  },
-                  child: const FaIcon(
-                    FontAwesomeIcons.filePdf,
-                    size: 20,
-                    color: MyColors.lessBlackColor,
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      action!();
+                    },
+                    child: const FaIcon(
+                      FontAwesomeIcons.filePdf,
+                      size: 20,
+                      color: MyColors.secondaryTextColor,
+                    ),
                   ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: GestureDetector(
+                    onTap: () {
+                      shareAction!();
+                    },
+                    child: const FaIcon(
+                      FontAwesomeIcons.shareFromSquare,
+                      size: 20,
+                      color: MyColors.secondaryTextColor,
+                    ),
+                  ),
+                ),
+              ],
             ),
           if (icon == null) const SizedBox(width: 20),
           Expanded(

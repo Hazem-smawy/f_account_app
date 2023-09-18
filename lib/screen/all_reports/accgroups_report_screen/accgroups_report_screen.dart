@@ -7,6 +7,7 @@ import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_crency_filter.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_footer.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_headers.dart';
+import 'package:account_app/utility/curency_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -104,12 +105,14 @@ class AccGroupReportWidget extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  (accGroupReportsController.getTotalDebit(accGroup.id!).$2 -
-                          accGroupReportsController
-                              .getTotalDebit(accGroup.id!)
-                              .$1)
-                      .abs()
-                      .toString(),
+                  GlobalUtitlity.formatNumberDouble(
+                      number: (accGroupReportsController
+                                  .getTotalDebit(accGroup.id!)
+                                  .$2 -
+                              accGroupReportsController
+                                  .getTotalDebit(accGroup.id!)
+                                  .$1)
+                          .abs()),
                   style: MyTextStyles.subTitle.copyWith(
                     color: accGroupReportsController
                                 .getTotalDebit(accGroup.id!)
@@ -131,10 +134,10 @@ class AccGroupReportWidget extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  accGroupReportsController
-                      .getTotalDebit(accGroup.id!)
-                      .$2
-                      .toString(),
+                  GlobalUtitlity.formatNumberDouble(
+                      number: accGroupReportsController
+                          .getTotalDebit(accGroup.id!)
+                          .$2),
                   style: MyTextStyles.subTitle
                       .copyWith(color: MyColors.creditColor),
                 ),
@@ -148,10 +151,10 @@ class AccGroupReportWidget extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  accGroupReportsController
-                      .getTotalDebit(accGroup.id!)
-                      .$1
-                      .toString(),
+                  GlobalUtitlity.formatNumberDouble(
+                      number: accGroupReportsController
+                          .getTotalDebit(accGroup.id!)
+                          .$1),
                   textAlign: TextAlign.right,
                   style: MyTextStyles.subTitle
                       .copyWith(color: MyColors.debetColor),

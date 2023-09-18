@@ -4,6 +4,8 @@ import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/controller/image_controller.dart';
 import 'package:account_app/controller/personal_controller.dart';
+import 'package:account_app/screen/about_app/about_app_screen.dart';
+import 'package:account_app/screen/contact_support/contacts_supports_screen.dart';
 import 'package:account_app/screen/copy_screen/google_copy_screen.dart';
 import 'package:account_app/screen/customer_account/customer_account.dart';
 import 'package:account_app/screen/copy_screen/local_copy_screen.dart';
@@ -17,6 +19,7 @@ import 'package:get/get.dart';
 
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/screen/settings/setting_screen.dart';
+import 'package:share_plus/share_plus.dart';
 
 class MyDrawerView extends StatelessWidget {
   MyDrawerView({super.key});
@@ -280,18 +283,25 @@ class MyDrawerView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const DrawerItemWidget(
+                    DrawerItemWidget(
+                      onPress: () {
+                        Share.share('check out my website https://example.com',
+                            subject: 'Look what I made!');
+                      },
                       icon: FontAwesomeIcons.share,
                       title: "مشاركة البرنامج",
                     ),
-                    const DrawerItemWidget(
+                    DrawerItemWidget(
+                      onPress: () {
+                        Get.to(() => ContactAndSupportsScreen());
+                      },
                       icon: FontAwesomeIcons.phone,
                       title: "الاتصال والدعم",
                     ),
                     DrawerItemWidget(
-                      onPress: () => Get.to(() => SettingScreen()),
+                      onPress: () => Get.to(() => AboutAppScreen()),
                       icon: FontAwesomeIcons.circleExclamation,
-                      title: " عنا",
+                      title: " حول البرنامج",
                     ),
                     ListTile(
                       contentPadding: const EdgeInsets.only(right: 20),
@@ -345,16 +355,6 @@ class ShortCutCopyWidget extends StatelessWidget {
             )),
         child: Row(
           children: [
-            // Text(
-            //   label,
-            //   style: MyTextStyles.body.copyWith(
-            //     color: MyColors.bg,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-            // SizedBox(
-            //   width: 5,
-            // ),
             const SizedBox(
               width: 10,
             ),

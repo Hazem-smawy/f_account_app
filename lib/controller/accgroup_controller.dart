@@ -50,6 +50,7 @@ class AccGroupController extends GetxController {
 
   Future<void> deleteAccGroup(int id) async {
     await accGroupData.delete(id);
+    await accGroupCurencyController.getAllAccGroupAndCurency();
     await readAllAccGroup();
   }
 }

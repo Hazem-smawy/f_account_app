@@ -9,6 +9,7 @@ import 'package:account_app/screen/all_reports/reports_widget/empyt_report.dart'
 import 'package:account_app/screen/all_reports/reports_widget/report_headers.dart';
 
 import 'package:account_app/screen/all_reports/reports_widget/report_crency_filter.dart';
+import 'package:account_app/utility/curency_format.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -173,15 +174,16 @@ class DailyReportScreen extends StatelessWidget {
                                                 child: FittedBox(
                                                   fit: BoxFit.scaleDown,
                                                   child: Text(
-                                                    (dailyReportsController
-                                                                        .journalsReports[
-                                                                    index]
-                                                                ['debit'] -
-                                                            dailyReportsController
-                                                                    .journalsReports[
-                                                                index]['credit'])
-                                                        .abs()
-                                                        .toString(),
+                                                    GlobalUtitlity.formatNumberDouble(
+                                                        number: (dailyReportsController
+                                                                            .journalsReports[
+                                                                        index]
+                                                                    ['debit'] -
+                                                                dailyReportsController
+                                                                            .journalsReports[
+                                                                        index]
+                                                                    ['credit'])
+                                                            .abs()),
                                                     style: MyTextStyles.title2,
                                                   ),
                                                 ),
@@ -371,10 +373,12 @@ class DailyReportScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              (dailyReportsController.totalDebit.value -
-                                      dailyReportsController.totalCredit.value)
-                                  .abs()
-                                  .toString(),
+                              GlobalUtitlity.formatNumberDouble(
+                                  number:
+                                      (dailyReportsController.totalDebit.value -
+                                              dailyReportsController
+                                                  .totalCredit.value)
+                                          .abs()),
                               style: MyTextStyles.title1,
                             ),
                             const SizedBox(width: 5),

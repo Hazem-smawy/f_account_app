@@ -9,6 +9,7 @@ import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' as intl;
 
 class HomeRowView extends StatelessWidget {
   final HomeModel homeModel;
@@ -37,7 +38,7 @@ class HomeRowView extends StatelessWidget {
           children: [
             const SizedBox(width: 5),
             Container(
-              width: 20,
+              width: 15,
               height: 5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
@@ -46,15 +47,15 @@ class HomeRowView extends StatelessWidget {
                     : MyColors.creditColor,
               ),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 5),
             SizedBox(
               width: Get.width * 0.2,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  (homeModel.totalCredit - homeModel.totalDebit)
-                      .abs()
-                      .toString(),
+                  intl.NumberFormat.currency(symbol: '', decimalDigits: 1)
+                      .format(
+                          (homeModel.totalCredit - homeModel.totalDebit).abs()),
                   textAlign: TextAlign.left,
                   style: MyTextStyles.title2.copyWith(
                     //   fontWeight: FontWeight.bold,
@@ -67,11 +68,14 @@ class HomeRowView extends StatelessWidget {
             ),
             const SizedBox(width: 5),
             CircleAvatar(
-              backgroundColor: MyColors.blackColor.withOpacity(0.9),
+              backgroundColor: MyColors.lessBlackColor.withOpacity(0.9),
               radius: 13,
-              child: Text(
-                "${homeModel.operation}",
-                style: const TextStyle(color: MyColors.bg),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  "${homeModel.operation}",
+                  style: const TextStyle(color: MyColors.bg),
+                ),
               ),
             ),
             const SizedBox(width: 15),

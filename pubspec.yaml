@@ -45,6 +45,7 @@ dependencies:
   pdf: ^3.10.4
   image_picker: ^1.0.4
   background_fetch: any
+  share_plus: ^7.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

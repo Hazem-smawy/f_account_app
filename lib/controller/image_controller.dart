@@ -37,7 +37,7 @@ class ImageController extends GetxController {
         readImage();
       }
     } catch (e) {
-      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+      //CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
     }
   }
 

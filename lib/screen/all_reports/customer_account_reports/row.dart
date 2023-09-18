@@ -2,6 +2,7 @@ import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/models/customer_account.dart';
+import 'package:account_app/utility/curency_format.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -31,7 +32,7 @@ class CustomerAccountReportRowWidget extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                cac.totalDebit.toString(),
+                GlobalUtitlity.formatNumberDouble(number: cac.totalDebit),
                 style:
                     MyTextStyles.title2.copyWith(color: MyColors.creditColor),
               ),
@@ -47,7 +48,7 @@ class CustomerAccountReportRowWidget extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                cac.totalCredit.toString(),
+                GlobalUtitlity.formatNumberDouble(number: cac.totalCredit),
                 style: MyTextStyles.title2.copyWith(color: MyColors.debetColor),
               ),
             ),

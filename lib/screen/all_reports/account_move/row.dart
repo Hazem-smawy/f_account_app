@@ -2,6 +2,7 @@
 
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/models/journal_model.dart';
+import 'package:account_app/utility/curency_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as date_formater;
@@ -55,7 +56,9 @@ class AccountMoveRowWidget extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                (journal.debit - journal.credit).abs().toString(),
+                GlobalUtitlity.formatNumberDouble(
+                  number: (journal.debit - journal.credit).abs(),
+                ),
                 style: MyTextStyles.title2.copyWith(
                   color: journal.credit > journal.debit
                       ? MyColors.debetColor

@@ -1,3 +1,4 @@
+import 'package:account_app/utility/curency_format.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -92,11 +93,12 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
-                            (homeController.todaysJournals[index]['debit'] -
-                                    homeController.todaysJournals[index]
-                                        ['credit'])
-                                .abs()
-                                .toString(),
+                            GlobalUtitlity.formatNumberDouble(
+                                number: (homeController.todaysJournals[index]
+                                            ['debit'] -
+                                        homeController.todaysJournals[index]
+                                            ['credit'])
+                                    .abs()),
                             style: MyTextStyles.title2,
                           ),
                         ),

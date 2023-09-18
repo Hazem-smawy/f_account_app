@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:account_app/controller/home_controller.dart';
-import 'package:account_app/controller/reports_pdf_controller/new_journals_pdf_controller.dart';
 import 'package:account_app/screen/all_reports/customer_accounts_in_accgroup_screen/customer_accounts_in_accgroup_screen.dart';
 import 'package:account_app/screen/all_reports/account_move/account_move_screen.dart';
 import 'package:account_app/screen/all_reports/accgroups_report_screen/accgroups_report_screen.dart';
@@ -29,27 +28,12 @@ class HomeReportsScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              // Container(
-              //   alignment: Alignment.center,
-              //   width: double.infinity,
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(5),
-              //     color: MyColors.bg,
-              //   ),
-              //   child: Text(
-              //     "تنبة",
-              //     style: myTextStyles.body,
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 10,
-              // ),
               Container(
                 padding: const EdgeInsets.all(10),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(13),
-                  color: MyColors.containerSecondColor,
+                  color: MyColors.containerSecondColor.withOpacity(0.5),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -126,18 +110,18 @@ class HomeReportsScreen extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    GestureDetector(
-                      onTap: () async {
-                        if (homeController.todaysJournals.isNotEmpty) {
-                          NewDailyPdfController.generateTodayDailyReportPdf();
-                        }
-                      },
-                      child: const FaIcon(
-                        FontAwesomeIcons.filePdf,
-                        size: 17,
-                        color: MyColors.secondaryTextColor,
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   onTap: () async {
+                    //     if (homeController.todaysJournals.isNotEmpty) {
+                    //       NewDailyPdfController.generateTodayDailyReportPdf();
+                    //     }
+                    //   },
+                    //   child: const FaIcon(
+                    //     FontAwesomeIcons.filePdf,
+                    //     size: 17,
+                    //     color: MyColors.secondaryTextColor,
+                    //   ),
+                    // ),
                     const Spacer(),
                     Text(
                       "العمليات الحد يثة",

@@ -1,9 +1,6 @@
 import 'package:account_app/service/database/helper/database_helper.dart';
 import 'package:account_app/service/database/helper/database_service.dart';
-import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
-
-import '../../widget/custom_dialog.dart';
 
 class IntroData {
   Future<void> createTable(Database db) async {
@@ -34,7 +31,7 @@ class IntroData {
 
       return value == 1;
     } catch (e) {
-      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+      // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
       return false;
     }
   }
@@ -46,7 +43,7 @@ class IntroData {
 
       return result;
     } catch (e) {
-      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+      // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
       return 0;
     }
   }

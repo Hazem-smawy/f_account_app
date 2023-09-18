@@ -2,6 +2,7 @@
 
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/models/journal_model.dart';
+import 'package:account_app/utility/curency_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as date_formater;
@@ -27,14 +28,18 @@ class DetailsRowWidget extends StatelessWidget {
         children: [
           SizedBox(
             width: Get.width / 6,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                accountMoney,
-                style: MyTextStyles.title2.copyWith(
-                  color: MyColors.blackColor,
+            child: Row(
+              children: [
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    GlobalUtitlity.formatNumberString(number: accountMoney),
+                    style: MyTextStyles.subTitle.copyWith(
+                      color: MyColors.blackColor,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
           SizedBox(
@@ -44,7 +49,8 @@ class DetailsRowWidget extends StatelessWidget {
             width: Get.width / 7,
             child: Text(
               date_formater.DateFormat.MEd().format(journal.registeredAt),
-              textDirection: TextDirection.ltr,
+              // textDirection: TextDirection.rtl,
+              textAlign: TextAlign.start,
               style: MyTextStyles.body.copyWith(
                 fontWeight: FontWeight.normal,
               ),
@@ -65,18 +71,23 @@ class DetailsRowWidget extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 5,
+            width: 10,
           ),
           SizedBox(
             width: Get.width / 6,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                (journal.debit - journal.credit).abs().toString(),
-                style: MyTextStyles.title2.copyWith(
-                  color: MyColors.lessBlackColor,
+            child: Row(
+              children: [
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    GlobalUtitlity.formatNumberDouble(
+                        number: (journal.debit - journal.credit).abs()),
+                    style: MyTextStyles.subTitle.copyWith(
+                      color: MyColors.lessBlackColor,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
           const SizedBox(

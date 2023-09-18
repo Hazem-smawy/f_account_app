@@ -1,4 +1,5 @@
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/utility/curency_format.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -56,7 +57,7 @@ class DetailsSammaryWidget extends StatelessWidget {
                     key: Key(subTitle),
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      "$title ",
+                      GlobalUtitlity.formatNumberString(number: title),
                       style: MyTextStyles.subTitle.copyWith(
                         color: MyColors.lessBlackColor,
                       ),

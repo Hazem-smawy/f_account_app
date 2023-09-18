@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
@@ -8,11 +10,13 @@ import 'package:account_app/models/journal_model.dart';
 import 'package:account_app/screen/details/details_row.dart';
 import 'package:account_app/screen/new_record/new_record.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/utility/curency_format.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 // import 'package:intl/intl.dart' as DateFormater;
 
 import 'detail_info_sheet.dart';
@@ -93,6 +97,21 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 child: Column(
                   children: [
                     CustomBackBtnWidget(
+                      shareAction: () async {
+                        File? file =
+                            await JournalPdfControls.generateJournlsPdfReports(
+                          journals: journals,
+                          totalCredit: onYou,
+                          totalDebit: onHem,
+                          customerId: widget.homeModel.caId ?? 0,
+                          curencyId: widget.homeModel.curId ?? 0,
+                          accGroupId: widget.homeModel.accGId ?? 0,
+                          share: true,
+                        );
+                        if (file != null) {
+                          Share.shareXFiles([XFile(file.path)], text: 'حساب ');
+                        }
+                      },
                       action: () {
                         if (journals.isNotEmpty) {
                           JournalPdfControls.generateJournlsPdfReports(
@@ -101,7 +120,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               totalDebit: onHem,
                               customerId: widget.homeModel.caId ?? 0,
                               curencyId: widget.homeModel.curId ?? 0,
-                              accGroupId: widget.homeModel.accGId ?? 0);
+                              accGroupId: widget.homeModel.accGId ?? 0,
+                              share: false);
                         }
                       },
                       icon: FontAwesomeIcons.solidFilePdf,
@@ -183,6 +203,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               )),
                         ],
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
                     ),
                     Expanded(
                       child: ListView.builder(
@@ -417,7 +440,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               ),
                               FittedBox(
                                 child: Text(
-                                  resultMoney.abs().toString(),
+                                  GlobalUtitlity.formatNumberDouble(
+                                      number: resultMoney.abs()),
                                   style: MyTextStyles.subTitle.copyWith(
                                     color: MyColors.lessBlackColor,
                                   ),

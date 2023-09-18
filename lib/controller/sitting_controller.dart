@@ -6,8 +6,6 @@ import 'package:account_app/service/database/sitting_data.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:get/get.dart';
 
-import '../widget/custom_dialog.dart';
-
 class SittingController extends GetxController {
   final every = 0.obs;
   final everyArray = [1, 2, 7, 30];

@@ -58,18 +58,12 @@ class MyMainScreen extends StatelessWidget {
                           accGroup: accGroupCurencyController
                                   .allAccgroupsAndCurency.isNotEmpty
                               ? accGroupController.allAccGroups
-                                      .firstWhereOrNull((element) =>
-                                          // ignore: unrelated_type_equality_checks
-                                          element.id ==
+                                  .firstWhereOrNull((element) =>
+                                      element.id ==
+                                      accGroupCurencyController
+                                              .allAccgroupsAndCurency[
                                           accGroupCurencyController
-                                                  .allAccgroupsAndCurency[
-                                              accGroupCurencyController
-                                                  .pageViewCount.value]) ??
-                                  AccGroup(
-                                      name: "name",
-                                      status: true,
-                                      createdAt: DateTime.now(),
-                                      modifiedAt: DateTime.now())
+                                              .pageViewCount.value])
                               : AccGroup(
                                   name: "name",
                                   status: true,
