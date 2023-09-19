@@ -88,16 +88,29 @@ class MoneyMovementPdfController {
   }
 
   static Widget customerAccountTitle() {
-    return Row(children: [
+    final customerName = customerController.allCustomers
+        .firstWhere((element) =>
+            element.id == accountMovemoentController.customerId.value)
+        .name;
+    final curencyName = curencyController.allCurency
+        .firstWhere((element) =>
+            element.id == accountMovemoentController.curencyId.value)
+        .name;
+
+    final accGroupName = accGourpController.allAccGroups
+        .firstWhere((element) =>
+            element.id == accountMovemoentController.accGroupId.value)
+        .name;
+    return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
       Text(date_formater.DateFormat.yMd()
           .format(DateTime.parse(accountMovemoentController.toDate.value))),
       SizedBox(width: 10),
-      PdfApi.paddedHeadingTextArabicCell("الي"),
+      PdfApi.paddedHeadingTextCellRegular("الي"),
       SizedBox(width: 10),
       Text(date_formater.DateFormat.yMd()
           .format(DateTime.parse(accountMovemoentController.fromDate.value))),
       SizedBox(width: 10),
-      PdfApi.paddedHeadingTextArabicCell("من تأريخ"),
+      PdfApi.paddedHeadingTextCellRegular("من تأريخ"),
       SizedBox(width: 10),
       Spacer(),
       Container(
@@ -105,46 +118,11 @@ class MoneyMovementPdfController {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             SizedBox(height: 10),
-            Text(
-              customerController.allCustomers
-                  .firstWhere((element) =>
-                      element.id == accountMovemoentController.customerId.value)
-                  .name,
-              style: TextStyle(
-                font: PdfApi.globalCustomFont,
-                fontFallback: [PdfApi.enFont],
-                fontSize: 14,
-              ),
-            ),
-            SizedBox(height: 10),
+            PdfApi.paddedHeadingTextCellHeader(customerName),
             Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Text(
-                curencyController.allCurency
-                    .firstWhere((element) =>
-                        element.id ==
-                        accountMovemoentController.curencyId.value)
-                    .name,
-                style: TextStyle(
-                  font: PdfApi.globalCustomFont,
-                  fontSize: 12,
-                  fontFallback: [PdfApi.enFont],
-                  color: PdfColors.blueGrey,
-                ),
-              ),
+              PdfApi.coloredArabicText(curencyName, PdfColors.blue900),
               SizedBox(width: 10),
-              Text(
-                accGourpController.allAccGroups
-                    .firstWhere((element) =>
-                        element.id ==
-                        accountMovemoentController.accGroupId.value)
-                    .name,
-                style: TextStyle(
-                  font: PdfApi.globalCustomFont,
-                  fontSize: 12,
-                  fontFallback: [PdfApi.enFont],
-                  color: PdfColors.black,
-                ),
-              ),
+              PdfApi.coloredArabicText(accGroupName, PdfColors.black),
             ]),
             SizedBox(height: 30),
           ],

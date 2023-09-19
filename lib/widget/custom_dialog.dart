@@ -5,7 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class CustomDialog {
-  static void customSnackBar(description, SnackPosition? snackPosition) {
+  static void customSnackBar(
+      description, SnackPosition? snackPosition, bool isError) {
     Get.closeAllSnackbars();
     Get.rawSnackbar(
       backgroundColor: MyColors.lessBlackColor.withOpacity(0.9),
@@ -20,11 +21,11 @@ class CustomDialog {
           fontWeight: FontWeight.normal,
         ),
       ),
-      icon: const Padding(
-        padding: EdgeInsets.all(10.0),
+      icon: Padding(
+        padding: const EdgeInsets.all(10),
         child: FaIcon(
-          FontAwesomeIcons.check,
-          color: MyColors.containerSecondColor,
+          isError ? FontAwesomeIcons.xmark : FontAwesomeIcons.check,
+          color: MyColors.bg,
           size: 25,
         ),
       ),

@@ -55,7 +55,7 @@ class _FolderCopyWidgetState extends State<FolderCopyWidget> {
                   ? copyController.selectFolder()
                   : copyController.selectFolderIos(),
               description:
-                  "إذا احتجت في أي وقت إلى نسخة احتياطية بديلة، فيمكنك نسخ بيانات جهازك احتياطيًا باستخدام",
+                  "قم بعمل نسخة إحتياطية جديدة , لحفظ كل بياناتك في ملفات الجهاز وإستعادتها في وقت لاحق",
             ),
             CustomCopyBtnWidget(
               topIcon: FontAwesomeIcons.upload,
@@ -66,7 +66,7 @@ class _FolderCopyWidgetState extends State<FolderCopyWidget> {
               action: () => copyController.openDatabaseFile(),
 
               description:
-                  "إذا احتجت في أي وقت إلى نسخة احتياطية بديلة، فيمكنك نسخ بيانات جهازك احتياطيًا باستخدام",
+                  'عند استعادة اي نسخة سابقة سيتم حذف جميع البيانات الحالية , تأكد من عمل نسخة إحتياطية للبيانات الحالية',
             ),
             const SizedBox(
               height: 10,

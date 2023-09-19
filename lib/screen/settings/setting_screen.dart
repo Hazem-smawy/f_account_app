@@ -39,7 +39,6 @@ class SettingScreen extends StatelessWidget {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
@@ -61,9 +60,12 @@ class SettingScreen extends StatelessWidget {
                           )),
                           GestureDetector(
                             onTap: () => Get.back(),
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 5),
-                              child: FaIcon(
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 12),
+                              color: MyColors.lessBlackColor,
+                              child: const FaIcon(
                                 FontAwesomeIcons.arrowRightLong,
                                 color: Colors.white54,
                                 size: 20,
@@ -227,23 +229,36 @@ class SettingScreen extends StatelessWidget {
                             icon: FontAwesomeIcons.googleDrive),
                         const SizedBox(height: 30),
                         const Spacer(),
-                        GestureDetector(
-                          onTap: () {
-                            SystemNavigator.pop();
-                          },
-                          child: Container(
-                            width: Get.width - 100,
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(18),
-                              color: MyColors.containerColor,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                SystemNavigator.pop();
+                              },
+                              child: Container(
+                                width: Get.width - 150,
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(18),
+                                  color: MyColors.containerColor,
+                                ),
+                                child: Text(
+                                  "خروج ",
+                                  style: MyTextStyles.subTitle,
+                                ),
+                              ),
                             ),
-                            child: Text(
-                              "خروج ",
-                              style: MyTextStyles.subTitle,
-                            ),
-                          ),
+                            Container(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: const FaIcon(
+                                FontAwesomeIcons.question,
+                                size: 20,
+                                color: MyColors.secondaryTextColor,
+                              ),
+                            )
+                          ],
                         ),
                         // const SizedBox(
                         //   height: 10,

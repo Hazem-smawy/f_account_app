@@ -25,7 +25,7 @@ class DatabaseService {
 
   Future<String> get fullPath async {
     String path = await getDatabasesPath();
-    String databasePath = p.join(path, "account_app_databse.db");
+    String databasePath = p.join(path, "account_app.db");
 
     return databasePath;
   }

@@ -27,28 +27,24 @@ class DetailsRowWidget extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: Get.width / 6,
-            child: Row(
-              children: [
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    GlobalUtitlity.formatNumberString(number: accountMoney),
-                    style: MyTextStyles.subTitle.copyWith(
-                      color: MyColors.blackColor,
-                    ),
-                  ),
+            width: Get.width / 5,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                GlobalUtitlity.formatNumberString(number: accountMoney),
+                style: MyTextStyles.subTitle.copyWith(
+                  color: MyColors.blackColor,
                 ),
-              ],
+              ),
             ),
           ),
           SizedBox(
             width: 5,
           ),
           SizedBox(
-            width: Get.width / 7,
+            width: Get.width / 10,
             child: Text(
-              date_formater.DateFormat.MEd().format(journal.registeredAt),
+              date_formater.DateFormat.Md().format(journal.registeredAt),
               // textDirection: TextDirection.rtl,
               textAlign: TextAlign.start,
               style: MyTextStyles.body.copyWith(

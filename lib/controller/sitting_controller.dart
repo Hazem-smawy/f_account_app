@@ -6,12 +6,15 @@ import 'package:account_app/service/database/sitting_data.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:get/get.dart';
 
+import '../widget/custom_dialog.dart';
+
 class SittingController extends GetxController {
   final every = 0.obs;
   final everyArray = [1, 2, 7, 30];
   final toggleAsyncGoogleDrive = false.obs;
   CopyController copyController = Get.find();
   SittingData sittingData = SittingData();
+  final newData = true.obs;
 
   @override
   void onInit() {
@@ -20,19 +23,25 @@ class SittingController extends GetxController {
     // toogleIsCopyOn(toggleAsyncGoogleDrive.value);
   }
 
-  Future<void> createSitting() async {
-    var sittingModel = SittingModel(id: 1, every: 0, isCopyOn: false);
+  Future<SittingModel?> createSitting() async {
+    var sittingModel =
+        SittingModel(id: 1, every: 0, isCopyOn: false, newData: false);
     try {
-      await sittingData.create(sittingModel);
+      var res = await sittingData.create(sittingModel);
+      return res;
     } catch (e) {
       // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+      return null;
     }
   }
 
   Future<void> readSitting() async {
     var res = await sittingData.read(1);
+
     if (res == null) {
-      createSitting();
+      res = await createSitting();
+      every.value = res?.every ?? 0;
+      toggleAsyncGoogleDrive.value = res?.isCopyOn ?? false;
     } else {
       every.value = res.every;
       toggleAsyncGoogleDrive.value = res.isCopyOn;
@@ -40,7 +49,8 @@ class SittingController extends GetxController {
   }
 
   Future<void> updateSitting(bool isCopyOn, int every) async {
-    var sittingModel = SittingModel(id: 1, every: every, isCopyOn: isCopyOn);
+    var sittingModel = SittingModel(
+        id: 1, every: every, isCopyOn: isCopyOn, newData: newData.value);
 
     await sittingData.update(sittingModel);
   }
@@ -55,7 +65,7 @@ class SittingController extends GetxController {
 
     if (isOn) {
       BackgroundFetch.start().then((int status) {}).catchError((e) {
-        // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+        CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM, false);
       });
     } else {
       BackgroundFetch.stop();

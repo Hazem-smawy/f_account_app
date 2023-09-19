@@ -31,7 +31,7 @@ class PersonalInfoScreen extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
                   children: [
-                    CustomBackBtnWidget(title: "المعلومات الشخصيه"),
+                    const CustomBackBtnWidget(title: "المعلومات الشخصيه"),
                     const SizedBox(height: 20),
                     Container(
                       padding: const EdgeInsets.all(14),
@@ -247,7 +247,7 @@ class EditPersonalInfoSheet extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (personalController.newPersonal['name'] == null)
-                  SafeArea(
+                  const SafeArea(
                     child: CustomBackBtnWidget(title: "الإعدادات الشخصية"),
                   ),
                 if (personalController.newPersonal['name'] != null)
@@ -298,13 +298,13 @@ class EditPersonalInfoSheet extends StatelessWidget {
                 PersonalTextFieldWidget(
                   textHint: "الاسم",
                   isNumber: false,
-                  icon: FontAwesomeIcons.user,
+                  icon: Icons.person_2_outlined,
                   placeHolder: personalController.newPersonal['name'] ?? "",
                   action: (p0) {
                     personalController.newPersonal.update(
                       'newName',
-                      (value) => p0,
-                      ifAbsent: () => p0,
+                      (value) => p0.toString().trim(),
+                      ifAbsent: () => p0.toString().trim(),
                     );
                   },
                 ),
@@ -312,7 +312,7 @@ class EditPersonalInfoSheet extends StatelessWidget {
                 PersonalTextFieldWidget(
                   textHint: "البريد ألإلكتروني",
                   isNumber: false,
-                  icon: FontAwesomeIcons.envelope,
+                  icon: Icons.email_outlined,
                   placeHolder: personalController.newPersonal['email'] ?? "",
                   action: (p0) {
                     personalController.newPersonal.update(
@@ -325,7 +325,7 @@ class EditPersonalInfoSheet extends StatelessWidget {
                 const SizedBox(height: 10),
                 PersonalTextFieldWidget(
                   textHint: "الرقم",
-                  icon: FontAwesomeIcons.phone,
+                  icon: Icons.phone_enabled_outlined,
                   isNumber: true,
                   placeHolder: personalController.newPersonal['phone'] ?? "",
                   action: (p0) {
@@ -342,7 +342,7 @@ class EditPersonalInfoSheet extends StatelessWidget {
                 PersonalTextFieldWidget(
                   textHint: "العنوان",
                   isNumber: false,
-                  icon: FontAwesomeIcons.locationPin,
+                  icon: Icons.location_on_outlined,
                   placeHolder: personalController.newPersonal['address'] ?? "",
                   action: (p0) {
                     personalController.newPersonal.update(
@@ -373,10 +373,11 @@ class EditPersonalInfoSheet extends StatelessWidget {
                       color: MyColors.primaryColor,
                       label: isFirstTime ? 'إضافة' : 'تعد يل',
                       action: () {
-                        if (personalController.newPersonal['newName'] == null ||
-                            personalController.newPersonal['email'] == null) {
+                        if (personalController.newPersonal['newName'] == null) {
                           CustomDialog.customSnackBar(
-                              "ادخل كل القيم بطريقة صحيحة", SnackPosition.TOP);
+                              "ادخل  الإ سم بطريقة صحيحة",
+                              SnackPosition.TOP,
+                              true);
                           return;
                         }
                         if (personalController.newPersonal['newName'].length <
@@ -384,7 +385,9 @@ class EditPersonalInfoSheet extends StatelessWidget {
                             personalController.newPersonal['email'].length <
                                 1) {
                           CustomDialog.customSnackBar(
-                              "ادخل كل القيم بطريقة صحيحة", SnackPosition.TOP);
+                              "ادخل كل القيم بطريقة صحيحة",
+                              SnackPosition.TOP,
+                              true);
                           return;
                         }
                         var newPersonalInfo = PersonalModel(

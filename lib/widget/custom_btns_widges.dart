@@ -1,6 +1,5 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
-import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -8,9 +7,9 @@ import 'package:get/get.dart';
 class CustomBackBtnWidget extends StatelessWidget {
   final String title;
   final IconData? icon;
-  VoidCallback? action;
-  VoidCallback? shareAction;
-  CustomBackBtnWidget({
+  final VoidCallback? action;
+  final VoidCallback? shareAction;
+  const CustomBackBtnWidget({
     required this.title,
     this.icon,
     this.action,
@@ -70,9 +69,14 @@ class CustomBackBtnWidget extends StatelessWidget {
           )),
           GestureDetector(
             onTap: () => Get.back(),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: FaIcon(
+            child: Container(
+              //margin: EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: MyColors.bg,
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: const FaIcon(
                 FontAwesomeIcons.arrowRightLong,
                 color: MyColors.secondaryTextColor,
                 size: 20,

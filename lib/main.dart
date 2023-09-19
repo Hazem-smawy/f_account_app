@@ -16,11 +16,9 @@ import 'package:account_app/service/database/sitting_data.dart';
 import 'package:account_app/service/http_service/google_drive_service.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 
-import 'package:account_app/widget/empty_accGroup_widget.dart';
+import 'package:account_app/widget/empty_accgroup_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -59,10 +57,10 @@ void main() async {
   Get.put(MainController());
   Get.put(PdfApi());
 
-  LicenseRegistry.addLicense(() async* {
-    final license = await rootBundle.loadString('assets/fonts/OFL.txt');
-    yield LicenseEntryWithLineBreaks(['google_fonts'], license);
-  });
+  // LicenseRegistry.addLicense(() async* {
+  //   final license = await rootBundle.loadString('assets/fonts/OFL.txt');
+  //   yield LicenseEntryWithLineBreaks(['google_fonts'], license);
+  // });
 
   runApp(const MyApp());
 
@@ -75,41 +73,50 @@ Future<void> _doCopyToGoogleDrive() async {
   //final settingArray = [1, 2, 7, 30];
 
   String title = "";
-//DateTime.now().hour == 23 &&
+
   if (sittingModel?.isCopyOn ?? false) {
-    GoogleDriveAppData googleDriveAppData = GoogleDriveAppData();
-    GoogleSignInAccount? googleUser;
-    DriveApi? driveApi;
+    if (sittingModel?.newData ?? false) {
+      GoogleDriveAppData googleDriveAppData = GoogleDriveAppData();
+      GoogleSignInAccount? googleUser;
+      DriveApi? driveApi;
 
-    googleUser = await googleDriveAppData.signInGoogle();
+      googleUser = await googleDriveAppData.signInGoogle();
 
-    if (googleUser != null) {
-      driveApi = await googleDriveAppData.getDriveApi(googleUser);
+      if (googleUser != null) {
+        driveApi = await googleDriveAppData.getDriveApi(googleUser);
+      } else {
+        CustomDialog.customSnackBar(
+            "حدث خطأ أثناء تسجيل الدخول", SnackPosition.TOP, true);
+      }
+
+      if (driveApi != null) {
+        String path = await DatabaseService().fullPath;
+
+        await googleDriveAppData.uploadDriveFile(
+          driveApi: driveApi,
+          file: io.File(path),
+        );
+        title = "تم عمل نسخة إحتياطية";
+        CustomDialog.customSnackBar(
+            "تم عمل نسخة إحتياطية", SnackPosition.TOP, false);
+        await sittingData.updateNewData(0);
+      } else {
+        CustomDialog.customSnackBar(
+            "حدث خطأ أثناء تسجيل الدخول", SnackPosition.TOP, true);
+        title = "حدث خطأ أثناء تسجيل الدخول";
+      }
     } else {
-      CustomDialog.customSnackBar(
-          "حدث خطأ أثناء تسجيل الدخول", SnackPosition.TOP);
-    }
-
-    if (driveApi != null) {
-      String path = await DatabaseService().fullPath;
-
-      await googleDriveAppData.uploadDriveFile(
-        driveApi: driveApi,
-        file: io.File(path),
-      );
-      title = "تم عمل نسخة إحتياطية";
-    } else {
-      title = "حدث خطأ أثناء تسجيل الدخول";
+      title = "ليس هناك اي بيانات جديدة لعمل نسخة إحتياطية";
     }
 
     flutterLocalPlugin.show(
       90,
+      "النسخ الإ حتياطي",
       title,
-      "تم عمل نسخة إحتياطية",
       const NotificationDetails(
         android: AndroidNotificationDetails(
             "coding is the life", "android channal service",
-            ongoing: true, icon: "@mipmap/ic_launcher"),
+            ongoing: false, icon: "logo"),
       ),
     );
   }
@@ -135,17 +142,18 @@ class _MyAppState extends State<MyApp> {
     // Configure BackgroundFetch.
     await BackgroundFetch.configure(
         BackgroundFetchConfig(
-            minimumFetchInterval: 60,
-            stopOnTerminate: false,
-            enableHeadless: true,
-            requiresBatteryNotLow: false,
-            requiresCharging: false,
-            requiresStorageNotLow: false,
-            requiresDeviceIdle: false,
-            requiredNetworkType: NetworkType.NONE), (String taskId) async {
-      if (DateTime.now().hour == 23) {
-        await _doCopyToGoogleDrive();
-      }
+          minimumFetchInterval: 60 * 12,
+          stopOnTerminate: false,
+          enableHeadless: true,
+          requiresBatteryNotLow: false,
+          requiresCharging: false,
+          requiresStorageNotLow: false,
+          requiresDeviceIdle: false,
+          requiredNetworkType: NetworkType.NONE,
+        ), (String taskId) async {
+      // if (DateTime.now().hour == 23) {
+      await _doCopyToGoogleDrive();
+      //   }
 
       BackgroundFetch.finish(taskId);
     }, (String taskId) async {
@@ -164,7 +172,7 @@ class _MyAppState extends State<MyApp> {
         scaffoldBackgroundColor: MyColors.containerColor,
       ),
       // theme: AppThemes.darkTheme,
-      // home: AccountMoveScreen(),
+      // home: ShowSnackBar(),
       home: FutureBuilder(
         future: introController.readIntro(),
         initialData: true,
@@ -186,6 +194,25 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+// class ShowSnackBar extends StatelessWidget {
+//   const ShowSnackBar({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: ElevatedButton(
+//             onPressed: () {
+//               CustomDialog.customSnackBar(
+//                   "hello fro snak bar", SnackPosition.TOP, true);
+//               ;
+//             },
+//             child: Text("show snak bar")),
+//       ),
+//     );
+//   }
+// }
 
 class ShowMyMainScreen extends StatelessWidget {
   ShowMyMainScreen({super.key});

@@ -45,7 +45,7 @@ class MyAppBarWidget extends StatelessWidget {
     return Obx(
       () => Container(
         margin: const EdgeInsets.all(10),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 7),
         decoration: BoxDecoration(
             color: MyColors.lessBlackColor,
             borderRadius: BorderRadius.circular(12)),
@@ -63,10 +63,17 @@ class MyAppBarWidget extends StatelessWidget {
                   ),
                 ));
               },
-              child: const FaIcon(
-                FontAwesomeIcons.solidFolderClosed,
-                size: 20,
-                color: MyColors.containerColor,
+              child: Container(
+                padding: const EdgeInsets.only(top: 10, bottom: 10, left: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: MyColors.lessBlackColor,
+                ),
+                child: const FaIcon(
+                  FontAwesomeIcons.solidFolderClosed,
+                  size: 20,
+                  color: MyColors.containerColor,
+                ),
               ),
             ),
             const SizedBox(
@@ -77,10 +84,15 @@ class MyAppBarWidget extends StatelessWidget {
                 onTap: () async {
                   reportsAction();
                 },
-                child: const Icon(
-                  Icons.flash_on,
-                  size: 20,
-                  color: MyColors.bg,
+                child: Container(
+                  padding: const EdgeInsets.only(
+                      top: 10, bottom: 10, left: 5, right: 5),
+                  color: MyColors.lessBlackColor,
+                  child: const Icon(
+                    Icons.flash_on,
+                    size: 20,
+                    color: MyColors.bg,
+                  ),
                 ),
               ),
             const SizedBox(
@@ -94,15 +106,22 @@ class MyAppBarWidget extends StatelessWidget {
               style:
                   MyTextStyles.title2.copyWith(color: MyColors.containerColor),
             ),
-            const SizedBox(width: 15),
+            const SizedBox(width: 10),
             GestureDetector(
               onTap: () {
                 _globalKey.currentState?.openEndDrawer();
               },
-              child: const FaIcon(
-                FontAwesomeIcons.bars,
-                color: MyColors.containerColor,
-                size: 20,
+              child: Container(
+                padding: const EdgeInsets.only(top: 10, bottom: 10, right: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: MyColors.lessBlackColor,
+                ),
+                child: const FaIcon(
+                  FontAwesomeIcons.bars,
+                  color: MyColors.containerColor,
+                  size: 20,
+                ),
               ),
             )
           ],

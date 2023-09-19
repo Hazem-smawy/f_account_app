@@ -13,11 +13,13 @@ import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/reports/account_move_controller.dart';
 import 'package:account_app/controller/reports_pdf_controller/mony_movements_pdf_controller.dart';
 import 'package:account_app/models/customer_model.dart';
-import 'package:account_app/screen/all_reports/account_move/account_movement_acc_group_list_widget.dart';
-import 'package:account_app/screen/all_reports/account_move/row.dart';
+import 'package:account_app/screen/all_reports/account_movement_screen/account_movement_acc_group_list_widget.dart';
+import 'package:account_app/screen/all_reports/account_movement_screen/row.dart';
 import 'package:account_app/screen/all_reports/reports_widget/date_filter_widget.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_crency_filter.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_footer.dart';
+
+import '../../../widget/custom_dialog.dart';
 
 class AccountMoveScreen extends StatelessWidget {
   final AccountMovemoentController accountMovemoentController =
@@ -67,6 +69,11 @@ class AccountMoveScreen extends StatelessWidget {
                                           .isNotEmpty) {
                                         MoneyMovementPdfController
                                             .generateMoneyMovementReportPdf();
+                                      } else {
+                                        CustomDialog.customSnackBar(
+                                            "ليس هناك شئ ل طباعتة",
+                                            SnackPosition.BOTTOM,
+                                            true);
                                       }
                                     },
                                     child: const FaIcon(
@@ -155,16 +162,18 @@ class AccountMoveScreen extends StatelessWidget {
                                     ),
                                   )),
                                   GestureDetector(
-                                    onTap: () {
-                                      Get.back();
-                                    },
+                                    onTap: () => Get.back(),
                                     child: Container(
                                       padding: const EdgeInsets.only(
-                                          left: 10, top: 5, bottom: 5),
+                                          top: 10,
+                                          bottom: 10,
+                                          right: 5,
+                                          left: 10),
+                                      color: MyColors.containerColor,
                                       child: const FaIcon(
                                         FontAwesomeIcons.arrowRightLong,
                                         color: MyColors.secondaryTextColor,
-                                        size: 20,
+                                        size: 17,
                                       ),
                                     ),
                                   ),
@@ -177,6 +186,7 @@ class AccountMoveScreen extends StatelessWidget {
                               height: 10,
                             ),
                             Container(
+                              padding: EdgeInsets.symmetric(horizontal: 5),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20)),
                               child: Row(
@@ -221,11 +231,18 @@ class AccountMoveScreen extends StatelessWidget {
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 3),
+                                          horizontal: 10,
+                                          vertical: 3,
+                                        ),
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(20),
-                                          color: MyColors.bg,
+                                          // border: Border.all(
+                                          //   color: MyColors.secondaryTextColor
+                                          //       .withOpacity(0.4),
+                                          //   width: 1,
+                                          // )
+                                          // color: MyColors.bg,
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
@@ -247,7 +264,8 @@ class AccountMoveScreen extends StatelessWidget {
                                               width: 10,
                                             ),
                                             const FaIcon(
-                                              FontAwesomeIcons.folder,
+                                              FontAwesomeIcons
+                                                  .solidFolderClosed,
                                               size: 15,
                                               color: MyColors.lessBlackColor,
                                             )
@@ -263,8 +281,9 @@ class AccountMoveScreen extends StatelessWidget {
                               height: 5,
                             ),
                             Container(
+                              margin: EdgeInsets.symmetric(horizontal: 5),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(10),
                                 color: MyColors.bg,
                               ),
                               child: ReportCurenyFilterWidget(
@@ -283,9 +302,7 @@ class AccountMoveScreen extends StatelessWidget {
                             Expanded(
                               child: accountMovemoentController
                                       .customerAccountsJournals.isEmpty
-                                  ? EmptyCustomerAccountJournlsReport(
-                                      isCustomerMovementAccount: true,
-                                    )
+                                  ? EmptyCustomerAccountJournlsReport()
                                   : ListView.builder(
                                       itemCount: accountMovemoentController
                                           .customerAccountsJournals.length,
@@ -398,16 +415,14 @@ class AccountMoveScreen extends StatelessWidget {
 
 // empyt account
 class EmptyCustomerAccountJournlsReport extends StatelessWidget {
-  final bool? isCustomerMovementAccount;
-  const EmptyCustomerAccountJournlsReport(
-      {super.key, this.isCustomerMovementAccount});
+  const EmptyCustomerAccountJournlsReport({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: isCustomerMovementAccount == null
-            ? const EdgeInsets.symmetric(horizontal: 15, vertical: 5)
-            : const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        margin: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),

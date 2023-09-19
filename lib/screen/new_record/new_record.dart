@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:account_app/constant/notification.dart';
 import 'package:account_app/constant/shadows.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/curency_controller.dart';
@@ -223,14 +224,17 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   ),
                   if (details.isNotEmpty)
                     Positioned(
-                      top: 180,
+                      top: CEC.errorMessage.value == "" ? 186 : 200,
                       right: 0,
                       left: 0,
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [
                           Container(
-                            height: Get.height / 6.4,
+                            constraints: BoxConstraints(
+                              minHeight: 40,
+                              maxHeight: Get.height / 6.4,
+                            ),
                             padding: const EdgeInsets.only(top: 3),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
@@ -299,13 +303,13 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 
     if (newAccountController.newAccount['money'] == null ||
         newAccountController.newAccount['desc'] == null) {
-      CEC.errorMessage.value = "no data to puplished";
+      CEC.errorMessage.value = interAllValues;
       return;
     }
     if (newAccountController.newAccount['desc'].length < 2 ||
         newAccountController.newAccount['money'].length < 1) {
       CEC.errorMessage.value = "";
-      CEC.errorMessage.value = "inter the value in valid way";
+      CEC.errorMessage.value = interValidText;
       return;
     }
 
@@ -341,83 +345,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
         );
       }
     } catch (e) {
-      CEC.errorMessage.value = "the money is not crected";
+      CEC.errorMessage.value = interCorrectMoney;
       return;
     }
     newAccountController.addNewRecordToCustomerAccount(widget.homeModel);
   }
 }
-
-// class NewCustomerSheet extends StatelessWidget {
-//   const NewCustomerSheet({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: const EdgeInsets.only(top: 5),
-//       decoration: BoxDecoration(
-//         borderRadius: BorderRadius.circular(10),
-//         color: MyColors.bg,
-//       ),
-//       child: SafeArea(
-//         child: Padding(
-//           padding: const EdgeInsets.symmetric(
-//             horizontal: 20,
-//             vertical: 10,
-//           ),
-//           child: Column(
-//             children: [
-//               //   const CustomBackBtnWidget(),
-//               const SizedBox(height: 30),
-//               Center(
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.center,
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     //  const FaIcon(
-//                     //   FontAwesomeIcons.user,
-//                     //   size: 50,
-//                     //   color: MyColors.secondaryTextColor,
-//                     // ),
-//                     // Text(
-//                     //   "اضافه عميل",
-//                     //   style: myTextStyles.title1,
-//                     // ),
-//                     const SizedBox(height: 20),
-//                     CustomTextFieldWidget(
-//                       textHint: "العنوان",
-//                     ),
-//                     const SizedBox(height: 10),
-//                     CustomTextFieldWidget(
-//                       textHint: "الهاتف",
-//                     ),
-//                     const SizedBox(height: 20),
-//                     Row(
-//                       children: [
-//                         Flexible(
-//                           child: CustomBtnWidget(
-//                             color: MyColors.secondaryTextColor,
-//                             label: "الغاء",
-//                             action: () {},
-//                           ),
-//                         ),
-//                         SizedBox(width: 10),
-//                         Flexible(
-//                           child: CustomBtnWidget(
-//                             color: Colors.green,
-//                             label: "اضافه",
-//                             action: () {},
-//                           ),
-//                         )
-//                       ],
-//                     )
-//                   ],
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

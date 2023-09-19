@@ -42,9 +42,9 @@ class HomeRowView extends StatelessWidget {
               height: 5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: homeModel.totalCredit > homeModel.totalDebit
-                    ? MyColors.debetColor
-                    : MyColors.creditColor,
+                color: homeModel.totalCredit < homeModel.totalDebit
+                    ? MyColors.creditColor
+                    : MyColors.debetColor,
               ),
             ),
             const SizedBox(width: 5),
@@ -59,9 +59,9 @@ class HomeRowView extends StatelessWidget {
                   textAlign: TextAlign.left,
                   style: MyTextStyles.title2.copyWith(
                     //   fontWeight: FontWeight.bold,
-                    color: homeModel.totalCredit > homeModel.totalDebit
-                        ? MyColors.debetColor
-                        : MyColors.creditColor,
+                    color: homeModel.totalCredit < homeModel.totalDebit
+                        ? MyColors.creditColor
+                        : MyColors.debetColor,
                   ),
                 ),
               ),
@@ -111,7 +111,8 @@ class HomeRowView extends StatelessWidget {
                   } else {
                     CustomDialog.customSnackBar(
                         "تم ايقاف هذه العمله من الاعدادات",
-                        SnackPosition.BOTTOM);
+                        SnackPosition.BOTTOM,
+                        false);
                     return;
                   }
                 },

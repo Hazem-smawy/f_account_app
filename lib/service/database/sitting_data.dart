@@ -1,10 +1,7 @@
 import 'package:account_app/models/sitting_model.dart';
 import 'package:account_app/service/database/helper/database_helper.dart';
 import 'package:account_app/service/database/helper/database_service.dart';
-import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:sqflite/sqflite.dart';
-
-import '../../widget/custom_dialog.dart';
 
 class SittingData {
   Future<void> createTable(Database db) async {
@@ -12,7 +9,8 @@ class SittingData {
         CREATE TABLE IF NOT EXISTS sitting (
           id ${FieldType.idType},
           every ${FieldType.integerType} ,
-          isCopyOn ${FieldType.boolType}
+          isCopyOn ${FieldType.boolType},
+          newData ${FieldType.boolType}
         );
     ''');
   }
@@ -29,7 +27,7 @@ class SittingData {
       final db = await DatabaseService().database;
       final maps = await db.query(
         'sitting',
-        columns: ['id', 'every', 'isCopyOn'],
+        columns: ['id', 'every', 'isCopyOn', 'newData'],
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -54,7 +52,21 @@ class SittingData {
 
       return upOb;
     } catch (e) {
-      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+      // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+    }
+    return null;
+  }
+
+  Future<int?> updateNewData(int value) async {
+    final db = await DatabaseService().database;
+
+    try {
+      final upOb = await db.update('sitting', {'newData': value},
+          where: 'id= ?', whereArgs: [1]);
+
+      return upOb;
+    } catch (e) {
+      //CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
     }
     return null;
   }

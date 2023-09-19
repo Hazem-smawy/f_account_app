@@ -130,6 +130,7 @@ class PdfApi extends GetxController {
  */
   static late Font globalCustomFont;
   static late Font enFont;
+  static late MemoryImage myLogo;
 
   static PersonalController personalController = Get.find();
   static ImageController imageController = Get.find();
@@ -140,12 +141,15 @@ class PdfApi extends GetxController {
         Font.ttf(await rootBundle.load('assets/fonts/DroidKufi-Regular.ttf'));
     enFont =
         Font.ttf(await rootBundle.load('assets/fonts/Tajawal-Regular.ttf'));
+    myLogo = MemoryImage(
+      (await rootBundle.load('assets/images/logo.png')).buffer.asUint8List(),
+    );
   }
 
   static Future<File> saveDocument(
       {required String name, required Document pdf}) async {
     CustomDialog.customSnackBar(
-        " تم حفظ الملف في ملف التنزيلات ", SnackPosition.TOP);
+        " تم حفظ الملف في ملف التنزيلات ", SnackPosition.TOP, false);
 
     final bytes = await pdf.save();
     if (Platform.isAndroid) {
@@ -222,15 +226,17 @@ class PdfApi extends GetxController {
   }
 
   static Padding paddedHeadingTextArabicCell(String textContent) {
+    final isRTL = date_formater.Bidi.detectRtlDirectionality(textContent);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Column(children: [
+        if (!isRTL) SizedBox(height: 5),
         Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Directionality(
-                textDirection: TextDirection.rtl,
+                textDirection: isRTL ? TextDirection.rtl : TextDirection.ltr,
                 child: Text(
                   textContent,
                   style: TextStyle(
@@ -266,6 +272,7 @@ class PdfApi extends GetxController {
       ]);
 
   static Padding paddedHeadingTextCellHeader(String textContent) {
+    final isRTL = date_formater.Bidi.detectRtlDirectionality(textContent);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 5),
       child: Column(
@@ -273,7 +280,7 @@ class PdfApi extends GetxController {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Directionality(
-              textDirection: TextDirection.rtl,
+              textDirection: isRTL ? TextDirection.rtl : TextDirection.ltr,
               child: Text(
                 textContent,
                 textAlign: TextAlign.center,
@@ -288,7 +295,34 @@ class PdfApi extends GetxController {
     );
   }
 
+  static Padding paddedHeadingTextCellRegular(String textContent) {
+    final isRTL = date_formater.Bidi.detectRtlDirectionality(textContent);
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 5),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Directionality(
+              textDirection: isRTL ? TextDirection.rtl : TextDirection.ltr,
+              child: Text(
+                textContent,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  font: globalCustomFont,
+                  color: PdfColors.grey,
+                  fontSize: 10,
+                  fontFallback: [enFont],
+                ),
+              ),
+            )
+          ]),
+    );
+  }
+
   static Padding coloredText(String textContent, PdfColor color) {
+    final isRTL = date_formater.Bidi.detectRtlDirectionality(textContent);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -298,11 +332,37 @@ class PdfApi extends GetxController {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Directionality(
-                textDirection: TextDirection.ltr,
+                textDirection: isRTL ? TextDirection.rtl : TextDirection.ltr,
                 child: Text(textContent,
                     style: TextStyle(
                       color: color,
                       font: enFont,
+                    )),
+              )
+            ]),
+      ]),
+    );
+  }
+
+  static Padding coloredArabicText(String textContent, PdfColor color) {
+    final isRTL = date_formater.Bidi.detectRtlDirectionality(textContent);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        SizedBox(height: 0.2 * PdfPageFormat.cm),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Directionality(
+                textDirection: isRTL ? TextDirection.rtl : TextDirection.ltr,
+                child: Text(textContent,
+                    style: TextStyle(
+                      color: color,
+                      fontSize: 10,
+                      font: globalCustomFont,
+                      fontFallback: [enFont],
                     )),
               )
             ]),
@@ -339,6 +399,7 @@ class PdfApi extends GetxController {
       )
     ]);
   }
+  // global header and footer
 
   static Widget documentFooter(String page) {
     return Container(
@@ -353,8 +414,18 @@ class PdfApi extends GetxController {
             ),
           ),
           Text(page),
-          Column(children: [
+          Row(children: [
             paddedHeadingTextEnglishCell('e-smart'),
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: myLogo,
+                ),
+                shape: BoxShape.circle,
+              ),
+            ),
           ])
         ],
       ),
@@ -367,49 +438,29 @@ class PdfApi extends GetxController {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (imageController.customImage['image'] != null)
-            Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: MemoryImage(imageController.customImage['image']),
+            Column(children: [
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: MemoryImage(imageController.customImage['image']),
+                  ),
+                  shape: BoxShape.circle,
                 ),
-                shape: BoxShape.circle,
               ),
-
-              // child: Image(
-              //   MemoryImage(imageController.customImage['image']),
-              //   fit: BoxFit.cover,
-              // ),
-            ),
+              SizedBox(height: 5),
+              paddedHeadingTextCellHeader(
+                  personalController.newPersonal['address'] ?? ""),
+            ]),
           Spacer(),
           Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
             paddedHeadingTextCellHeader(
                 personalController.newPersonal['name'] ?? ""),
-            Text(
-              personalController.newPersonal['email'] ?? "",
-              style: TextStyle(
-                font: enFont,
-                color: PdfColors.grey,
-                fontSize: 10,
-              ),
-            ),
-            Text(
-              personalController.newPersonal['address'] ?? "",
-              style: TextStyle(
-                  font: globalCustomFont,
-                  color: PdfColors.grey,
-                  fontSize: 10,
-                  fontFallback: [enFont]),
-            ),
-            Text(
-              personalController.newPersonal['phone'] ?? "",
-              style: TextStyle(
-                font: enFont,
-                color: PdfColors.grey,
-                fontSize: 10,
-              ),
-            ),
+            paddedHeadingTextCellRegular(
+                personalController.newPersonal['email'] ?? ""),
+            paddedHeadingTextCellRegular(
+                personalController.newPersonal['phone'] ?? "")
           ])
         ],
       ),
@@ -419,13 +470,14 @@ class PdfApi extends GetxController {
   static Widget sammaryFooterMoney(
       {required double credit, required double debit}) {
     return Container(
-        margin: const EdgeInsets.only(top: 30),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: PdfColors.grey300,
-          ),
+      margin: const EdgeInsets.only(top: 30),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: PdfColors.grey300,
         ),
-        child: Column(children: [
+      ),
+      child: Column(
+        children: [
           Row(mainAxisSize: MainAxisSize.min, children: [
             coloredText(GlobalUtitlity.formatNumberDouble(number: credit),
                 PdfColors.green),
@@ -446,6 +498,8 @@ class PdfApi extends GetxController {
             SizedBox(width: 10),
             paddedHeadingTextArabicCell("الإ جمالي :"),
           ]),
-        ]));
+        ],
+      ),
+    );
   }
 }

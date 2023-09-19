@@ -10,6 +10,7 @@ import 'package:account_app/screen/all_reports/reports_widget/report_headers.dar
 
 import 'package:account_app/screen/all_reports/reports_widget/report_crency_filter.dart';
 import 'package:account_app/utility/curency_format.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -45,6 +46,9 @@ class DailyReportScreen extends StatelessWidget {
                               await DailyPdfController.generateDailyReportPdf();
 
                           OpenFile.open(file.path);
+                        } else {
+                          CustomDialog.customSnackBar("ليس هناك شئ ل طباعتة",
+                              SnackPosition.BOTTOM, true);
                         }
                       },
                     ),

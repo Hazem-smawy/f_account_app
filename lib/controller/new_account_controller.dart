@@ -10,6 +10,7 @@ import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/models/home_model.dart';
 
 import 'package:account_app/models/journal_model.dart';
+import 'package:account_app/service/database/sitting_data.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:get/get.dart';
 
@@ -24,7 +25,8 @@ class NewAccountController extends GetxController {
   DetailController detailController = Get.find();
   Future<void> createNewCustomerAccount() async {
     if (curencyController.selectedCurency['status'] == false) {
-      CustomDialog.customSnackBar("قم بإختيار العملة", SnackPosition.BOTTOM);
+      CustomDialog.customSnackBar(
+          "قم بإختيار العملة", SnackPosition.BOTTOM, false);
       return;
     }
     final int? customerId;
@@ -56,7 +58,8 @@ class NewAccountController extends GetxController {
         addJournal(newCac.id ?? 0);
       } else {
         if (old.status == false) {
-          CustomDialog.customSnackBar("هذا الحساب موقف", SnackPosition.BOTTOM);
+          CustomDialog.customSnackBar(
+              "هذا الحساب موقف", SnackPosition.BOTTOM, false);
           return;
         }
         var currentCustomerAcccounter = old.copyWith(
@@ -85,7 +88,9 @@ class NewAccountController extends GetxController {
         modifiedAt: DateTime.now());
     await detailController.create(newAccount['desc'].toString().trim());
 
-    journalController.createJournal(newJournal);
+    await journalController.createJournal(newJournal);
+    SittingData sittingData = SittingData();
+    await sittingData.updateNewData(1);
   }
 
   Future<CustomerAccount> addNewCustomerAccount(int customerId) async {

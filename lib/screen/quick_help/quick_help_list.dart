@@ -83,10 +83,10 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                       ),
                       Text(
                         homeController.todaysJournals[index]['symbol'],
-                        style: MyTextStyles.body,
+                        style: MyTextStyles.body.copyWith(fontSize: 9),
                       ),
                       const SizedBox(
-                        width: 5,
+                        width: 2,
                       ),
                       SizedBox(
                         width: Get.width / 8,
@@ -117,7 +117,6 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                               Expanded(
                                 child: FittedBox(
                                   fit: BoxFit.scaleDown,
-                                  clipBehavior: Clip.hardEdge,
                                   child: Text(
                                     homeController.todaysJournals[index]
                                         ['accName'],
@@ -130,7 +129,7 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                                 ),
                               ),
                               const SizedBox(
-                                width: 3,
+                                width: 1,
                               ),
                               const FaIcon(
                                 FontAwesomeIcons.folder,

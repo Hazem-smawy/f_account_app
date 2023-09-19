@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/copy_controller.dart';
@@ -20,22 +22,22 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
     {
       "id": 2,
       "image": "assets/images/intro2.png",
-      "title": "العنوان",
+      "title": "إدارة الأ موال بسهولة",
       "desc":
-          "الله في الإسلام هو الإله الواحد الأحد وهو وصف لغوي للذات الإلهية. وله أسماء تسمى أسماء الله الحسنى وهي أكثر من أن تعد"
+          "مراقبة ميزانيتك الشخصية او الحسابات التجارية \n وكذالك مجموعة تقارير دقيقة وهامة",
     },
     {
       "id": 1,
       "image": "assets/images/intro3.png",
-      "title": "العنوان",
+      "title": "واجهات بسيطة",
       "desc":
-          "الله في الإسلام هو الإله الواحد الأحد وهو وصف لغوي للذات الإلهية. وله أسماء تسمى أسماء الله الحسنى وهي أكثر من أن تعد"
+          "واجهات إدخال بسيطة , عمليات غير محدودة بعملات مختلفة \n ومزامنة سحابية لحفظ نسخة تلقائية امنة لبياناتك",
     },
     {
       "id": 0,
       "image": "assets/images/intro4.png",
-      "title": "العنوان",
-      "desc": ". أكثر من أن تعد إغلاق التطبيق"
+      "title": "سجل ديونك ومديونيتك الان",
+      "desc": "سجل ديونك ومديونيتك الان",
     },
   ];
   int i = 0;
@@ -177,12 +179,14 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                                           } else {
                                             CustomDialog.customSnackBar(
                                                 "حدث خطأ عند إستعادة النسخة",
-                                                SnackPosition.TOP);
+                                                SnackPosition.TOP,
+                                                true);
                                           }
                                         } catch (e) {
                                           CustomDialog.customSnackBar(
                                               "حدث خطأ عند إستعادة النسخة",
-                                              SnackPosition.TOP);
+                                              SnackPosition.TOP,
+                                              true);
                                         }
                                       },
                                       child: Container(
@@ -223,8 +227,11 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                                       try {
                                         await copyController
                                             .requestPermission();
-                                        final result = await copyController
-                                            .openDatabaseFile();
+                                        final result = Platform.isIOS
+                                            ? await copyController
+                                                .openDatabaseFileIos()
+                                            : await copyController
+                                                .openDatabaseFile();
                                         if (result == true) {
                                           await introController
                                               .updateIntro()
@@ -235,12 +242,14 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                                         } else {
                                           CustomDialog.customSnackBar(
                                               "حدث خطأ عند إستعادة النسخة",
-                                              SnackPosition.TOP);
+                                              SnackPosition.TOP,
+                                              true);
                                         }
                                       } catch (e) {
                                         CustomDialog.customSnackBar(
                                             "حدث خطأ عند إستعادة النسخة",
-                                            SnackPosition.TOP);
+                                            SnackPosition.TOP,
+                                            true);
                                       }
                                     },
                                     child: Container(
@@ -389,30 +398,30 @@ class FirstPage extends StatelessWidget {
           SizedBox(
             height: lastPage ? 30 : Get.height / 9,
           ),
-          // if (!lastPage)
-          Text(
-            page['title'],
-            style: MyTextStyles.title2.copyWith(
-              color: MyColors.containerColor,
-              fontWeight: FontWeight.normal,
-              fontSize: 23,
+          if (!lastPage)
+            Text(
+              page['title'],
+              style: MyTextStyles.title2.copyWith(
+                color: MyColors.containerColor,
+                fontWeight: FontWeight.normal,
+                fontSize: 18,
+              ),
             ),
-          ),
           const SizedBox(
             height: 20,
           ),
-          if (!lastPage)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Text(
-                page['desc'],
-                textAlign: TextAlign.center,
-                style: MyTextStyles.body.copyWith(
-                  color: MyColors.containerSecondColor,
-                  fontWeight: FontWeight.normal,
-                ),
+          //  if (!lastPage)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Text(
+              page['desc'],
+              textAlign: TextAlign.center,
+              style: MyTextStyles.title2.copyWith(
+                color: MyColors.containerSecondColor,
+                fontWeight: FontWeight.normal,
               ),
             ),
+          ),
         ],
       ),
     );

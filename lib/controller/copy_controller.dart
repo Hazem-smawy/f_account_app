@@ -18,6 +18,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:external_path/external_path.dart' as ex;
 import 'package:permission_handler/permission_handler.dart' as per;
 
+import '../service/database/sitting_data.dart';
 import 'accgroup_controller.dart';
 import 'curency_controller.dart';
 import 'customers_controller.dart';
@@ -44,7 +45,10 @@ class CopyController extends GetxController {
         file: io.File(path),
       );
       Get.back();
-      CustomDialog.customSnackBar("تم حفظ النسخة بنجاح", SnackPosition.BOTTOM);
+      CustomDialog.customSnackBar(
+          "تم حفظ النسخة بنجاح", SnackPosition.BOTTOM, false);
+      SittingData sittingData = SittingData();
+      await sittingData.updateNewData(1);
     }
   }
 
@@ -77,17 +81,18 @@ class CopyController extends GetxController {
           } else {
             Get.back();
             CustomDialog.customSnackBar(
-                "لاتوجد ملفات في جوجل درايف", SnackPosition.TOP);
+                "لاتوجد ملفات في جوجل درايف", SnackPosition.TOP, true);
             return null;
           }
         } else {
           Get.back();
-          CustomDialog.customSnackBar("حدث خطأ ", SnackPosition.TOP);
+          CustomDialog.customSnackBar(
+              "لاتوجد ملفات في جوجل درايف", SnackPosition.TOP, true);
           return null;
         }
       } catch (e) {
         Get.back();
-        CustomDialog.customSnackBar("حدث خطأ ", SnackPosition.TOP);
+        CustomDialog.customSnackBar("حدث خطأ ", SnackPosition.TOP, true);
         return null;
       }
     }
@@ -107,7 +112,7 @@ class CopyController extends GetxController {
       return;
     } catch (e) {
       Get.back();
-      CustomDialog.customSnackBar("حدث خطأ ", SnackPosition.TOP);
+      CustomDialog.customSnackBar("حدث خطأ ", SnackPosition.TOP, false);
       return;
     }
   }
@@ -130,9 +135,11 @@ class CopyController extends GetxController {
 
     await homeController.getTheTodaysJournals();
     await Future.delayed(const Duration(milliseconds: 500));
+
     Get.offAll(() => ShowMyMainScreen());
     CustomDialog.customSnackBar(
-        "تم إسترجاع النسخة بنجاح", SnackPosition.BOTTOM);
+        "تم إسترجاع النسخة بنجاح", SnackPosition.BOTTOM, false);
+    accGroupCurencyController.pageViewCount.value = 0;
   }
 
   Future<List<File>?> getAllFiles() async {
@@ -144,7 +151,8 @@ class CopyController extends GetxController {
           await googleDriveAppData.getAllDriveFiles(driveApi!);
       return allfiles;
     } else {
-      CustomDialog.customSnackBar("error restore all files", SnackPosition.TOP);
+      CustomDialog.customSnackBar(
+          "حدت خطأ عند إستعادة كل الملفات", SnackPosition.TOP, true);
       return null;
     }
   }
@@ -157,7 +165,7 @@ class CopyController extends GetxController {
         driveApi = await googleDriveAppData.getDriveApi(googleUser!);
       } else {
         CustomDialog.customSnackBar(
-            "حدث خطأ أثناء تسجيل الدخول", SnackPosition.TOP);
+            "حدث خطأ أثناء تسجيل الدخول", SnackPosition.TOP, true);
         return;
       }
     } else {
@@ -216,12 +224,12 @@ class CopyController extends GetxController {
         copyDatabaseToFolder(file.path).then((value) {
           Get.back();
           CustomDialog.customSnackBar(
-              "تم الحفظ بنجاح في ${file.path}", SnackPosition.BOTTOM);
+              "تم الحفظ بنجاح في ${file.path}", SnackPosition.BOTTOM, true);
         });
         //  }
       } catch (e) {
         Get.back();
-        CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+        CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM, false);
       }
     }
   }
@@ -322,7 +330,7 @@ class CopyController extends GetxController {
       try {
         targetDatabase.writeAsBytes(bytes);
       } catch (e) {
-        CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+        CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM, true);
       }
     }
   }
@@ -334,10 +342,10 @@ class CopyController extends GetxController {
       CustomDialog.loadingProgress();
       await copyDatabaseToFolderIosFunc(result.absolute.path);
       Get.back();
-      CustomDialog.customSnackBar(
-          "  تم حفظ النسخة بنجاح الي ${result.path}", SnackPosition.BOTTOM);
+      CustomDialog.customSnackBar("  تم حفظ النسخة بنجاح الي ${result.path}",
+          SnackPosition.BOTTOM, false);
     } catch (e) {
-      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM, true);
     }
   }
 
@@ -350,7 +358,7 @@ class CopyController extends GetxController {
     io.File(selectedFolderPath).copy(databasePath);
   }
 
-  Future<void> openDatabaseFileIos() async {
+  Future<bool> openDatabaseFileIos() async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
       if (result != null) {
@@ -360,12 +368,17 @@ class CopyController extends GetxController {
 
           await copyDatabaseFromFolderIos(file.path!);
           restoreSucess();
+          return true;
+        } else {
+          return false;
         }
       } else {
         // User canceled the picker
+        return false;
       }
     } catch (e) {
-      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+      // CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+      return false;
     }
   }
 }

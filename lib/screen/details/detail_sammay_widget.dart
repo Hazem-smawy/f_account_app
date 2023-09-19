@@ -27,7 +27,7 @@ class DetailsSammaryWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(13),
+          borderRadius: BorderRadius.circular(10),
           border: Border.all(color: MyColors.shadowColor),
           color: MyColors.bg,
         ),

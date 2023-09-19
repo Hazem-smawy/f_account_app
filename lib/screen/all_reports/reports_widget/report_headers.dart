@@ -22,13 +22,21 @@ class ReportHeaderWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
+          const SizedBox(
+            width: 5,
+          ),
           GestureDetector(
             onTap: () {
               action();
             },
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-              child: FaIcon(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: MyColors.lessBlackColor,
+              ),
+              padding: const EdgeInsets.only(
+                  top: 10, bottom: 10, left: 10, right: 10),
+              child: const FaIcon(
                 FontAwesomeIcons.filePdf,
                 size: 20,
                 color: MyColors.containerColor,
@@ -46,15 +54,23 @@ class ReportHeaderWidget extends StatelessWidget {
           )),
           GestureDetector(
             onTap: () => Get.back(),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: FaIcon(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: MyColors.lessBlackColor,
+              ),
+              padding: const EdgeInsets.only(
+                  top: 10, bottom: 10, left: 10, right: 5),
+              child: const FaIcon(
                 FontAwesomeIcons.arrowRightLong,
                 size: 20,
                 color: MyColors.secondaryTextColor,
               ),
             ),
           ),
+          const SizedBox(
+            width: 10,
+          )
         ],
       ),
     );

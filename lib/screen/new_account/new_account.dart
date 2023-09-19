@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_typing_uninitialized_variables
 
+import 'package:account_app/constant/notification.dart';
 import 'package:account_app/constant/shadows.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/curency_controller.dart';
@@ -21,7 +22,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/widget/custom_textfiled_widget.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
 // import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 
 class NewAccountScreen extends StatefulWidget {
@@ -109,261 +109,231 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   // }
 
   // ignore: unused_element
-  void _handleInvalidPermissions(PermissionStatus permissionStatus) {
-    if (permissionStatus == PermissionStatus.denied) {
-      const snackBar = SnackBar(content: Text('Access to contact data denied'));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    } else if (permissionStatus == PermissionStatus.permanentlyDenied) {
-      CustomDialog.customSnackBar(
-          'Contact data not available on device', SnackPosition.TOP);
-    }
-  }
+  // void _handleInvalidPermissions(PermissionStatus permissionStatus) {
+  //   if (permissionStatus == PermissionStatus.denied) {
+  //     const snackBar = SnackBar(content: Text('Access to contact data denied'));
+  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //   } else if (permissionStatus == PermissionStatus.permanentlyDenied) {
+  //     CustomDialog.customSnackBar(
+  //         'Contact data not available on device', SnackPosition.TOP);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     CEC.errorMessage.value = "";
     return SafeArea(
-      top: false,
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            details = [];
-          });
-        },
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          margin: const EdgeInsets.only(right: 10, left: 10, bottom: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            // borderRadius: BorderRadius.only(
-            //     topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-            color: MyColors.bg,
-          ),
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Stack(
-                children: [
-                  Obx(
-                    () => Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (CEC.errorMessage.isNotEmpty)
-                          const ErrorShowWidget(),
-                        if (isFindedIt) const CorrectShowWidget(),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            SizedBox(
-                                width: Get.width / 3,
-                                child: CustomNumberFieldWidget(
-                                  textHint: "المبلغ",
-                                  onTap: () {
-                                    setState(() {
-                                      customers.clear();
+        top: false,
+        child: GestureDetector(
+          onTap: () {
+            setState(() {
+              details = [];
+            });
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            margin: const EdgeInsets.only(right: 10, left: 10, bottom: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              // borderRadius: BorderRadius.only(
+              //     topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+              color: MyColors.bg,
+            ),
+            child: SafeArea(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Obx(
+                  () => Stack(
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (CEC.errorMessage.isNotEmpty)
+                            const ErrorShowWidget(),
+                          if (isFindedIt) const CorrectShowWidget(),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              SizedBox(
+                                  width: Get.width / 3,
+                                  child: CustomNumberFieldWidget(
+                                    textHint: "المبلغ",
+                                    onTap: () {
+                                      setState(() {
+                                        customers.clear();
 
-                                      details = [];
-                                    });
-                                  },
-                                  action: (p0) {
-                                    newAccountController.newAccount.update(
-                                      'money',
-                                      (value) => p0,
-                                      ifAbsent: () => p0,
-                                    );
-                                  },
-                                )),
-                            const SizedBox(width: 10),
-                            Expanded(
-                                child: Container(
-                              height: 50,
-                              alignment: Alignment.center,
-                              //padding: const EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: MyColors.containerSecondColor,
-                              ),
-                              child: Row(
-                                children: [
-                                  // SizedBox(
-                                  //   width: 10,
-                                  // ),
-                                  // GestureDetector(
-                                  //   // onTap: _askContactPermissions,
-                                  //   child: FaIcon(
-                                  //     FontAwesomeIcons.user,
-                                  //     size: 18,
-                                  //     color: MyColors.secondaryTextColor,
-                                  //   ),
-                                  // ),
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: nameController,
-                                      textAlign: TextAlign.right,
-                                      textDirection: TextDirection.rtl,
-                                      style: MyTextStyles.subTitle.copyWith(
-                                          color: MyColors.blackColor,
-                                          fontWeight: FontWeight.bold),
-                                      onTap: () {
-                                        setState(() {
-                                          details = [];
-                                        });
-                                      },
-                                      onChanged: (p0) {
-                                        selectionCustomer = null;
-                                        CEC.errorMessage.value = "";
-                                        newAccountController.newAccount.update(
-                                          'name',
-                                          (value) => p0,
-                                          ifAbsent: () => p0,
-                                        );
-                                        if (p0.isNotEmpty) {
+                                        details = [];
+                                      });
+                                    },
+                                    action: (p0) {
+                                      newAccountController.newAccount.update(
+                                        'money',
+                                        (value) => p0,
+                                        ifAbsent: () => p0,
+                                      );
+                                    },
+                                  )),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                  child: Container(
+                                height: 50,
+                                alignment: Alignment.center,
+                                //padding: const EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: MyColors.containerSecondColor,
+                                ),
+                                child: Row(
+                                  children: [
+                                    // SizedBox(
+                                    //   width: 10,
+                                    // ),
+                                    // GestureDetector(
+                                    //   // onTap: _askContactPermissions,
+                                    //   child: FaIcon(
+                                    //     FontAwesomeIcons.user,
+                                    //     size: 18,
+                                    //     color: MyColors.secondaryTextColor,
+                                    //   ),
+                                    // ),
+                                    Expanded(
+                                      child: TextFormField(
+                                        controller: nameController,
+                                        textAlign: TextAlign.right,
+                                        textDirection: TextDirection.rtl,
+                                        style: MyTextStyles.subTitle.copyWith(
+                                            color: MyColors.blackColor,
+                                            fontWeight: FontWeight.bold),
+                                        onTap: () {
                                           setState(() {
-                                            customers = customerController
-                                                .allCustomers
-                                                .where((element) => element.name
-                                                    .contains(
-                                                        p0.toString().trim()))
-                                                .toList();
-                                          });
-                                        } else {
-                                          setState(() {
-                                            customers.clear();
                                             details = [];
                                           });
-                                        }
-                                      },
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: "الاسم",
-                                          hintStyle: MyTextStyles.body.copyWith(
-                                              fontWeight: FontWeight.normal),
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 10)),
+                                        },
+                                        onChanged: (p0) {
+                                          selectionCustomer = null;
+                                          CEC.errorMessage.value = "";
+                                          newAccountController.newAccount
+                                              .update(
+                                            'name',
+                                            (value) => p0,
+                                            ifAbsent: () => p0,
+                                          );
+                                          if (p0.isNotEmpty) {
+                                            setState(() {
+                                              customers = customerController
+                                                  .allCustomers
+                                                  .where((element) =>
+                                                      element.name.contains(
+                                                          p0.toString().trim()))
+                                                  .toList();
+                                            });
+                                          } else {
+                                            setState(() {
+                                              customers.clear();
+                                              details = [];
+                                            });
+                                          }
+                                        },
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: "الاسم",
+                                            hintStyle: MyTextStyles.body
+                                                .copyWith(
+                                                    fontWeight:
+                                                        FontWeight.normal),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 10)),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
+                              )),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () => _selectDate(context),
+                                child: Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: MyColors.containerSecondColor,
+                                    ),
+                                    child: const Center(
+                                        child: FaIcon(
+                                      FontAwesomeIcons.calendarCheck,
+                                      color: MyColors.secondaryTextColor,
+                                      size: 22,
+                                    ))),
                               ),
-                            )),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () => _selectDate(context),
-                              child: Container(
-                                  height: 50,
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: MyColors.containerSecondColor,
-                                  ),
-                                  child: const Center(
-                                      child: FaIcon(
-                                    FontAwesomeIcons.calendarCheck,
-                                    color: MyColors.secondaryTextColor,
-                                    size: 22,
-                                  ))),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                                child: DetailTextFieldWidget(
-                              key: const Key("newAccount"),
-                              textHint: "التفاصل",
-                              controller: detailsTextController,
-                              action: (p0) {
-                                newAccountController.newAccount.update(
-                                  'desc',
-                                  (value) => p0,
-                                  ifAbsent: () => p0,
-                                );
+                              const SizedBox(width: 10),
+                              Expanded(
+                                  child: DetailTextFieldWidget(
+                                key: const Key("newAccount"),
+                                textHint: "التفاصل",
+                                controller: detailsTextController,
+                                action: (p0) {
+                                  newAccountController.newAccount.update(
+                                    'desc',
+                                    (value) => p0,
+                                    ifAbsent: () => p0,
+                                  );
 
-                                if (p0.isNotEmpty) {
-                                  setState(() {
-                                    details = detailController.allDetails
-                                        .where((e) => e['body']
-                                            .toString()
-                                            .contains(p0.toString().trim()))
-                                        .toList();
-                                  });
-                                } else {
-                                  setState(() {
-                                    details = [];
-                                  });
-                                }
-                              },
-                            )),
-                          ],
-                        ),
-                        CurencyShowWidget(),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Flexible(
-                              child: CustomBtnWidget(
-                                color: MyColors.debetColor,
-                                label: "له",
-                                action: () {
-                                  createCustomerAccount(true);
+                                  if (p0.isNotEmpty) {
+                                    setState(() {
+                                      details = detailController.allDetails
+                                          .where((e) => e['body']
+                                              .toString()
+                                              .contains(p0.toString().trim()))
+                                          .toList();
+                                    });
+                                  } else {
+                                    setState(() {
+                                      details = [];
+                                    });
+                                  }
                                 },
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Flexible(
+                              )),
+                            ],
+                          ),
+                          CurencyShowWidget(),
+                          const SizedBox(height: 20),
+                          Row(
+                            children: [
+                              Flexible(
                                 child: CustomBtnWidget(
-                              color: MyColors.creditColor,
-                              label: "عليه",
-                              action: () {
-                                createCustomerAccount(false);
-                              },
-                            ))
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                      ],
-                    ),
-                  ),
-                  if (customers.isNotEmpty)
-                    Positioned(
-                      top: 65,
-                      right: 0,
-                      left: 0,
-                      child: Container(
-                        padding: const EdgeInsets.only(top: 3),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: MyColors.secondaryTextColor.withOpacity(0.5),
-                        ),
-                        child: ListView.builder(
-                          itemCount: customers.length,
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ExitCustomerItemWidget(
-                              customer: customers[index],
-                              action: () {
-                                setState(() {
-                                  selectionCustomer = customers[index];
-                                  nameController.text = customers[index].name;
-                                  customers.clear();
-                                });
-                              },
-                            );
-                          },
-                        ),
+                                  color: MyColors.debetColor,
+                                  label: "له",
+                                  action: () {
+                                    createCustomerAccount(true);
+                                  },
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Flexible(
+                                  child: CustomBtnWidget(
+                                color: MyColors.creditColor,
+                                label: "عليه",
+                                action: () {
+                                  createCustomerAccount(false);
+                                },
+                              ))
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                        ],
                       ),
-                    ),
-                  if (details.isNotEmpty)
-                    Positioned(
-                      top: 125,
-                      right: 0,
-                      left: 0,
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Container(
-                            height: Get.height / 6.4,
+                      if (customers.isNotEmpty)
+                        Positioned(
+                          top: CEC.errorMessage.value == "" ? 65 : 115,
+                          right: 0,
+                          left: 0,
+                          child: Container(
                             padding: const EdgeInsets.only(top: 3),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
@@ -371,60 +341,102 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                   MyColors.secondaryTextColor.withOpacity(0.5),
                             ),
                             child: ListView.builder(
-                              itemCount: details.length,
+                              itemCount: customers.length,
                               shrinkWrap: true,
                               itemBuilder: (BuildContext context, int index) {
-                                return DetailListItemWidet(
-                                  body: details[index]['body'],
+                                return ExitCustomerItemWidget(
+                                  customer: customers[index],
                                   action: () {
                                     setState(() {
-                                      detailsTextController.text =
-                                          details[index]['body'];
-                                      newAccountController.newAccount.update(
-                                        'desc',
-                                        (value) => details[index]['body'],
-                                        ifAbsent: () => details[index]['body'],
-                                      );
-
-                                      details = [];
+                                      selectionCustomer = customers[index];
+                                      nameController.text =
+                                          customers[index].name;
+                                      customers.clear();
                                     });
                                   },
                                 );
                               },
                             ),
                           ),
-                          Positioned(
-                              left: -5,
-                              top: -5,
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    details = [];
-                                  });
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
-                                      boxShadow: [MyShadow.blackShadow]),
-                                  child: const FaIcon(
-                                    FontAwesomeIcons.xmark,
-                                    size: 13,
-                                    color: Colors.red,
-                                  ),
+                        ),
+                      if (details.isNotEmpty)
+                        Positioned(
+                          top: CEC.errorMessage.value == "" ? 125 : 175,
+                          right: 0,
+                          left: 0,
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Container(
+                                // height: Get.height / 6.4,
+                                constraints: BoxConstraints(
+                                  minHeight: 40,
+                                  maxHeight: Get.height / 6.4,
                                 ),
-                              )),
-                        ],
-                      ),
-                    ),
-                ],
+                                padding: const EdgeInsets.only(top: 3),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: MyColors.secondaryTextColor
+                                      .withOpacity(0.5),
+                                ),
+                                child: ListView.builder(
+                                  itemCount: details.length,
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return DetailListItemWidet(
+                                      body: details[index]['body'],
+                                      action: () {
+                                        setState(() {
+                                          detailsTextController.text =
+                                              details[index]['body'];
+                                          newAccountController.newAccount
+                                              .update(
+                                            'desc',
+                                            (value) => details[index]['body'],
+                                            ifAbsent: () =>
+                                                details[index]['body'],
+                                          );
+
+                                          details = [];
+                                        });
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                              Positioned(
+                                  left: -5,
+                                  top: -5,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        details = [];
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                          boxShadow: [MyShadow.blackShadow]),
+                                      child: const FaIcon(
+                                        FontAwesomeIcons.xmark,
+                                        size: 13,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  )),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
   /*
 
@@ -467,12 +479,12 @@ Column(
     if (newAccountController.newAccount['name'] == null ||
         newAccountController.newAccount['money'] == null ||
         newAccountController.newAccount['desc'] == null) {
-      CEC.errorMessage.value = "no data to puplished";
+      CEC.errorMessage.value = interAllValues;
       return;
     }
     if (newAccountController.newAccount['money'].length < 1 ||
         newAccountController.newAccount['desc'].length < 2) {
-      CEC.errorMessage.value = "no data to puplished";
+      CEC.errorMessage.value = interValidText;
       return;
     }
 
@@ -481,7 +493,8 @@ Column(
                 element.id == curencyController.selectedCurency['crId'])
             ?.status ==
         false) {
-      CustomDialog.customSnackBar("لم تقم بتحديد العمله", SnackPosition.BOTTOM);
+      CustomDialog.customSnackBar(
+          "لم تقم بتحديد العمله", SnackPosition.BOTTOM, true);
       return;
     }
 
@@ -523,7 +536,7 @@ Column(
         );
       }
     } catch (e) {
-      CEC.errorMessage.value = "قم بإدخال الحقول بشكل صحيح";
+      CEC.errorMessage.value = "قم بإدخال المبلغ بشكل صحيح";
       return;
     }
 
@@ -542,7 +555,8 @@ Column(
       newAccountController.createNewCustomerAccount();
     } else {
       if (findCustomer?.status == false) {
-        CustomDialog.customSnackBar("هذا الحساب موقف", SnackPosition.BOTTOM);
+        CustomDialog.customSnackBar(
+            " هذا الحساب موقف من الإعدادات", SnackPosition.BOTTOM, true);
         return;
       }
       _showBottomSheet();

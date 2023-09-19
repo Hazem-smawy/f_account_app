@@ -27,7 +27,7 @@ class DetialInfoSheet extends StatelessWidget {
         vertical: 100,
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(12),
         color: MyColors.containerColor,
       ),
       child: Scaffold(
@@ -202,11 +202,11 @@ class DetialInfoSheet extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(16),
                     color: MyColors.secondaryTextColor,
                   ),
                   child: Text(
-                    "إلغاء",
+                    "رجوع",
                     textAlign: TextAlign.center,
                     style: MyTextStyles.subTitle.copyWith(color: MyColors.bg),
                   ),

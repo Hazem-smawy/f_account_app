@@ -14,6 +14,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/accgroup_controller.dart';
+import '../../../widget/custom_dialog.dart';
 
 class CustomerAccountsInAccGroupReportScreen extends StatelessWidget {
   CustomerAccountsInAccGroupReportScreen({super.key});
@@ -38,6 +39,9 @@ class CustomerAccountsInAccGroupReportScreen extends StatelessWidget {
                       .allCustomerAccountsRow.isNotEmpty) {
                     CustomerAccountsInAccGroupPdfController
                         .generateAccGroupPdfReports();
+                  } else {
+                    CustomDialog.customSnackBar(
+                        "ليس هناك شئ ل طباعتة", SnackPosition.BOTTOM, true);
                   }
                 },
               ),

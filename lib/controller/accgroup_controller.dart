@@ -3,6 +3,8 @@ import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/service/database/accgroup_data.dart';
 import 'package:get/get.dart';
 
+import '../service/database/sitting_data.dart';
+
 class AccGroupController extends GetxController {
   AccGroupData accGroupData = AccGroupData();
   AccGroupCurencyController accGroupCurencyController = Get.find();
@@ -39,13 +41,17 @@ class AccGroupController extends GetxController {
   }
 
   Future<void> createAccGroup(AccGroup accGroup) async {
-    accGroupData.create(accGroup);
-    readAllAccGroup();
+    await accGroupData.create(accGroup);
+    await readAllAccGroup();
+    SittingData sittingData = SittingData();
+    await sittingData.updateNewData(1);
   }
 
   Future<void> updateAccGroup(AccGroup accGroup) async {
     accGroupData.updateAccGroup(accGroup);
-    readAllAccGroup();
+    await readAllAccGroup();
+    SittingData sittingData = SittingData();
+    await sittingData.updateNewData(1);
   }
 
   Future<void> deleteAccGroup(int id) async {

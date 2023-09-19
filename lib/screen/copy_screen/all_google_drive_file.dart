@@ -53,7 +53,7 @@ class _ShowAllFilesState extends State<ShowAllFiles> {
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           child: Column(
             children: [
-              CustomBackBtnWidget(
+              const CustomBackBtnWidget(
                 title: " كل الملفات",
               ),
               const SizedBox(
@@ -221,7 +221,7 @@ class ShowFileItemWidget extends StatelessWidget {
                       action();
                       Get.back();
                       CustomDialog.customSnackBar(
-                          "تم الحذف بنجاح", SnackPosition.TOP);
+                          "تم الحذف بنجاح", SnackPosition.TOP, false);
                     },
                   );
                 }

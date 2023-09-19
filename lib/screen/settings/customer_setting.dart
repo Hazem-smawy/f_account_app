@@ -28,7 +28,7 @@ class CustomerSettingScreen extends StatelessWidget {
                 const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 50),
             child: Column(
               children: [
-                CustomBackBtnWidget(title: "العملاء"),
+                const CustomBackBtnWidget(title: "العملاء"),
                 const SizedBox(height: 20),
                 if (customerController.allCustomers.isEmpty)
                   const EmptyWidget(
@@ -249,6 +249,7 @@ class NewCustomerSheet extends StatelessWidget {
                         CustomDialog.customSnackBar(
                           changeStatusMessageCustomer,
                           SnackPosition.TOP,
+                          false,
                         );
                       }
                     }),
@@ -329,7 +330,9 @@ class NewCustomerSheet extends StatelessWidget {
                                 .newCustomer[CustomerField.name].length <
                             2) {
                           CustomDialog.customSnackBar(
-                              "ادخل كل القيم بطريقة صحيحة", SnackPosition.TOP);
+                              "ادخل كل القيم بطريقة صحيحة",
+                              SnackPosition.TOP,
+                              false);
 
                           return;
                         }
@@ -364,7 +367,9 @@ class NewCustomerSheet extends StatelessWidget {
                             .getCustomerAccountsFromCurencyAndAccGroupIds();
                       } else {
                         CustomDialog.customSnackBar(
-                            "ادخل كل القيم بطريقة صحيحة", SnackPosition.TOP);
+                            "ادخل كل القيم بطريقة صحيحة",
+                            SnackPosition.TOP,
+                            false);
 
                         return;
                       }

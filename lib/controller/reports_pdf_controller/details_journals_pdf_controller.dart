@@ -74,7 +74,7 @@ class JournalPdfControls {
     }
   }
 
-  static Widget buildMoneyMovementsTableReport(final Journls) {
+  static Widget buildMoneyMovementsTableReport(final journls) {
     final headers = ["التأريخ", "لك", "المبلغ", 'التفاصيل'];
 
     return Table(
@@ -84,7 +84,7 @@ class JournalPdfControls {
           TableRow(
               decoration: const BoxDecoration(color: PdfColors.grey200),
               children: PdfApi.buildHeader(headers)),
-          ...Journls.map((e) {
+          ...journls.map((e) {
             return TableRow(children: [
               PdfApi.paddedHeadingTextEnglishCell(
                 date_formater.DateFormat.yMd().format(e.registeredAt),

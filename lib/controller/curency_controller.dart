@@ -2,6 +2,8 @@ import 'package:account_app/models/curency_model.dart';
 import 'package:account_app/service/database/curency_data.dart';
 import 'package:get/get.dart';
 
+import '../service/database/sitting_data.dart';
+
 class CurencyController extends GetxController {
   CurencyData curencyData = CurencyData();
   final allCurency = <Curency>[].obs;
@@ -34,13 +36,17 @@ class CurencyController extends GetxController {
   }
 
   Future<void> createCurency(Curency curency) async {
-    curencyData.create(curency);
-    readAllCurency();
+    await curencyData.create(curency);
+    await readAllCurency();
+    SittingData sittingData = SittingData();
+    await sittingData.updateNewData(1);
   }
 
   Future<void> updateCurency(Curency curency) async {
-    curencyData.updateCurency(curency);
-    readAllCurency();
+    await curencyData.updateCurency(curency);
+    await readAllCurency();
+    SittingData sittingData = SittingData();
+    await sittingData.updateNewData(1);
   }
 
   Future<void> deleteCurency(int id) async {

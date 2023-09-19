@@ -29,7 +29,7 @@ class CurencySettingScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
               children: [
-                CustomBackBtnWidget(title: "العملات"),
+                const CustomBackBtnWidget(title: "العملات"),
                 const SizedBox(height: 15),
                 if (curencyController.allCurency.isEmpty)
                   const EmptyWidget(
@@ -229,10 +229,8 @@ class NewCurencySheet extends StatelessWidget {
                         ifAbsent: () => newValue,
                       );
                       if (newValue == false) {
-                        CustomDialog.customSnackBar(
-                          changeStatusMessageCurency,
-                          SnackPosition.TOP,
-                        );
+                        CustomDialog.customSnackBar(changeStatusMessageCurency,
+                            SnackPosition.TOP, false);
                       }
                     }),
                 Text(
@@ -304,7 +302,9 @@ class NewCurencySheet extends StatelessWidget {
                                     .newCurency[CurencyField.symbol].length <
                                 1) {
                           CustomDialog.customSnackBar(
-                              "ادخل كل القيم بطريقة صحيحة", SnackPosition.TOP);
+                              "ادخل كل القيم بطريقة صحيحة",
+                              SnackPosition.TOP,
+                              true);
                           CEC.errorMessage.value = "ادخل كل القيم بطريقة صحيحة";
 
                           return;
@@ -340,7 +340,9 @@ class NewCurencySheet extends StatelessWidget {
                         curencyController.readAllCurency();
                       } else {
                         CustomDialog.customSnackBar(
-                            "ادخل كل القيم بطريقة صحيحة", SnackPosition.TOP);
+                            "ادخل كل القيم بطريقة صحيحة",
+                            SnackPosition.TOP,
+                            true);
 
                         CEC.errorMessage.value = "ادخل كل القيم بطريقة صحيحة";
 
@@ -348,7 +350,7 @@ class NewCurencySheet extends StatelessWidget {
                       }
                     } catch (e) {
                       CustomDialog.customSnackBar(
-                          "حدث خطأ", SnackPosition.BOTTOM);
+                          "حدث خطأ", SnackPosition.BOTTOM, true);
                     }
                   },
                 ))

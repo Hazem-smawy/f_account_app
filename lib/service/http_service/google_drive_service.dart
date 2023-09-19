@@ -91,7 +91,7 @@ class GoogleDriveAppData {
     try {
       await driveApi.files.delete(driveFile.id!);
     } catch (e) {
-      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM, true);
     }
   }
 

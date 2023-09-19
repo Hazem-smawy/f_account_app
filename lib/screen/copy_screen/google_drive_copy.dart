@@ -110,7 +110,7 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                         await contorller.uploadCopy();
                       },
                       description:
-                          "إذا احتجت في أي وقت إلى نسخة احتياطية بديلة، فيمكنك نسخ بيانات جهازك احتياطيًا باستخدام",
+                          "قم بعمل نسخة إحتياطية جديدة , لحفظ كل بياناتك في جوجل درايف وإستعادتها في وقت لاحق",
                     ),
                     CustomDriveCopyBtnWidget(
                       topIcon: FontAwesomeIcons.upload,
@@ -122,7 +122,7 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                         contorller.getTheLastFile();
                       },
                       description:
-                          "إذا احتجت في أي وقت إلى نسخة احتياطية بديلة، فيمكنك نسخ بيانات جهازك احتياطيًا باستخدام",
+                          'عند استعادة اي نسخة سابقة سيتم حذف جميع البيانات الحالية , تأكد من عمل نسخة إحتياطية للبيانات الحالية',
                     ),
                     const SizedBox(
                       height: 10,
@@ -152,7 +152,8 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                                       if (Get.isSnackbarOpen == false) {
                                         CustomDialog.customSnackBar(
                                             "سيتم رفع نسخة الي جوجل درايف كل ${getCopyEveryString(sittingController.every.value)}",
-                                            SnackPosition.BOTTOM);
+                                            SnackPosition.BOTTOM,
+                                            false);
                                       }
                                     }
                                   }
@@ -374,7 +375,7 @@ class CustomDriveCopyBtnWidget extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                "عرض كل الملفات",
+                                " كل النسخ",
                                 style: MyTextStyles.subTitle.copyWith(
                                   color: MyColors.bg,
                                   fontWeight: FontWeight.normal,
@@ -384,7 +385,7 @@ class CustomDriveCopyBtnWidget extends StatelessWidget {
                                 width: 7,
                               ),
                               const FaIcon(
-                                FontAwesomeIcons.fileCirclePlus,
+                                FontAwesomeIcons.filePen,
                                 color: MyColors.bg,
                                 size: 17,
                               ),

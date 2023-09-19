@@ -28,7 +28,8 @@ class AccGroupData {
       Get.back();
       return accGroup.copyWith(id: id);
     } catch (e) {
-      CustomDialog.customSnackBar('هذا الاسم موجود من قبل', SnackPosition.TOP);
+      CustomDialog.customSnackBar(
+          'هذا الاسم موجود من قبل', SnackPosition.TOP, true);
     }
     return null;
   }
@@ -65,7 +66,8 @@ class AccGroupData {
       Get.back();
       return upOb;
     } catch (e) {
-      CustomDialog.customSnackBar('هذا الاسم موجود من قبل', SnackPosition.TOP);
+      CustomDialog.customSnackBar(
+          'هذا الاسم موجود من قبل', SnackPosition.TOP, true);
     }
     return null;
   }

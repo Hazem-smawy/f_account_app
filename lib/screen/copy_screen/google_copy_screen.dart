@@ -15,8 +15,8 @@ class GoogleCopyScreen extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: CustomBackBtnWidget(title: " النسخ الإ حتياطي"),
             ),
             Expanded(

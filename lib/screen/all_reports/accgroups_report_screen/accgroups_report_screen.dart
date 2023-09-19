@@ -13,10 +13,11 @@ import 'package:get/get.dart';
 
 import '../../../controller/accgroup_controller.dart';
 import '../../../controller/reports_pdf_controller/accgroups_pdf_controller.dart';
+import '../../../widget/custom_dialog.dart';
 
 class AccGroupsReportScreen extends StatelessWidget {
   AccGroupsReportScreen({super.key});
-  final AccGroupsReportController allAccGroupReportController =
+  final AccGroupsReportController accGroupReportController =
       Get.put(AccGroupsReportController());
   final AccGroupController accGroupController = Get.find();
 
@@ -34,7 +35,13 @@ class AccGroupsReportScreen extends StatelessWidget {
               child: ReportHeaderWidget(
                 title: " إجمالي التصنيفات",
                 action: () {
-                  AccGroupsPdfContoller.generateAllAccGroupPdfReports();
+                  if (accGroupReportController.totalCredit.value != 0.0 &&
+                      accGroupReportController.totalDebit.value != 0.0) {
+                    AccGroupsPdfContoller.generateAllAccGroupPdfReports();
+                  } else {
+                    CustomDialog.customSnackBar(
+                        "ليس هناك شئ ل طباعتة", SnackPosition.BOTTOM, true);
+                  }
                 },
               ),
             ),
@@ -53,10 +60,10 @@ class AccGroupsReportScreen extends StatelessWidget {
                   // allAccGroupReportController.totalCredit.value = 0;
                   // allAccGroupReportController.totalDebit.value = 0;
 
-                  allAccGroupReportController.getAllAccGroupSammary();
+                  accGroupReportController.getAllAccGroupSammary();
                 },
-                curencyId: allAccGroupReportController.curencyId.value,
-                controller: allAccGroupReportController,
+                curencyId: accGroupReportController.curencyId.value,
+                controller: accGroupReportController,
               ),
             ),
             const SizedBox(
@@ -74,7 +81,7 @@ class AccGroupsReportScreen extends StatelessWidget {
               ),
             ),
             ReportFooterWidget(
-              controller: allAccGroupReportController,
+              controller: accGroupReportController,
             )
           ],
         ),

@@ -63,10 +63,8 @@ class _CustomerAccountDetailsSheetState
                       status = value;
                     });
                     if (value == false) {
-                      CustomDialog.customSnackBar(
-                        changeStatusMessageCustomer,
-                        SnackPosition.TOP,
-                      );
+                      CustomDialog.customSnackBar(changeStatusMessageCustomer,
+                          SnackPosition.TOP, false);
                     }
                   }),
               const Spacer(),
@@ -77,7 +75,7 @@ class _CustomerAccountDetailsSheetState
               )
             ],
           ),
-          Divider(),
+          const Divider(),
           const SizedBox(height: 10),
           Row(
             children: [

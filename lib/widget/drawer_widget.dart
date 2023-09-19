@@ -13,7 +13,6 @@ import 'package:account_app/screen/personal_info/personal_info.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/no_personal_info_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
@@ -293,38 +292,21 @@ class MyDrawerView extends StatelessWidget {
                     ),
                     DrawerItemWidget(
                       onPress: () {
-                        Get.to(() => ContactAndSupportsScreen());
+                        Get.to(() => const ContactAndSupportsScreen());
                       },
                       icon: FontAwesomeIcons.phone,
                       title: "الاتصال والدعم",
                     ),
                     DrawerItemWidget(
-                      onPress: () => Get.to(() => AboutAppScreen()),
+                      onPress: () => Get.to(() => const AboutAppScreen()),
                       icon: FontAwesomeIcons.circleExclamation,
                       title: " حول البرنامج",
                     ),
-                    ListTile(
-                      contentPadding: const EdgeInsets.only(right: 20),
-                      onTap: () {
-                        SystemNavigator.pop();
-                        // closeApp();
-                        // print("h");
-                      },
-                      title: Text(
-                        "خروج",
-                        textAlign: TextAlign.right,
-                        style: MyTextStyles.title2.copyWith(
-                          color: MyColors.secondaryTextColor,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                      trailing: const FaIcon(
-                        FontAwesomeIcons.arrowRightToBracket,
-                        size: 20,
-                        color: MyColors.secondaryTextColor,
-                      ),
+                    DrawerItemWidget(
+                      onPress: () => Get.to(() => const AboutAppScreen()),
+                      icon: FontAwesomeIcons.solidCircleQuestion,
+                      title: "طريقة الإ ستخدام",
                     ),
-                    const SizedBox(height: 10),
                   ],
                 ),
               ),

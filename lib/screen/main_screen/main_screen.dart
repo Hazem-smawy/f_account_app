@@ -9,7 +9,7 @@ import 'package:account_app/screen/home/home.dart';
 import 'package:account_app/screen/new_account/new_account.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/drawer_widget.dart';
-import 'package:account_app/widget/empty_accGroup_widget.dart';
+import 'package:account_app/widget/empty_accgroup_widget.dart';
 import 'package:account_app/widget/my_appbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -59,6 +59,7 @@ class MyMainScreen extends StatelessWidget {
                                   .allAccgroupsAndCurency.isNotEmpty
                               ? accGroupController.allAccGroups
                                   .firstWhereOrNull((element) =>
+                                      // ignore: unrelated_type_equality_checks
                                       element.id ==
                                       accGroupCurencyController
                                               .allAccgroupsAndCurency[
@@ -206,8 +207,8 @@ class MyMainScreen extends StatelessWidget {
                                           const Duration(milliseconds: 200),
                                       curve: Curves.linear);
                                 } catch (e) {
-                                  CustomDialog.customSnackBar(
-                                      "حدث خطأ", SnackPosition.BOTTOM);
+                                  // CustomDialog.customSnackBar(
+                                  //     "حدث خطأ", SnackPosition.BOTTOM);
                                 }
                               }
                             });
@@ -215,7 +216,7 @@ class MyMainScreen extends StatelessWidget {
                         }
                       } else {
                         CustomDialog.customSnackBar(
-                            "هذا التصنيف موقف", SnackPosition.BOTTOM);
+                            "هذا التصنيف موقف", SnackPosition.BOTTOM, true);
                         return;
                       }
                     },

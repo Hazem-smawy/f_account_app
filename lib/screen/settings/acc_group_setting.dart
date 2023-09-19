@@ -26,7 +26,7 @@ class AccGroupSettingScreen extends StatelessWidget {
           child: Obx(
             () => Column(
               children: [
-                CustomBackBtnWidget(title: "التصنيفات"),
+                const CustomBackBtnWidget(title: "التصنيفات"),
                 const SizedBox(height: 15),
                 if (accGroupController.allAccGroups.isEmpty)
                   const EmptyWidget(
@@ -212,7 +212,7 @@ class NewAccGroupSheet extends StatelessWidget {
                         );
                         if (newValue == false) {
                           CustomDialog.customSnackBar(
-                              changeStatusMessageAcc, SnackPosition.TOP);
+                              changeStatusMessageAcc, SnackPosition.TOP, false);
                         }
                       }),
                   Text(
@@ -279,7 +279,8 @@ class NewAccGroupSheet extends StatelessWidget {
                                 if (accgroup.name.isEmpty) {
                                   CustomDialog.customSnackBar(
                                       "ادخل كل القيم بطريقة صحيحة",
-                                      SnackPosition.TOP);
+                                      SnackPosition.TOP,
+                                      true);
 
                                   return;
                                 }
@@ -294,7 +295,8 @@ class NewAccGroupSheet extends StatelessWidget {
                               } else {
                                 CustomDialog.customSnackBar(
                                     "ادخل كل القيم بطريقة صحيحة",
-                                    SnackPosition.TOP);
+                                    SnackPosition.TOP,
+                                    true);
 
                                 return;
                               }

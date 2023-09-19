@@ -142,7 +142,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: Get.width / 6,
+                            width: Get.width / 5,
                             child: Text(
                               'الحساب',
                               textAlign: TextAlign.center,
@@ -152,7 +152,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ),
                           ),
                           SizedBox(
-                            width: Get.width / 7,
+                            width: Get.width / 9,
                             child: Text(
                               'التأريخ',
                               textAlign: TextAlign.center,
@@ -163,9 +163,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           ),
                           const SizedBox(
                             width: 10,
-                          ),
-                          const SizedBox(
-                            width: 5,
                           ),
                           Container(
                             width: 20,
@@ -179,12 +176,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ),
                           ),
                           const SizedBox(
-                            width: 5,
+                            width: 10,
                           ),
                           SizedBox(
                             width: Get.width / 6,
                             child: Text('المبلغ',
-                                textAlign: TextAlign.center,
+                                textAlign: TextAlign.left,
                                 style: MyTextStyles.subTitle.copyWith(
                                   color: MyColors.bg,
                                 )),
@@ -204,7 +201,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Expanded(
@@ -237,125 +234,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // ClipRRect(
-                    //   borderRadius: BorderRadius.circular(12),
-                    //   child: Row(
-                    //     children: [
-                    //       Expanded(
-                    //         child: Directionality(
-                    //           textDirection: TextDirection.rtl,
-                    //           child: DataTable(
-                    //             headingRowColor:
-                    //                 MaterialStateProperty.resolveWith<Color?>(
-                    //                     (Set<MaterialState> states) {
-                    //               return MyColors.lessBlackColor;
-                    //               // Use the default value.
-                    //             }),
-                    //             columnSpacing: 5,
-                    //             headingRowHeight: 45,
-                    //             headingTextStyle:
-                    //                 myTextStyles.subTitle.copyWith(
-                    //               color: MyColors.bg,
-                    //               fontSize: 12,
-                    //             ),
-                    //             dataTextStyle: myTextStyles.subTitle.copyWith(
-                    //               fontSize: 10,
-                    //               fontWeight: FontWeight.normal,
-                    //             ),
-                    //             decoration: BoxDecoration(
-                    //                 color: MyColors.bg,
-                    //                 borderRadius: BorderRadius.circular(12)),
-                    //             columns: [
-                    //               const DataColumn(label: Text('التأريخ')),
-                    //               const DataColumn(label: Text('المبلغ')),
-                    //               const DataColumn(
-                    //                   label: Center(
-                    //                 child: Text(
-                    //                   ' تفاصيل',
-                    //                 ),
-                    //               )),
-                    //               DataColumn(
-                    //                   label: Container(
-                    //                 width: 20,
-                    //                 height: 5,
-                    //                 decoration: BoxDecoration(
-                    //                   borderRadius: BorderRadius.circular(10),
-                    //                   color: widget.homeModel.totalCredit >
-                    //                           widget.homeModel.totalDebit
-                    //                       ? MyColors.debetColor
-                    //                       : MyColors.creditColor,
-                    //                 ),
-                    //               )),
-                    //               const DataColumn(
-                    //                 label: Text('الحساب'),
-                    //               ),
-                    //             ],
-                    //             rows: journals
-                    //                 .map(
-                    //                   (e) => DataRow(
-                    //                       onLongPress: () {
-
-                    //                       },
-                    //                       cells: [
-                    //                         DataCell(
-                    //                           FittedBox(
-                    //                             child: Text(
-                    //                               DateFormater.DateFormat.yMd()
-                    //                                   .format(e.registeredAt),
-                    //                               style: myTextStyles.body,
-                    //                             ),
-                    //                           ),
-                    //                         ),
-                    //                         DataCell(FittedBox(
-                    //                           child: Text(
-                    //                             " ${(e.credit - e.debit).abs()}",
-                    //                             style: myTextStyles.subTitle
-                    //                                 .copyWith(
-                    //                                     color: Colors.black),
-                    //                           ),
-                    //                         )),
-                    //                         DataCell(FittedBox(
-                    //                           fit: BoxFit.fill,
-                    //                           clipBehavior: Clip.hardEdge,
-                    //                           child: Text(
-                    //                             e.details,
-                    //                             textAlign: TextAlign.right,
-                    //                             overflow: TextOverflow.clip,
-                    //                             textDirection:
-                    //                                 TextDirection.rtl,
-                    //                             style: myTextStyles.body,
-                    //                           ),
-                    //                         )),
-                    //                         DataCell(Container(
-                    //                           width: 20,
-                    //                           height: 5,
-                    //                           decoration: BoxDecoration(
-                    //                             borderRadius:
-                    //                                 BorderRadius.circular(10),
-                    //                             color: e.credit > e.debit
-                    //                                 ? MyColors.debetColor
-                    //                                 : MyColors.creditColor,
-                    //                           ),
-                    //                         )),
-                    //                         DataCell(Text(
-                    //                           getAccountMoney(e)
-                    //                               .abs()
-                    //                               .toString(),
-                    //                           textAlign: TextAlign.left,
-                    //                           style: myTextStyles.subTitle
-                    //                               .copyWith(
-                    //                                   color:
-                    //                                       MyColors.blackColor),
-                    //                         )),
-                    //                       ]),
-                    //                 )
-                    //                 .toList(),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                     const Spacer(),
                     Row(
                       children: [
@@ -379,53 +257,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13),
+                        borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: MyColors.shadowColor),
                         color: MyColors.bg,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // Container(
-                          //   padding: const EdgeInsets.all(5),
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(20),
-                          //     color: MyColors.containerColor,
-                          //   ),
-                          //   child: Row(
-                          //     mainAxisSize: MainAxisSize.min,
-                          //     crossAxisAlignment: CrossAxisAlignment.center,
-                          //     children: [
-                          //       const SizedBox(width: 10),
-                          //       Text(
-                          //         curencyController.selectedCurency['symbol'],
-                          //         style: myTextStyles.body.copyWith(
-                          //           fontSize: 10,
-                          //           color: MyColors.lessBlackColor,
-                          //         ),
-                          //       ),
-                          //       const SizedBox(width: 10),
-                          //       Container(
-                          //         width: 1,
-                          //         height: 15,
-                          //         decoration: BoxDecoration(
-                          //           borderRadius: BorderRadius.circular(3),
-                          //           color: MyColors.secondaryTextColor
-                          //               .withOpacity(0.7),
-                          //         ),
-                          //       ),
-                          //       const SizedBox(width: 10),
-                          //       Text(
-                          //         curencyController.selectedCurency['name'],
-                          //         style: myTextStyles.body.copyWith(
-                          //           fontSize: 10,
-                          //           color: MyColors.lessBlackColor,
-                          //         ),
-                          //       ),
-                          //       const SizedBox(width: 10),
-                          //     ],
-                          //   ),
-                          // ),
                           const SizedBox(
                             width: 20,
                           ),
@@ -509,7 +347,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   });
                 } else {
                   CustomDialog.customSnackBar(
-                      "تم ايقاف هذا الحساب من الاعدادات", SnackPosition.BOTTOM);
+                      "تم ايقاف هذا الحساب من الاعدادات",
+                      SnackPosition.BOTTOM,
+                      false);
                   return;
                 }
               },

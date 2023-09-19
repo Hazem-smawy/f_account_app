@@ -15,6 +15,8 @@ class AccGroupCurencyController extends GetxController {
   }
 
   Future<void> getAllAccGroupAndCurency() async {
+    homeReportShow.value = false;
+
     allAccgroupsAndCurency.value = await homeData.getAccGroupsAndCurencies();
   }
 }

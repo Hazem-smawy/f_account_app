@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 
 import '../../../controller/accgroup_controller.dart';
 import '../../../models/accgroup_model.dart';
+import '../../../widget/custom_dialog.dart';
 
 class CustomerAccountsReportScreen extends StatelessWidget {
   CustomerAccountsReportScreen({super.key});
@@ -38,6 +39,9 @@ class CustomerAccountsReportScreen extends StatelessWidget {
                       .allCustomerAccountsRow.isNotEmpty) {
                     CustomerAccountPdfController
                         .generateCustomerAccountPdfReports();
+                  } else {
+                    CustomDialog.customSnackBar(
+                        "ليس هناك شئ ل طباعتة", SnackPosition.BOTTOM, true);
                   }
                 },
               ),

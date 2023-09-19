@@ -85,7 +85,7 @@ class DailyPdfController {
                 GlobalUtitlity.formatNumberDouble(
                     number: (e['credit'] - e['debit']).abs()),
               ),
-              PdfApi.paddedHeadingTextArabicCell('${e['details']}'),
+              PdfApi.paddedHeadingTextArabicCell('${e['desc']}'),
               PdfApi.paddedHeadingTextArabicCell('${e['name']}'),
               PdfApi.paddedHeadingTextArabicCell('${e['accName']}'),
             ]);

@@ -30,7 +30,7 @@ class PlaceHolderWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     Image.asset(
-                      "assets/images/curency1.png",
+                      "assets/images/curency2.png",
                       width: Get.width - 100,
                     ),
                     const SizedBox(

@@ -82,7 +82,7 @@ class JournalData {
       Get.back();
       return updatedObject;
     } catch (e) {
-      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM);
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM, true);
     }
     return null;
   }

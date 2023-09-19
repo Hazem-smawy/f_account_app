@@ -76,15 +76,16 @@ class CustomerAccountsView extends StatelessWidget {
                         // style: myTextStyles.subTitle,
                       ),
                     )),
-                    const SizedBox(
-                      width: 10,
-                    ),
                     GestureDetector(
                       onTap: () => Get.back(),
-                      child: const FaIcon(
-                        FontAwesomeIcons.arrowRightLong,
-                        color: MyColors.secondaryTextColor,
-                        size: 17,
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        color: MyColors.containerColor,
+                        child: const FaIcon(
+                          FontAwesomeIcons.arrowRightLong,
+                          color: MyColors.secondaryTextColor,
+                          size: 17,
+                        ),
                       ),
                     )
                   ],
@@ -111,7 +112,7 @@ class CustomerAccountsView extends StatelessWidget {
                             ),
                             const SizedBox(height: 20),
                             Text(
-                              "لايوجد اي حساب ",
+                              "لا يوجد اي حساب ",
                               style: MyTextStyles.title2,
                             ),
                             const Spacer(),

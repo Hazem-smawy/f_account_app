@@ -1,5 +1,6 @@
 import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
+import 'package:account_app/utility/curency_format.dart';
 
 import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
@@ -73,7 +74,8 @@ class NewDailyPdfController {
               PdfApi.debitOrCreditView(e['credit'] > e['debit']),
               PdfApi.paddedHeadingTextArabicCell(e['curencyName']),
               PdfApi.paddedHeadingTextEnglishCell(
-                  '${e['credit'] - e['debit']}'),
+                  GlobalUtitlity.formatNumberDouble(
+                      number: (e['credit'] - e['debit']).abs())),
               PdfApi.paddedHeadingTextArabicCell('${e['accName']}'),
               PdfApi.paddedHeadingTextArabicCell('${e['name']}'),
             ]);

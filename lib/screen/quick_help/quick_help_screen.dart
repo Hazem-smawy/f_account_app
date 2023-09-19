@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/screen/all_reports/customer_accounts_in_accgroup_screen/customer_accounts_in_accgroup_screen.dart';
-import 'package:account_app/screen/all_reports/account_move/account_move_screen.dart';
+import 'package:account_app/screen/all_reports/account_movement_screen/account_movement_screen.dart';
 import 'package:account_app/screen/all_reports/accgroups_report_screen/accgroups_report_screen.dart';
 import 'package:account_app/screen/all_reports/customer_account_reports/customer_account_report.dart';
 import 'package:account_app/screen/customer_account/customer_account.dart';

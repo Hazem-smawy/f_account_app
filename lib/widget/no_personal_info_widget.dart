@@ -40,7 +40,7 @@ class NoPersonalInfoWidget extends StatelessWidget {
             height: 10,
           ),
           Text(
-            " للحصول علي جميع خدماتنا \nقم بإدخال معلوماتك الشخصية من هنا ",
+            " قم بإضافة معلوماتك الشخصية من هنا ",
             textAlign: TextAlign.center,
             textDirection: TextDirection.rtl,
             style: MyTextStyles.body.copyWith(

@@ -12,11 +12,11 @@ class AboutAppScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
             children: [
-              CustomBackBtnWidget(title: "حول البرنامج"),
-              SizedBox(
+              const CustomBackBtnWidget(title: "حول البرنامج"),
+              const SizedBox(
                 height: 30,
               ),
               Text(
@@ -27,7 +27,7 @@ class AboutAppScreen extends StatelessWidget {
                 'دقة سهولة أمان',
                 style: MyTextStyles.subTitle,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
@@ -35,7 +35,7 @@ class AboutAppScreen extends StatelessWidget {
                 textAlign: TextAlign.right,
                 style: MyTextStyles.title2,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               FetureWidget('سهولة ترتيب الحياة المالية'),
@@ -47,6 +47,7 @@ class AboutAppScreen extends StatelessWidget {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Container FetureWidget(String title) {
     return Container(
       width: double.infinity,
