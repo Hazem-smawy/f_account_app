@@ -41,8 +41,7 @@ class MyDrawerView extends StatelessWidget {
           // margin:
           //     const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
           decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
+            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20)),
             color: MyColors.bg,
           ),
           child: Column(
@@ -55,8 +54,8 @@ class MyDrawerView extends StatelessWidget {
                         decoration: const BoxDecoration(
                             color: MyColors.lessBlackColor,
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                            )),
+                                //  topLeft: Radius.circular(20),
+                                )),
                         child: NoPersonalInfoWidget(
                           isDrawer: true,
                         ))
@@ -66,8 +65,8 @@ class MyDrawerView extends StatelessWidget {
                         decoration: const BoxDecoration(
                             color: MyColors.lessBlackColor,
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                            )),
+                                // topLeft: Radius.circular(20),
+                                )),
                         child: GestureDetector(
                           onTap: () {
                             Get.to(() => PersonalInfoScreen());
@@ -123,7 +122,12 @@ class MyDrawerView extends StatelessWidget {
                 child: Column(
                   children: [
                     DrawerItemWidget(
-                      onPress: () => Get.to(() => CustomerAccountsView()),
+                      onPress: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return CustomerAccountsView();
+                        }));
+                      },
                       icon: FontAwesomeIcons.users,
                       title: "حسابات العملاء",
                     ),
@@ -292,20 +296,21 @@ class MyDrawerView extends StatelessWidget {
                     ),
                     DrawerItemWidget(
                       onPress: () {
-                        Get.to(() => const ContactAndSupportsScreen());
+                        Get.bottomSheet(ContactAndSupportsScreen());
                       },
                       icon: FontAwesomeIcons.phone,
                       title: "الاتصال والدعم",
                     ),
                     DrawerItemWidget(
-                      onPress: () => Get.to(() => const AboutAppScreen()),
-                      icon: FontAwesomeIcons.circleExclamation,
-                      title: " حول البرنامج",
+                      onPress: () =>
+                          Get.bottomSheet(ContactAndSupportsScreen()),
+                      icon: Icons.message,
+                      title: 'مقترحات',
                     ),
                     DrawerItemWidget(
                       onPress: () => Get.to(() => const AboutAppScreen()),
-                      icon: FontAwesomeIcons.solidCircleQuestion,
-                      title: "طريقة الإ ستخدام",
+                      icon: FontAwesomeIcons.circleExclamation,
+                      title: "حول البرنامج",
                     ),
                   ],
                 ),

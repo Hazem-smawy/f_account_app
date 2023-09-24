@@ -1,3 +1,4 @@
+import 'package:account_app/controller/alert_controller.dart';
 import 'package:account_app/controller/detail_controller.dart';
 import 'package:account_app/controller/image_controller.dart';
 import 'package:account_app/controller/sitting_controller.dart';
@@ -39,5 +40,6 @@ class MainController extends GetxController {
     Get.put(CopyController());
     Get.put(SittingController());
     Get.put(ImageController());
+    Get.put(AlertController());
   }
 }

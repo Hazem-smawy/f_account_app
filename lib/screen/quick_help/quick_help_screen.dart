@@ -190,7 +190,7 @@ class HomeReportsScreen extends StatelessWidget {
                       width: 10,
                     ),
                     HomeReportFooterWidget(
-                      title: "العملات",
+                      title: "العملا ت",
                       icon: FontAwesomeIcons.dollarSign,
                       action: () {
                         Get.to(() => CurencySettingScreen());
@@ -235,13 +235,14 @@ class ReportItemWidget extends StatelessWidget {
           children: [
             Text(
               title,
-              style: MyTextStyles.subTitle,
+              style:
+                  MyTextStyles.subTitle.copyWith(fontWeight: FontWeight.normal),
             ),
             const SizedBox(
-              width: 10,
+              width: 5,
             ),
             const FaIcon(
-              FontAwesomeIcons.fileLines,
+              Icons.file_open_outlined,
               color: MyColors.secondaryTextColor,
               size: 15,
             ),

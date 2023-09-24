@@ -18,6 +18,7 @@ import 'package:account_app/screen/all_reports/account_movement_screen/row.dart'
 import 'package:account_app/screen/all_reports/reports_widget/date_filter_widget.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_crency_filter.dart';
 import 'package:account_app/screen/all_reports/reports_widget/report_footer.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../widget/custom_dialog.dart';
 
@@ -68,7 +69,8 @@ class AccountMoveScreen extends StatelessWidget {
                                           .customerAccountsJournals
                                           .isNotEmpty) {
                                         MoneyMovementPdfController
-                                            .generateMoneyMovementReportPdf();
+                                            .generateMoneyMovementReportPdf(
+                                                share: false);
                                       } else {
                                         CustomDialog.customSnackBar(
                                             "ليس هناك شئ ل طباعتة",
@@ -78,6 +80,37 @@ class AccountMoveScreen extends StatelessWidget {
                                     },
                                     child: const FaIcon(
                                       FontAwesomeIcons.filePdf,
+                                      color: MyColors.secondaryTextColor,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      if (accountMovemoentController
+                                          .customerAccountsJournals
+                                          .isNotEmpty) {
+                                        final file =
+                                            await MoneyMovementPdfController
+                                                .generateMoneyMovementReportPdf(
+                                                    share: true);
+
+                                        if (file != null) {
+                                          Share.shareXFiles([XFile(file.path)],
+                                              text: 'حساب ');
+                                        }
+                                        //f
+                                      } else {
+                                        CustomDialog.customSnackBar(
+                                            "ليس هناك شئ ل طباعتة",
+                                            SnackPosition.BOTTOM,
+                                            true);
+                                      }
+                                    },
+                                    child: const FaIcon(
+                                      FontAwesomeIcons.share,
                                       color: MyColors.secondaryTextColor,
                                       size: 20,
                                     ),

@@ -176,7 +176,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ),
                           ),
                           const SizedBox(
-                            width: 10,
+                            width: 15,
                           ),
                           SizedBox(
                             width: Get.width / 6,

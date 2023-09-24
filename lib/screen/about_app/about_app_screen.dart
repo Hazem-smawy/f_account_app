@@ -1,6 +1,7 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:googleapis/displayvideo/v2.dart';
 
 import '../../widget/custom_btns_widges.dart';
 
@@ -17,15 +18,39 @@ class AboutAppScreen extends StatelessWidget {
             children: [
               const CustomBackBtnWidget(title: "حول البرنامج"),
               const SizedBox(
-                height: 30,
+                height: 10,
               ),
-              Text(
-                ' E-smart مرحبا بكم في برنامج ',
-                style: MyTextStyles.title1,
-              ),
-              Text(
-                'دقة سهولة أمان',
-                style: MyTextStyles.subTitle,
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: MyColors.containerSecondColor.withOpacity(0.5),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/logo.png'),
+                              fit: BoxFit.cover)),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      ' E-smart مرحبا بكم في برنامج ',
+                      style: MyTextStyles.title1,
+                    ),
+                    Text(
+                      'دقة سهولة أمان',
+                      style: MyTextStyles.subTitle,
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 20,

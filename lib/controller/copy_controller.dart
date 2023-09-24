@@ -1,6 +1,7 @@
 import 'dart:io' as io;
 
 import 'package:account_app/controller/acc_curency_controller.dart';
+import 'package:account_app/controller/alert_controller.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/sitting_controller.dart';
 import 'package:account_app/main.dart';
@@ -123,6 +124,7 @@ class CopyController extends GetxController {
     CurencyController curencyController = Get.find();
     CustomerController customerController = Get.find();
     CustomerAccountController customerAccountController = Get.find();
+    AlertController alertController = Get.find();
 
     HomeController homeController = Get.find();
     await accGroupController.readAllAccGroup();
@@ -134,6 +136,8 @@ class CopyController extends GetxController {
     await homeController.getCustomerAccountsFromCurencyAndAccGroupIds();
 
     await homeController.getTheTodaysJournals();
+    await alertController.readAllAlerts();
+
     await Future.delayed(const Duration(milliseconds: 500));
 
     Get.offAll(() => ShowMyMainScreen());
@@ -218,13 +222,13 @@ class CopyController extends GetxController {
         String path = await ex.ExternalPath.getExternalStoragePublicDirectory(
             ex.ExternalPath.DIRECTORY_DOWNLOADS);
         final file = await io.File(
-                '$path/account_app${DateTime.now().millisecondsSinceEpoch}.db')
+                '$path/E-smart/database_copy/account_app${DateTime.now().millisecondsSinceEpoch}.db')
             .create(recursive: true);
 
         copyDatabaseToFolder(file.path).then((value) {
           Get.back();
           CustomDialog.customSnackBar(
-              "تم الحفظ بنجاح في ${file.path}", SnackPosition.BOTTOM, true);
+              "تم الحفظ بنجاح في ${file.path}", SnackPosition.BOTTOM, false);
         });
         //  }
       } catch (e) {

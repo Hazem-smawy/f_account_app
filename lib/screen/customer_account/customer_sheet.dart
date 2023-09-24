@@ -91,7 +91,9 @@ class _CustomerAccountDetailsSheetState
                       Text(
                         GlobalUtitlity.formatNumberDouble(
                             number: widget.customerAccount.totalCredit),
-                        style: MyTextStyles.title2,
+                        style: MyTextStyles.subTitle.copyWith(
+                          color: MyColors.blackColor,
+                        ),
                       ),
                       const SizedBox(width: 10),
                       const FaIcon(
@@ -122,7 +124,9 @@ class _CustomerAccountDetailsSheetState
                       Text(
                         GlobalUtitlity.formatNumberDouble(
                             number: widget.customerAccount.totalDebit),
-                        style: MyTextStyles.title2,
+                        style: MyTextStyles.subTitle.copyWith(
+                          color: MyColors.blackColor,
+                        ),
                       ),
                       const SizedBox(width: 10),
                       const FaIcon(

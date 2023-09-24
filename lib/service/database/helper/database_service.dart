@@ -1,4 +1,5 @@
 import 'package:account_app/service/database/accgroup_data.dart';
+import 'package:account_app/service/database/alert_data.dart';
 import 'package:account_app/service/database/curency_data.dart';
 import 'package:account_app/service/database/customer_account_data.dart';
 import 'package:account_app/service/database/customer_data.dart';
@@ -25,7 +26,7 @@ class DatabaseService {
 
   Future<String> get fullPath async {
     String path = await getDatabasesPath();
-    String databasePath = p.join(path, "account_app.db");
+    String databasePath = p.join(path, "account_database_app.db");
 
     return databasePath;
   }
@@ -49,6 +50,7 @@ class DatabaseService {
       await PersonalData().createTable(txn.database);
       await DetailData().createTable(txn.database);
       await ImageData().createTable(txn.database);
+      await AlertData().createTable(txn.database);
     });
   }
 }

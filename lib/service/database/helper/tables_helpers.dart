@@ -5,4 +5,5 @@ class TableName {
   static const customerAccountTbl = 'customeraccount';
   static const journalTbl = 'journal';
   static const personalTbl = 'personal';
+  static const alert = 'alert';
 }

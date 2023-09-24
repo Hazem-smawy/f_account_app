@@ -22,7 +22,7 @@ class CustomDialog {
         ),
       ),
       icon: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: FaIcon(
           isError ? FontAwesomeIcons.xmark : FontAwesomeIcons.check,
           color: MyColors.bg,

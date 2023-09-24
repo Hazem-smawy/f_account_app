@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
     calculateResultMoneyForYou();
     return curency != null
         ? Column(mainAxisSize: MainAxisSize.min, children: [
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
 
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),

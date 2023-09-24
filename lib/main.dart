@@ -19,6 +19,7 @@ import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/empty_accgroup_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -136,7 +137,23 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   // DeviceOrientation.landscapeLeft,
+    // ]);
   }
+
+  // @override
+  // dispose() {
+  //   SystemChrome.setPreferredOrientations([
+  //     DeviceOrientation.landscapeRight,
+  //     DeviceOrientation.landscapeLeft,
+  //     DeviceOrientation.portraitUp,
+  //     DeviceOrientation.portraitDown,
+  //   ]);
+
+  //   super.dispose();
+  // }
 
   Future<void> initPlatformState() async {
     // Configure BackgroundFetch.
@@ -163,6 +180,8 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
   }
 
+  int popped = 0;
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -173,23 +192,50 @@ class _MyAppState extends State<MyApp> {
       ),
       // theme: AppThemes.darkTheme,
       // home: ShowSnackBar(),
-      home: FutureBuilder(
-        future: introController.readIntro(),
-        initialData: true,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData &&
-              ConnectionState.done == snapshot.connectionState) {
-            return introController.introShow.value
-                ? ShowMyMainScreen()
-                : const MyEntroScreen();
-          } else {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator.adaptive(),
-              ),
-            );
-          }
-        },
+      home: Container(
+        constraints: const BoxConstraints(maxWidth: 900),
+        child: FutureBuilder(
+          future: introController.readIntro(),
+          initialData: true,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData &&
+                ConnectionState.done == snapshot.connectionState) {
+              return introController.introShow.value
+                  ? ShowMyMainScreen()
+                  : const MyEntroScreen();
+            } else {
+              return WillPopScope(
+                onWillPop: () async {
+                  DateTime initTime = DateTime.now();
+                  popped += 1;
+                  if (popped >= 2) return true;
+                  await ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(
+                        behavior: SnackBarBehavior.floating,
+                        content: Text(
+                          'Tap one more time to exit.',
+                          textAlign: TextAlign.center,
+                        ),
+                        duration: Duration(seconds: 2),
+                      ))
+                      .closed;
+
+                  // if timer is > 2 seconds reset popped counter
+                  if (DateTime.now().difference(initTime) >=
+                      Duration(seconds: 2)) {
+                    popped = 0;
+                  }
+                  return false;
+                },
+                child: const Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

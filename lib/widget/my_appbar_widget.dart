@@ -2,9 +2,11 @@ import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
+import 'package:account_app/controller/alert_controller.dart';
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/models/curency_model.dart';
+import 'package:account_app/screen/alert_screen/alert_screen.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,6 +43,7 @@ class MyAppBarWidget extends StatelessWidget {
               " "
           : "";
     }
+    AlertController alertController = Get.find();
 
     return Obx(
       () => Container(
@@ -77,7 +80,39 @@ class MyAppBarWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              width: 20,
+              width: 10,
+            ),
+            GestureDetector(
+              onTap: () => Get.to(() => AlertScreen()),
+              child: Stack(
+                children: [
+                  Container(
+                    padding:
+                        const EdgeInsets.only(top: 10, bottom: 10, left: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: MyColors.lessBlackColor,
+                    ),
+                    child: FaIcon(Icons.access_alarms_outlined,
+                        size: 20, color: MyColors.containerColor),
+                  ),
+                  if (alertController.newAlerts.isNotEmpty)
+                    Positioned(
+                        top: 7,
+                        left: 2,
+                        child: Container(
+                          width: 7,
+                          height: 7,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                          ),
+                        ))
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 10,
             ),
             if (!accGroupCurencyController.homeReportShow.value)
               GestureDetector(

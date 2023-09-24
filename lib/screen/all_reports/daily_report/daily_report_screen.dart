@@ -2,6 +2,7 @@
 
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/reports/daily_report_controller.dart';
 import 'package:account_app/controller/reports_pdf_controller/daily_pdf_controller.dart';
 import 'package:account_app/screen/all_reports/reports_widget/dialy_sammary_widget.dart';
@@ -22,6 +23,7 @@ class DailyReportScreen extends StatelessWidget {
       Get.put(DailyReportsController());
 
   DailyReportScreen({super.key});
+  final CurencyController curencyController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -162,14 +164,14 @@ class DailyReportScreen extends StatelessWidget {
                                                         : MyColors.debetColor),
                                               ),
                                               const SizedBox(
-                                                width: 15,
+                                                width: 5,
                                               ),
-                                              Text(
-                                                dailyReportsController
-                                                        .journalsReports[index]
-                                                    ['symbol'],
-                                                style: MyTextStyles.body,
-                                              ),
+                                              // Text(
+                                              //   dailyReportsController
+                                              //           .journalsReports[index]
+                                              //       ['symbol'],
+                                              //   style: MyTextStyles.body,
+                                              // ),
                                               const SizedBox(
                                                 width: 5,
                                               ),
@@ -374,6 +376,17 @@ class DailyReportScreen extends StatelessWidget {
                                       dailyReportsController.totalCredit.value
                                   ? MyColors.creditColor
                                   : MyColors.debetColor,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              curencyController.allCurency
+                                  .firstWhere((element) =>
+                                      element.id ==
+                                      dailyReportsController.curencyId.value)
+                                  .symbol,
+                              style: MyTextStyles.body,
                             ),
                             const SizedBox(width: 5),
                             Text(

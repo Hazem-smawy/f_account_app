@@ -24,7 +24,8 @@ class MoneyMovementPdfController {
   static AccGroupController accGourpController = Get.find();
   static CurencyController curencyController = Get.find();
 
-  static Future<void> generateMoneyMovementReportPdf() async {
+  static Future<File?> generateMoneyMovementReportPdf(
+      {required bool share}) async {
     CopyController copyController = Get.find();
     if (Platform.isAndroid) {
       copyController.requestPermission();
@@ -59,7 +60,13 @@ class MoneyMovementPdfController {
         name:
             'E-smart_${date_formater.DateFormat.yMMMEd().format(DateTime.now())}_report.pdf',
         pdf: pdf);
-    OpenFile.open(file.path);
+
+    if (share) {
+      return file;
+    } else {
+      OpenFile.open(file.path);
+      return null;
+    }
   }
 
   static Widget buildMoneyMovementsTableReport() {

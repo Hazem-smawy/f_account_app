@@ -1,18 +1,21 @@
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/screen/all_reports/reports_widget/dialy_sammary_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 import '../../../constant/colors.dart';
 
 class ReportFooterWidget extends StatelessWidget {
-  const ReportFooterWidget({
+  ReportFooterWidget({
     super.key,
     this.controller,
   });
   // ignore: prefer_typing_uninitialized_variables
   final controller;
+  final CurencyController curencyController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +65,14 @@ class ReportFooterWidget extends StatelessWidget {
                             controller.totalCredit.value
                         ? MyColors.debetColor
                         : MyColors.creditColor,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    curencyController.allCurency
+                        .firstWhere((element) =>
+                            element.id == controller.curencyId.value)
+                        .symbol,
+                    style: MyTextStyles.body,
                   ),
                   const SizedBox(width: 5),
                   Text(
