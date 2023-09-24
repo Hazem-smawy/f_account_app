@@ -93,7 +93,7 @@ class MyAppBarWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       color: MyColors.lessBlackColor,
                     ),
-                    child: FaIcon(Icons.access_alarms_outlined,
+                    child: const FaIcon(Icons.access_alarms_outlined,
                         size: 20, color: MyColors.containerColor),
                   ),
                   if (alertController.newAlerts.isNotEmpty)
@@ -103,7 +103,7 @@ class MyAppBarWidget extends StatelessWidget {
                         child: Container(
                           width: 7,
                           height: 7,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.red,
                           ),

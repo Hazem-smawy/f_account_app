@@ -235,8 +235,10 @@ class ReportItemWidget extends StatelessWidget {
           children: [
             Text(
               title,
-              style:
-                  MyTextStyles.subTitle.copyWith(fontWeight: FontWeight.normal),
+              style: MyTextStyles.subTitle.copyWith(
+                fontWeight: FontWeight.normal,
+                color: MyColors.lessBlackColor,
+              ),
             ),
             const SizedBox(
               width: 5,

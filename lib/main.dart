@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io' as io;
+import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/pdf_controller.dart';
 import 'package:background_fetch/background_fetch.dart';
 
@@ -137,23 +138,22 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
-    // SystemChrome.setPreferredOrientations([
-    //   DeviceOrientation.portraitUp,
-    //   // DeviceOrientation.landscapeLeft,
-    // ]);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      // DeviceOrientation.landscapeLeft,
+    ]);
   }
 
-  // @override
-  // dispose() {
-  //   SystemChrome.setPreferredOrientations([
-  //     DeviceOrientation.landscapeRight,
-  //     DeviceOrientation.landscapeLeft,
-  //     DeviceOrientation.portraitUp,
-  //     DeviceOrientation.portraitDown,
-  //   ]);
-
-  //   super.dispose();
-  // }
+  @override
+  dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
+  }
 
   Future<void> initPlatformState() async {
     // Configure BackgroundFetch.
@@ -180,8 +180,9 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
   }
 
-  int popped = 0;
+// back btn
 
+//end back btn
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -190,9 +191,105 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.green,
         scaffoldBackgroundColor: MyColors.containerColor,
       ),
-      // theme: AppThemes.darkTheme,
-      // home: ShowSnackBar(),
-      home: Container(
+      home: WillBackBtnWidget(introController: introController),
+    );
+  }
+}
+
+class WillBackBtnWidget extends StatelessWidget {
+  const WillBackBtnWidget({
+    super.key,
+    required this.introController,
+  });
+
+  final IntroController introController;
+
+  Future<bool> _onWillPop(BuildContext context) async {
+    bool? exitResult = await _showExitBottomSheet(context);
+    return exitResult ?? false;
+  }
+
+  Future<bool?> _showExitBottomSheet(BuildContext context) async {
+    return await showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          margin: EdgeInsets.all(10),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          decoration: const BoxDecoration(
+            color: MyColors.containerColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12),
+              topRight: Radius.circular(12),
+              bottomLeft: Radius.circular(12),
+              bottomRight: Radius.circular(12),
+            ),
+          ),
+          child: _buildBottomSheet(context),
+        );
+      },
+    );
+  }
+
+  Widget _buildBottomSheet(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          'هل انت متأكد من الخروج من التطبيق ؟',
+          style: MyTextStyles.subTitle,
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            TextButton(
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all(
+                  const EdgeInsets.symmetric(
+                    horizontal: 8,
+                  ),
+                ),
+              ),
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(
+                'نعم , متأكد',
+                style: MyTextStyles.subTitle.copyWith(color: Colors.green[600]),
+              ),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all(
+                  const EdgeInsets.symmetric(
+                    horizontal: 8,
+                  ),
+                ),
+              ),
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(
+                'إلغاء',
+                textAlign: TextAlign.right,
+                style: MyTextStyles.subTitle.copyWith(color: Colors.red[600]),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () => _onWillPop(context),
+      child: Container(
         constraints: const BoxConstraints(maxWidth: 900),
         child: FutureBuilder(
           future: introController.readIntro(),
@@ -204,33 +301,9 @@ class _MyAppState extends State<MyApp> {
                   ? ShowMyMainScreen()
                   : const MyEntroScreen();
             } else {
-              return WillPopScope(
-                onWillPop: () async {
-                  DateTime initTime = DateTime.now();
-                  popped += 1;
-                  if (popped >= 2) return true;
-                  await ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(
-                        behavior: SnackBarBehavior.floating,
-                        content: Text(
-                          'Tap one more time to exit.',
-                          textAlign: TextAlign.center,
-                        ),
-                        duration: Duration(seconds: 2),
-                      ))
-                      .closed;
-
-                  // if timer is > 2 seconds reset popped counter
-                  if (DateTime.now().difference(initTime) >=
-                      Duration(seconds: 2)) {
-                    popped = 0;
-                  }
-                  return false;
-                },
-                child: const Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  ),
+              return const Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator.adaptive(),
                 ),
               );
             }
@@ -240,25 +313,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-// class ShowSnackBar extends StatelessWidget {
-//   const ShowSnackBar({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: ElevatedButton(
-//             onPressed: () {
-//               CustomDialog.customSnackBar(
-//                   "hello fro snak bar", SnackPosition.TOP, true);
-//               ;
-//             },
-//             child: Text("show snak bar")),
-//       ),
-//     );
-//   }
-// }
 
 class ShowMyMainScreen extends StatelessWidget {
   ShowMyMainScreen({super.key});

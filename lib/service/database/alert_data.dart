@@ -2,7 +2,6 @@ import 'package:account_app/models/alert_model.dart';
 import 'package:account_app/service/database/helper/database_helper.dart';
 import 'package:account_app/service/database/helper/database_service.dart';
 import 'package:account_app/service/database/helper/tables_helpers.dart';
-import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AlertData {

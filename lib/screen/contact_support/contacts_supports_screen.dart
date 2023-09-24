@@ -1,6 +1,5 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
-import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -144,10 +143,11 @@ class ContactAndSupportsScreen extends StatelessWidget {
               title: 'الهاتف',
               icon: Icons.phone_enabled_outlined,
               action: () async {
-                final Uri _phoneUri = Uri(scheme: "tel", path: '779593990');
+                final Uri phoneUri = Uri(scheme: "tel", path: '779593990');
                 try {
-                  if (await launchUrlString(_phoneUri.toString()))
-                    await launchUrlString(_phoneUri.toString());
+                  if (await launchUrlString(phoneUri.toString())) {
+                    await launchUrlString(phoneUri.toString());
+                  }
                 } catch (error) {
                   throw ("Cannot dial");
                 }
@@ -220,10 +220,10 @@ class ContactAndSupportsScreen extends StatelessWidget {
 }
 
 class TitleWidget extends StatelessWidget {
-  VoidCallback action;
+  final VoidCallback action;
   final String title;
   final IconData icon;
-  TitleWidget({
+  const TitleWidget({
     super.key,
     required this.title,
     required this.icon,

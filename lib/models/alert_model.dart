@@ -71,7 +71,7 @@ class AlertModel {
       date: DateTime.parse(map['date'] as String),
       name: map['name'] as String,
       note: map['note'] as String,
-      isDone: map['isDone'] == 1 as int,
+      isDone: map['isDone'] == 1,
       createdAt: DateTime.parse(map['createdAt'] as String),
     );
   }

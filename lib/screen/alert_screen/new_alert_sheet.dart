@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class NewAlertSheet extends StatefulWidget {
-  NewAlertSheet({super.key});
+  const NewAlertSheet({super.key});
 
   @override
   State<NewAlertSheet> createState() => _NewAlertSheetState();

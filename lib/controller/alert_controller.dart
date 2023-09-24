@@ -3,7 +3,6 @@ import 'package:account_app/service/database/alert_data.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:googleapis/servicemanagement/v1.dart';
 import 'package:timezone/timezone.dart' as time_zone;
 
 import '../service/database/sitting_data.dart';
@@ -52,7 +51,7 @@ class AlertController extends GetxController {
     await alertData.create(alert);
 
     CustomDialog.customSnackBar(
-        'تم إضافة التنبية بنجاح', SnackPosition.TOP, false);
+        'تم إضافة التنبية بنجاح', SnackPosition.BOTTOM, false);
 
     await readAllAlerts();
     try {

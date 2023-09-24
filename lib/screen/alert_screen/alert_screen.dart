@@ -19,7 +19,7 @@ class AlertScreen extends StatelessWidget {
       body: SafeArea(
         child: Obx(
           () => AnimatedContainer(
-            duration: Duration(milliseconds: 200),
+            duration: const Duration(milliseconds: 200),
             padding:
                 const EdgeInsets.only(right: 15, left: 15, top: 10, bottom: 50),
             child: Column(
@@ -66,7 +66,7 @@ class AlertScreen extends StatelessWidget {
                   ),
                 ),
                 //container
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Expanded(
@@ -93,7 +93,7 @@ class AlertScreen extends StatelessWidget {
                 if (alertController.oldAlerts.isNotEmpty)
                   Container(
                     width: double.infinity,
-                    margin: EdgeInsets.symmetric(vertical: 10),
+                    margin: const EdgeInsets.symmetric(vertical: 10),
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
@@ -153,7 +153,7 @@ class AlertScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: MyColors.primaryColor,
         onPressed: () {
-          Get.bottomSheet(NewAlertSheet(), isScrollControlled: true);
+          Get.bottomSheet(const NewAlertSheet(), isScrollControlled: true);
         },
         child: const FaIcon(FontAwesomeIcons.plus),
       ),
@@ -197,8 +197,8 @@ class AlertItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 5),
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+      margin: const EdgeInsets.only(bottom: 5),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -213,14 +213,14 @@ class AlertItemWidget extends StatelessWidget {
                 children: [
                   Text(
                     date_formater.DateFormat.Hm().format(alertModel.date),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     date_formater.DateFormat.yMd().format(alertModel.date),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 10,
                     ),
                   ),
@@ -233,7 +233,7 @@ class AlertItemWidget extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -278,7 +278,7 @@ class AlertItemWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: isNew
-                    ? Color.fromARGB(225, 52, 155, 18).withOpacity(0.8)
+                    ? const Color.fromARGB(225, 52, 155, 18).withOpacity(0.8)
                     : MyColors.secondaryTextColor,
               ),
               child: Center(

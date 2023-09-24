@@ -1,7 +1,6 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:googleapis/displayvideo/v2.dart';
 
 import '../../widget/custom_btns_widges.dart';
 
@@ -22,7 +21,7 @@ class AboutAppScreen extends StatelessWidget {
               ),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: MyColors.containerSecondColor.withOpacity(0.5),
@@ -38,7 +37,7 @@ class AboutAppScreen extends StatelessWidget {
                               image: AssetImage('assets/images/logo.png'),
                               fit: BoxFit.cover)),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(

@@ -296,14 +296,14 @@ class MyDrawerView extends StatelessWidget {
                     ),
                     DrawerItemWidget(
                       onPress: () {
-                        Get.bottomSheet(ContactAndSupportsScreen());
+                        Get.bottomSheet(const ContactAndSupportsScreen());
                       },
                       icon: FontAwesomeIcons.phone,
                       title: "الاتصال والدعم",
                     ),
                     DrawerItemWidget(
                       onPress: () =>
-                          Get.bottomSheet(ContactAndSupportsScreen()),
+                          Get.bottomSheet(const ContactAndSupportsScreen()),
                       icon: Icons.message,
                       title: 'مقترحات',
                     ),
