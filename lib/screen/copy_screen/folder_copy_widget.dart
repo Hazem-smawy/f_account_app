@@ -48,8 +48,8 @@ class _FolderCopyWidgetState extends State<FolderCopyWidget> {
             ),
             CustomCopyBtnWidget(
               color: Colors.green,
-              icon: FontAwesomeIcons.download,
-              topIcon: FontAwesomeIcons.download,
+              icon: FontAwesomeIcons.upload,
+              topIcon: FontAwesomeIcons.upload,
               label: "عمل نسخة جد يد ة",
               action: () => Platform.isAndroid
                   ? copyController.selectFolder()
@@ -58,9 +58,9 @@ class _FolderCopyWidgetState extends State<FolderCopyWidget> {
                   "قم بعمل نسخة إحتياطية جديدة , لحفظ كل بياناتك في ملفات الجهاز وإستعادتها في وقت لاحق",
             ),
             CustomCopyBtnWidget(
-              topIcon: FontAwesomeIcons.upload,
+              topIcon: FontAwesomeIcons.download,
               color: const Color.fromARGB(197, 149, 7, 7),
-              icon: FontAwesomeIcons.upload,
+              icon: FontAwesomeIcons.download,
               label: "فتح نسخة سابقة",
               //  action: () {},
               action: () => copyController.openDatabaseFile(),

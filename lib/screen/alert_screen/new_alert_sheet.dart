@@ -65,87 +65,82 @@ class _NewAlertSheetState extends State<NewAlertSheet> {
           ),
           Row(
             children: [
-              Flexible(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () async {
-                          final date = await pickDate();
-                          if (date == null) {
-                            return;
-                          }
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      final date = await pickDate();
+                      if (date == null) {
+                        return;
+                      }
 
-                          dateTime = date;
+                      dateTime = date;
 
-                          final time = await pickTime();
-                          // if (time == null) return;
+                      final time = await pickTime();
+                      // if (time == null) return;
 
-                          final newDateTime = DateTime(
-                            dateTime.year,
-                            dateTime.month,
-                            dateTime.day,
-                            time?.hour ?? dateTime.hour,
-                            time?.minute ?? dateTime.minute,
-                          );
+                      final newDateTime = DateTime(
+                        dateTime.year,
+                        dateTime.month,
+                        dateTime.day,
+                        time?.hour ?? dateTime.hour,
+                        time?.minute ?? dateTime.minute,
+                      );
 
-                          setState(() {
-                            dateTime = newDateTime;
+                      setState(() {
+                        dateTime = newDateTime;
 
-                            alertController.newAlert.update(
-                              'date',
-                              (value) => dateTime.toIso8601String(),
-                              ifAbsent: () => dateTime.toIso8601String(),
-                            );
-                          });
-                        },
-                        child: Container(
-                          height: 50,
-                          alignment: Alignment.center,
+                        alertController.newAlert.update(
+                          'date',
+                          (value) => dateTime.toIso8601String(),
+                          ifAbsent: () => dateTime.toIso8601String(),
+                        );
+                      });
+                    },
+                    child: Container(
+                      height: 50,
+                      alignment: Alignment.center,
 
-                          //padding: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: MyColors.containerSecondColor,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                '${dateTime.month}/${dateTime.day}  $hours:$minutes',
-                                textDirection: TextDirection.ltr,
-                                style: const TextStyle(
-                                  color: MyColors.lessBlackColor,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const FaIcon(
-                                FontAwesomeIcons.clock,
-                                size: 18,
-                                color: MyColors.lessBlackColor,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                            ],
-                          ),
-                        ),
+                      //padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: MyColors.containerSecondColor,
                       ),
-                    )
-                  ],
-                ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            '${dateTime.year}/${dateTime.month}/${dateTime.day}  $hours:$minutes',
+                            textDirection: TextDirection.ltr,
+                            style: const TextStyle(
+                              color: MyColors.lessBlackColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const FaIcon(
+                            FontAwesomeIcons.clock,
+                            size: 18,
+                            color: MyColors.lessBlackColor,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
               const SizedBox(
                 width: 10,
               ),
-              Flexible(
-                flex: 2,
+              Expanded(
                 child: CustomTextFieldWidget(
                   textHint: 'الاسم',
                   action: (p0) {

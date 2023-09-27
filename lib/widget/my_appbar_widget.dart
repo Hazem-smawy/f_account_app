@@ -138,8 +138,8 @@ class MyAppBarWidget extends StatelessWidget {
               accGroupCurencyController.homeReportShow.value
                   ? "مساعدة سريعة"
                   : accGroupName,
-              style:
-                  MyTextStyles.title2.copyWith(color: MyColors.containerColor),
+              style: MyTextStyles.subTitle
+                  .copyWith(color: MyColors.containerColor),
             ),
             const SizedBox(width: 10),
             GestureDetector(

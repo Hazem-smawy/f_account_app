@@ -143,7 +143,7 @@ class ContactAndSupportsScreen extends StatelessWidget {
               title: 'الهاتف',
               icon: Icons.phone_enabled_outlined,
               action: () async {
-                final Uri phoneUri = Uri(scheme: "tel", path: '779593990');
+                final Uri phoneUri = Uri(scheme: "tel", path: '775426836');
                 try {
                   if (await launchUrlString(phoneUri.toString())) {
                     await launchUrlString(phoneUri.toString());
@@ -162,7 +162,7 @@ class ContactAndSupportsScreen extends StatelessWidget {
                 icon: FontAwesomeIcons.telegram,
                 action: () async {
                   final web = Uri.parse(
-                    'https://codoweb.com/',
+                    'https://t.me/haz_sma',
                   );
                   if (await canLaunchUrl(web)) {
                     launchUrl(web);
@@ -175,7 +175,7 @@ class ContactAndSupportsScreen extends StatelessWidget {
               icon: FontAwesomeIcons.facebook,
               action: () async {
                 final web = Uri.parse(
-                  'https://codoweb.com/',
+                  'https://www.facebook.com/profile.php?id=100005699237303',
                 );
                 if (await canLaunchUrl(web)) {
                   launchUrl(web);
@@ -188,11 +188,9 @@ class ContactAndSupportsScreen extends StatelessWidget {
               title: 'تويتر',
               icon: FontAwesomeIcons.twitter,
               action: () async {
-                final web = Uri.parse(
-                  'https://codoweb.com/',
-                );
-                if (await canLaunchUrl(web)) {
-                  launchUrl(web);
+                const web = 'https://twitter.com/';
+                if (await canLaunchUrlString(web)) {
+                  launchUrlString(web);
                 } else {
                   print('Could not launch $web');
                 }
@@ -202,13 +200,12 @@ class ContactAndSupportsScreen extends StatelessWidget {
               title: 'واتساب',
               icon: FontAwesomeIcons.whatsapp,
               action: () async {
-                final web = Uri.parse(
-                  'https://codoweb.com/',
-                );
-                if (await canLaunchUrl(web)) {
-                  launchUrl(web);
+                const url = "whatsapp://send?phone=775426836&text=هلا";
+
+                if (await canLaunchUrlString(url)) {
+                  launchUrlString(url);
                 } else {
-                  print('Could not launch $web');
+                  print('Could not launch $url');
                 }
               },
             ),

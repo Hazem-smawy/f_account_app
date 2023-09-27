@@ -25,12 +25,14 @@
     <uses-permission android:minSdkVersion="34" android:name="android.permission.USE_EXACT_ALARM" />
 
     <application
-     tools:replace="android:label"
+      
+        tools:replace="android:label"
         android:requestLegacyExternalStorage="true"
         android:label="E-Smart"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:enableOnBackInvokedCallback="true"
+       
+     
         >
 
         <!-- <provider
@@ -51,7 +53,10 @@
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            >
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues

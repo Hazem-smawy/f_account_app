@@ -8,10 +8,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-    //     maven {
-    //       // [required] background_fetch
-    //       url "${project(':background_fetch').projectDir}/libs"
-    //   }
+  
     }
 
     dependencies {
@@ -27,10 +24,10 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-            maven {
+        maven {
           // [required] background_fetch
           url "${project(':background_fetch').projectDir}/libs"
-      }
+       }
 
     }
 }
@@ -56,6 +53,7 @@ tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
 subprojects {
+   // project.buildDir = "${rootProject.buildDir}/${project.name}"
     project.configurations.all {
         resolutionStrategy.eachDependency { details ->
             if (details.requested.group == 'com.android.support'

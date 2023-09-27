@@ -6,6 +6,7 @@ import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/models/customer_model.dart';
+import 'package:account_app/screen/new_account/select_contact_widget.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/custom_textfiled_widget.dart';
@@ -50,7 +51,7 @@ class CustomerSettingScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.bottomSheet(
-            NewCustomerSheet(),
+            const NewCustomerSheet(),
             isScrollControlled: true,
           ).then((value) {
             customerController.newCustomer.clear();
@@ -138,7 +139,7 @@ class CustomerSettingItemWidget extends StatelessWidget {
                           .addAll(customer.toEditMap());
                       Get.back();
                       Get.bottomSheet(
-                        NewCustomerSheet(
+                        const NewCustomerSheet(
                           isEditing: true,
                         ),
                         isScrollControlled: true,
@@ -198,11 +199,32 @@ class CustomerSettingItemWidget extends StatelessWidget {
   }
 }
 
-class NewCustomerSheet extends StatelessWidget {
+class NewCustomerSheet extends StatefulWidget {
   final bool isEditing;
-  NewCustomerSheet({super.key, this.isEditing = false});
+  const NewCustomerSheet({super.key, this.isEditing = false});
+
+  @override
+  State<NewCustomerSheet> createState() => _NewCustomerSheetState();
+}
+
+class _NewCustomerSheetState extends State<NewCustomerSheet> {
   final CustomerController customerController = Get.find();
+
   final HomeController homeController = Get.find();
+
+  TextEditingController nameController = TextEditingController();
+
+  TextEditingController phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isEditing) {
+      nameController.text = customerController.newCustomer['name'];
+      phoneController.text = customerController.newCustomer['phone'] ?? "";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -225,7 +247,7 @@ class NewCustomerSheet extends StatelessWidget {
             ),
             const SizedBox(height: 7),
             Text(
-              isEditing ? "تعد يل" : "اضافة عميل",
+              widget.isEditing ? "تعد يل" : "اضافة عميل",
               style: MyTextStyles.title1
                   .copyWith(color: MyColors.secondaryTextColor),
             ),
@@ -260,11 +282,62 @@ class NewCustomerSheet extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            // customer name
+
             Row(
               children: [
                 Flexible(
-                    child: CustomTextFieldWidget(
+                  child: DetailTextFieldWidget(
+                    controller: nameController,
+                    textHint: "الاسم",
+                    placeHolder:
+                        customerController.newCustomer[CustomerField.name] ??
+                            '',
+                    action: (p0) {
+                      customerController.newCustomer.update(
+                        CustomerField.name,
+                        (value) => p0,
+                        ifAbsent: () => p0,
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                SelectContactWidget(action: (name, number) {
+                  nameController.text = name;
+                  phoneController.text = number;
+
+                  customerController.newCustomer.update(
+                    CustomerField.phone,
+                    (value) => number,
+                    ifAbsent: () => number,
+                  );
+                })
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Flexible(
+                  child: CustomTextFieldWidget(
+                    textHint: "العنوان",
+                    placeHolder:
+                        customerController.newCustomer[CustomerField.address] ??
+                            "",
+                    action: (p0) {
+                      customerController.newCustomer.update(
+                        CustomerField.address,
+                        (value) => p0,
+                        ifAbsent: () => p0,
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Flexible(
+                    child: DetailTextFieldWidget(
+                  controller: phoneController,
                   textHint: "الرقم",
                   placeHolder:
                       customerController.newCustomer[CustomerField.phone] ?? '',
@@ -276,34 +349,7 @@ class NewCustomerSheet extends StatelessWidget {
                     );
                   },
                 )),
-                const SizedBox(width: 10),
-                Flexible(
-                    child: CustomTextFieldWidget(
-                  textHint: "الاسم",
-                  placeHolder:
-                      customerController.newCustomer[CustomerField.name] ?? '',
-                  action: (p0) {
-                    customerController.newCustomer.update(
-                      CustomerField.name,
-                      (value) => p0,
-                      ifAbsent: () => p0,
-                    );
-                  },
-                ))
               ],
-            ),
-            const SizedBox(height: 10),
-            CustomTextFieldWidget(
-              textHint: "العنوان",
-              placeHolder:
-                  customerController.newCustomer[CustomerField.address] ?? "",
-              action: (p0) {
-                customerController.newCustomer.update(
-                  CustomerField.address,
-                  (value) => p0,
-                  ifAbsent: () => p0,
-                );
-              },
             ),
             const SizedBox(height: 20),
             Row(
@@ -321,14 +367,11 @@ class NewCustomerSheet extends StatelessWidget {
                 Flexible(
                     child: CustomBtnWidget(
                   color: MyColors.primaryColor,
-                  label: isEditing ? "تعد يل" : "اضافة",
+                  label: widget.isEditing ? "تعد يل" : "اضافة",
                   action: () async {
                     try {
-                      if (customerController.newCustomer[CustomerField.name] !=
-                          null) {
-                        if (customerController
-                                .newCustomer[CustomerField.name].length <
-                            2) {
+                      if (nameController.text.trim().isNotEmpty) {
+                        if (nameController.text.length < 2) {
                           CustomDialog.customSnackBar(
                               "ادخل كل القيم بطريقة صحيحة",
                               SnackPosition.TOP,
@@ -337,29 +380,33 @@ class NewCustomerSheet extends StatelessWidget {
                           return;
                         }
                         var customer = Customer(
-                            id: isEditing
+                            id: widget.isEditing
                                 ? customerController
                                     .newCustomer[CustomerField.id]
                                 : null,
-                            name: customerController.newCustomer[CustomerField.name]
-                                .toString()
-                                .trim(),
-                            phone: customerController
-                                    .newCustomer[CustomerField.phone] ??
-                                'لا يوجد رقم',
+                            name: nameController.text == ""
+                                ? customerController
+                                    .newCustomer[CustomerField.name]
+                                    .toString()
+                                    .trim()
+                                : nameController.text.trim(),
+                            phone: phoneController.text.isEmpty
+                                ? customerController.newCustomer[CustomerField.phone] ??
+                                    'لا يوجد رقم'
+                                : phoneController.text.trim(),
                             address: customerController
                                     .newCustomer[CustomerField.address] ??
-                                "لايوجد عنوان",
+                                "لا يوجد عنوان",
                             status: customerController
                                     .newCustomer[CustomerField.status] ??
                                 true,
-                            createdAt: isEditing
+                            createdAt: widget.isEditing
                                 ? DateTime.parse(customerController
                                     .newCustomer[CustomerField.createdAt])
                                 : DateTime.now(),
                             modifiedAt: DateTime.now());
 
-                        isEditing
+                        widget.isEditing
                             ? await customerController.updateCustomer(customer)
                             : await customerController.createCusomer(customer);
 

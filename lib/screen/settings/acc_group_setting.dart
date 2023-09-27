@@ -310,7 +310,7 @@ class NewAccGroupSheet extends StatelessWidget {
               //CustomBtnWidget(color: Colors.red, label: "حذف التصنيف"),
               if (isEditing && isHasAAccountsOnIt())
                 CustomDeleteBtnWidget(
-                  lable: "حذف ",
+                  lable: "حذف",
                   action: () {
                     CustomDialog.showDialog(
                         title: "حذف التصنيف",

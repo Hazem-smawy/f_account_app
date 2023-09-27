@@ -12,6 +12,7 @@ import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/controller/new_account_controller.dart';
 import 'package:account_app/models/customer_account.dart';
 import 'package:account_app/models/customer_model.dart';
+import 'package:account_app/screen/new_account/select_contact_widget.dart';
 import 'package:account_app/widget/curency_show_widget.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
@@ -80,44 +81,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   CurencyController curencyController = Get.find();
   TextEditingController nameController = TextEditingController();
   TextEditingController detailsTextController = TextEditingController();
-
-  // FullContact? _contact;
-
-  // Future<void> _askContactPermissions() async {
-  //   PermissionStatus permissionStatus = await _getContactPermission();
-  //   if (permissionStatus == PermissionStatus.granted) {
-  //     final FullContact contact = await FlutterContactPicker.pickFullContact();
-  //     if (contact != null) {
-  //       setState(() {
-  //         _contact = contact;
-  //       });
-  //     }
-  //   } else {
-  //     _handleInvalidPermissions(permissionStatus);
-  //   }
-  // }
-
-  // Future<PermissionStatus> _getContactPermission() async {
-  //   PermissionStatus permission = await Permission.contacts.status;
-  //   if (permission != PermissionStatus.granted &&
-  //       permission != PermissionStatus.permanentlyDenied) {
-  //     PermissionStatus permissionStatus = await Permission.contacts.request();
-  //     return permissionStatus;
-  //   } else {
-  //     return permission;
-  //   }
-  // }
-
-  // ignore: unused_element
-  // void _handleInvalidPermissions(PermissionStatus permissionStatus) {
-  //   if (permissionStatus == PermissionStatus.denied) {
-  //     const snackBar = SnackBar(content: Text('Access to contact data denied'));
-  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  //   } else if (permissionStatus == PermissionStatus.permanentlyDenied) {
-  //     CustomDialog.customSnackBar(
-  //         'Contact data not available on device', SnackPosition.TOP);
-  //   }
-  // }
+  TextEditingController moneyTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +121,8 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                             children: [
                               SizedBox(
                                   width: Get.width / 3,
-                                  child: CustomNumberFieldWidget(
+                                  child: CustomCurencyFieldWidget(
+                                    controller: moneyTextController,
                                     textHint: "المبلغ",
                                     onTap: () {
                                       setState(() {
@@ -236,20 +201,34 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                           }
                                         },
                                         decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: "الاسم",
-                                            hintStyle: MyTextStyles.body
-                                                .copyWith(
-                                                    fontWeight:
-                                                        FontWeight.normal),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 10)),
+                                          border: InputBorder.none,
+                                          hintText: "الاسم",
+                                          hintStyle: MyTextStyles.body.copyWith(
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
                               )),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              SelectContactWidget(
+                                action: (contactName, contactNumber) {
+                                  nameController.text = contactName;
+                                  newAccountController.newAccount.update(
+                                    'phone',
+                                    (value) => contactName,
+                                    ifAbsent: () => contactNumber,
+                                  );
+                                },
+                              )
                             ],
                           ),
                           const SizedBox(height: 10),
@@ -459,6 +438,8 @@ Column(
   */
 
   void createCustomerAccount(bool credit) async {
+    newAccountController.newAccount['money'] =
+        newAccountController.newAccount['money'].toString().replaceAll(",", "");
     if (nameController.text.isEmpty) {
       CEC.errorMessage.value = "قم يملئ حقل الاسم بطريقة صحيحة";
       return;
@@ -683,6 +664,8 @@ class NewCustomerSheet extends StatelessWidget {
                     // ),
                     const SizedBox(height: 20),
                     CustomNumberFieldWidget(
+                      placeHolder:
+                          newAccountController.newAccount['phone'] ?? "",
                       textHint: "الهاتف",
                       action: (p0) {
                         newAccountController.newAccount.update(

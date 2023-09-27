@@ -100,7 +100,9 @@ class AlertController extends GetxController {
   }
 
   Future<void> deleteAlert(int id) async {
-    alertData.delete(id);
-    readAllAlerts();
+    await alertData.delete(id);
+    await readAllAlerts();
+    CustomDialog.customSnackBar(
+        'تم حذف التنبية بنجاح', SnackPosition.BOTTOM, false);
   }
 }

@@ -167,7 +167,7 @@ class HomeReportsScreen extends StatelessWidget {
                         Get.to(() => SettingScreen());
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(9),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: MyColors.lessBlackColor),
@@ -180,7 +180,7 @@ class HomeReportsScreen extends StatelessWidget {
                     ),
                     const Spacer(),
                     HomeReportFooterWidget(
-                      title: "جميع الحسابات",
+                      title: "كل الحسابات",
                       icon: FontAwesomeIcons.fileCircleCheck,
                       action: () {
                         Get.to(() => CustomerAccountsView());
@@ -190,7 +190,7 @@ class HomeReportsScreen extends StatelessWidget {
                       width: 10,
                     ),
                     HomeReportFooterWidget(
-                      title: "العملا ت",
+                      title: "كل العملا ت",
                       icon: FontAwesomeIcons.dollarSign,
                       action: () {
                         Get.to(() => CurencySettingScreen());
@@ -225,7 +225,7 @@ class ReportItemWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => action(),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: MyColors.bg,

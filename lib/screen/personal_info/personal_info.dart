@@ -78,18 +78,25 @@ class PersonalInfoScreen extends StatelessWidget {
                                           null)
                                         Container(
                                           padding: const EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 5),
+                                            horizontal: 15,
+                                            vertical: 2,
+                                          ),
                                           margin: const EdgeInsets.only(
-                                              top: 10, bottom: 5),
+                                            top: 10,
+                                            bottom: 5,
+                                          ),
                                           decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              border: Border.all(
-                                                  color: MyColors.shadowColor)),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            border: Border.all(
+                                              color: MyColors.shadowColor,
+                                            ),
+                                          ),
                                           child: Text(
-                                            "تعد يل صوره",
-                                            style: MyTextStyles.body
-                                                .copyWith(fontSize: 8),
+                                            "تعد يل الصوره",
+                                            style: MyTextStyles.body.copyWith(
+                                              fontSize: 8,
+                                            ),
                                           ),
                                         )
                                     ],

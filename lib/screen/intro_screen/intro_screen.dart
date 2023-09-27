@@ -59,7 +59,7 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
             Expanded(
               child: PageView.builder(
                   controller: controller,
-                  physics: const NeverScrollableScrollPhysics(),
+                  //  physics: const NeverScrollableScrollPhysics(),
                   reverse: true,
                   onPageChanged: (value) {
                     setState(() {
@@ -237,19 +237,22 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                                               .updateIntro()
                                               .then((value) {
                                             Get.offAll(
-                                                () => ShowMyMainScreen());
+                                              () => ShowMyMainScreen(),
+                                            );
                                           });
                                         } else {
                                           CustomDialog.customSnackBar(
-                                              "حدث خطأ عند إستعادة النسخة",
-                                              SnackPosition.TOP,
-                                              true);
+                                            "حدث خطأ عند إستعادة النسخة",
+                                            SnackPosition.TOP,
+                                            true,
+                                          );
                                         }
                                       } catch (e) {
                                         CustomDialog.customSnackBar(
-                                            "حدث خطأ عند إستعادة النسخة",
-                                            SnackPosition.TOP,
-                                            true);
+                                          "حدث خطأ عند إستعادة النسخة",
+                                          SnackPosition.TOP,
+                                          true,
+                                        );
                                       }
                                     },
                                     child: Container(
@@ -295,8 +298,10 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
             if (i != pages.length - 1)
               Container(
                 margin: const EdgeInsets.only(bottom: 30),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 20,
+                ),
                 child: Row(
                   textDirection: TextDirection.rtl,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -323,24 +328,24 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                     ),
                     Expanded(
                       child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: pages
-                              .map(
-                                (e) => AnimatedContainer(
-                                  duration: const Duration(microseconds: 200),
-                                  margin: const EdgeInsets.only(left: 5),
-                                  width: e['id'] == i ? 15 : 5,
-                                  height: 5,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: e['id'] == i
-                                        ? const Color.fromARGB(
-                                            255, 88, 223, 162)
-                                        : Colors.white,
-                                  ),
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: pages
+                            .map(
+                              (e) => AnimatedContainer(
+                                duration: const Duration(microseconds: 200),
+                                margin: const EdgeInsets.only(left: 5),
+                                width: e['id'] == i ? 15 : 5,
+                                height: 5,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: e['id'] == i
+                                      ? const Color.fromARGB(255, 88, 223, 162)
+                                      : Colors.white,
                                 ),
-                              )
-                              .toList()),
+                              ),
+                            )
+                            .toList(),
+                      ),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -352,9 +357,11 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                       child: Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                            border:
-                                Border.all(color: MyColors.secondaryTextColor),
-                            shape: BoxShape.circle),
+                          border: Border.all(
+                            color: MyColors.secondaryTextColor,
+                          ),
+                          shape: BoxShape.circle,
+                        ),
                         child: const FaIcon(
                           FontAwesomeIcons.chevronLeft,
                           color: Colors.white,

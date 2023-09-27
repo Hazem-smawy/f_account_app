@@ -48,6 +48,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   DetailController detailController = Get.find();
   List<dynamic> details = [];
   TextEditingController detailsTextController = TextEditingController();
+  TextEditingController moneyTextController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -148,7 +149,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                             width: 10,
                           ),
                           Expanded(
-                              child: CustomNumberFieldWidget(
+                              child: CustomCurencyFieldWidget(
+                            controller: moneyTextController,
                             textHint: "المبلغ",
                             onTap: () {
                               setState(() {
@@ -300,7 +302,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 
   Future<void> addNewRecordFunction(bool credit) async {
     newAccountController.newAccount['desc'] = detailsTextController.text.trim();
-
+    newAccountController.newAccount['money'] =
+        newAccountController.newAccount['money'].toString().replaceAll(",", "");
     if (newAccountController.newAccount['money'] == null ||
         newAccountController.newAccount['desc'] == null) {
       CEC.errorMessage.value = interAllValues;

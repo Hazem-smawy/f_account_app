@@ -166,13 +166,13 @@ class AlertScreen extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: MyColors.bg.withOpacity(0.5),
+          color: MyColors.bg.withOpacity(0.7),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const FaIcon(
-              FontAwesomeIcons.bell,
+              Icons.alarm_off,
               size: 50,
               color: MyColors.lessBlackColor,
             ),
@@ -189,10 +189,10 @@ class AlertScreen extends StatelessWidget {
 }
 
 class AlertItemWidget extends StatelessWidget {
-  AlertModel alertModel;
-  bool isNew;
+  final AlertModel alertModel;
+  final bool isNew;
   AlertItemWidget({super.key, required this.alertModel, required this.isNew});
-  AlertController alertController = Get.find();
+  final AlertController alertController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -214,14 +214,14 @@ class AlertItemWidget extends StatelessWidget {
                   Text(
                     date_formater.DateFormat.Hm().format(alertModel.date),
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     date_formater.DateFormat.yMd().format(alertModel.date),
                     style: const TextStyle(
-                      fontSize: 10,
+                      fontSize: 8,
                     ),
                   ),
                 ],
@@ -229,7 +229,7 @@ class AlertItemWidget extends StatelessWidget {
               const Spacer(),
               Text(
                 alertModel.name,
-                style: MyTextStyles.title1,
+                style: MyTextStyles.title2,
               ),
             ],
           ),
@@ -252,7 +252,7 @@ class AlertItemWidget extends StatelessWidget {
 
           // btns
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
           GestureDetector(
             onTap: () async {
@@ -279,7 +279,7 @@ class AlertItemWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 color: isNew
                     ? const Color.fromARGB(225, 52, 155, 18).withOpacity(0.8)
-                    : MyColors.secondaryTextColor,
+                    : Colors.red[400],
               ),
               child: Center(
                 child: Text(

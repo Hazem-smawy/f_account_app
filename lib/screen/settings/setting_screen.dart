@@ -2,6 +2,7 @@
 import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/controller/image_controller.dart';
 import 'package:account_app/controller/personal_controller.dart';
+import 'package:account_app/screen/about_app/about_app_screen.dart';
 import 'package:account_app/screen/copy_screen/google_copy_screen.dart';
 import 'package:account_app/screen/copy_screen/local_copy_screen.dart';
 import 'package:account_app/screen/personal_info/personal_info.dart';
@@ -80,14 +81,16 @@ class SettingScreen extends StatelessWidget {
                       onTap: () => Get.to(() => PersonalInfoScreen()),
                       child: Container(
                         padding: const EdgeInsets.only(
-                          left: 15,
-                          right: 15,
+                          left: 20,
+                          right: 20,
                           bottom: 12,
                           top: 10,
                         ),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: MyColors.bg,
+                          borderRadius: BorderRadius.circular(20),
+                          color: personalController.newPersonal['name'] != null
+                              ? MyColors.bg
+                              : Colors.transparent,
                         ),
                         child: Obx(
                           () => personalController.newPersonal['name'] == null
@@ -162,7 +165,8 @@ class SettingScreen extends StatelessWidget {
                                             padding: const EdgeInsets.all(5),
                                             decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
-                                              color: Colors.green,
+                                              color:
+                                                  MyColors.secondaryTextColor,
                                             ),
                                             margin:
                                                 const EdgeInsets.only(top: 20),
@@ -192,7 +196,7 @@ class SettingScreen extends StatelessWidget {
                   height: double.infinity,
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   margin:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   decoration: BoxDecoration(
                     color: MyColors.bg,
                     borderRadius: BorderRadius.circular(30),
@@ -220,7 +224,7 @@ class SettingScreen extends StatelessWidget {
                         SettingItemWidget(
                           onPress: () => Get.to(() => const LocalCopyScreen()),
                           icon: FontAwesomeIcons.solidFolderClosed,
-                          title: "النسخ الإحتياطي",
+                          title: " النسخ الإحتياطي الى الملفات",
                         ),
                         SettingItemWidget(
                             onPress: () =>
@@ -250,12 +254,15 @@ class SettingScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Container(
-                              padding: const EdgeInsets.only(right: 20),
-                              child: const FaIcon(
-                                FontAwesomeIcons.question,
-                                size: 20,
-                                color: MyColors.secondaryTextColor,
+                            GestureDetector(
+                              onTap: () => Get.to(() => const AboutAppScreen()),
+                              child: Container(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: const FaIcon(
+                                  FontAwesomeIcons.question,
+                                  size: 20,
+                                  color: MyColors.secondaryTextColor,
+                                ),
                               ),
                             )
                           ],

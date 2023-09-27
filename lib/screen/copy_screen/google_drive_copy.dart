@@ -102,9 +102,9 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                 Column(
                   children: [
                     CustomCopyBtnWidget(
-                      topIcon: FontAwesomeIcons.download,
+                      topIcon: FontAwesomeIcons.upload,
                       color: Colors.green,
-                      icon: FontAwesomeIcons.download,
+                      icon: FontAwesomeIcons.upload,
                       label: "عمل نسخة جد يد ة",
                       action: () async {
                         await contorller.uploadCopy();
@@ -113,9 +113,9 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                           "قم بعمل نسخة إحتياطية جديدة , لحفظ كل بياناتك في جوجل درايف وإستعادتها في وقت لاحق",
                     ),
                     CustomDriveCopyBtnWidget(
-                      topIcon: FontAwesomeIcons.upload,
+                      topIcon: FontAwesomeIcons.download,
                       color: const Color.fromARGB(197, 170, 18, 18),
-                      icon: FontAwesomeIcons.upload,
+                      icon: FontAwesomeIcons.download,
                       label: "فتح أخر نسخة ",
                       //  action: () {},
                       action: () {

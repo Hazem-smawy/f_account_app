@@ -57,8 +57,10 @@ class DailyPdfController {
   static Widget buildDailyTableReport() {
     final headers = [
       "التأريخ",
-      "لك",
+      ' ',
       "العملة",
+      "علية",
+      "لة",
       "المبلغ",
       'التفاصيل',
       "الأسم",
@@ -82,8 +84,10 @@ class DailyPdfController {
               PdfApi.debitOrCreditView(e['credit'] > e['debit']),
               PdfApi.paddedHeadingTextArabicCell(e['curencyName']),
               PdfApi.paddedHeadingTextEnglishCell(
-                GlobalUtitlity.formatNumberDouble(
-                    number: (e['credit'] - e['debit']).abs()),
+                GlobalUtitlity.formatNumberDouble(number: (e['debit']).abs()),
+              ),
+              PdfApi.paddedHeadingTextEnglishCell(
+                GlobalUtitlity.formatNumberDouble(number: (e['credit']).abs()),
               ),
               PdfApi.paddedHeadingTextArabicCell('${e['desc']}'),
               PdfApi.paddedHeadingTextArabicCell('${e['name']}'),

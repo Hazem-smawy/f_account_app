@@ -32,7 +32,7 @@ final FlutterLocalNotificationsPlugin flutterLocalPlugin =
     FlutterLocalNotificationsPlugin();
 const AndroidNotificationChannel notificationChannel =
     AndroidNotificationChannel("coding is the life", "android channal service",
-        description: "this is channel des..", importance: Importance.low);
+        description: "this is channel des..", importance: Importance.high);
 
 @pragma('vm:entry-point')
 void backgroundFetchHeadlessTask(HeadlessTask task) async {
@@ -159,24 +159,25 @@ class _MyAppState extends State<MyApp> {
     // Configure BackgroundFetch.
     await BackgroundFetch.configure(
         BackgroundFetchConfig(
-          minimumFetchInterval: 60 * 12,
-          stopOnTerminate: false,
-          enableHeadless: true,
-          requiresBatteryNotLow: false,
-          requiresCharging: false,
-          requiresStorageNotLow: false,
-          requiresDeviceIdle: false,
-          requiredNetworkType: NetworkType.NONE,
-        ), (String taskId) async {
-      // if (DateTime.now().hour == 23) {
+            minimumFetchInterval: 60,
+            stopOnTerminate: false,
+            enableHeadless: true,
+            requiresBatteryNotLow: false,
+            requiresCharging: false,
+            requiresStorageNotLow: false,
+            requiresDeviceIdle: false,
+            requiredNetworkType: NetworkType.NONE), (String taskId) async {
       await _doCopyToGoogleDrive();
-      //   }
 
       BackgroundFetch.finish(taskId);
     }, (String taskId) async {
+      await _doCopyToGoogleDrive();
+
       BackgroundFetch.finish(taskId);
     });
-
+    if (DateTime.now().hour == 23) {
+      await _doCopyToGoogleDrive();
+    }
     if (!mounted) return;
   }
 
@@ -190,6 +191,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.green,
         scaffoldBackgroundColor: MyColors.containerColor,
+        brightness: Brightness.light,
       ),
       home: WillBackBtnWidget(introController: introController),
     );
@@ -215,7 +217,7 @@ class WillBackBtnWidget extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           decoration: const BoxDecoration(
             color: MyColors.containerColor,
@@ -258,7 +260,10 @@ class WillBackBtnWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+                SystemNavigator.pop();
+              },
               child: Text(
                 'نعم , متأكد',
                 style: MyTextStyles.subTitle.copyWith(color: Colors.green[600]),
@@ -325,7 +330,7 @@ class ShowMyMainScreen extends StatelessWidget {
               backgroundColor: MyColors.bg,
               body: EmptyAccGroupsWidget(),
             )
-          : MyMainScreen(),
+          : Scaffold(body: MyMainScreen()),
     );
   }
 }

@@ -51,7 +51,7 @@ class CustomBackBtnWidget extends StatelessWidget {
                       shareAction!();
                     },
                     child: const FaIcon(
-                      FontAwesomeIcons.shareFromSquare,
+                      FontAwesomeIcons.share,
                       size: 20,
                       color: MyColors.secondaryTextColor,
                     ),

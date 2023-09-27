@@ -173,8 +173,11 @@ class CopyController extends GetxController {
         return;
       }
     } else {
+      CustomDialog.loadingProgress();
       driveApi = await googleDriveAppData.getDriveApi(googleUser!);
+      Get.back();
     }
+
     update();
   }
 

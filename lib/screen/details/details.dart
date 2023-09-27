@@ -8,6 +8,7 @@ import 'package:account_app/controller/reports_pdf_controller/details_journals_p
 import 'package:account_app/models/home_model.dart';
 import 'package:account_app/models/journal_model.dart';
 import 'package:account_app/screen/details/details_row.dart';
+import 'package:account_app/screen/details/details_share_sheet.dart';
 import 'package:account_app/screen/new_record/new_record.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/utility/curency_format.dart';
@@ -26,8 +27,12 @@ class DetailsScreen extends StatefulWidget {
   final HomeModel homeModel;
 
   final bool accGoupStatus;
+  final bool isFormReports;
   const DetailsScreen(
-      {super.key, required this.homeModel, required this.accGoupStatus});
+      {super.key,
+      required this.homeModel,
+      required this.accGoupStatus,
+      required this.isFormReports});
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -83,6 +88,35 @@ class _DetailsScreenState extends State<DetailsScreen> {
   JournalController journalController = Get.find();
   CustomerController customerController = Get.find();
   CurencyController curencyController = Get.find();
+
+  Future<void> shareAction() async {
+    File? file = await JournalPdfControls.generateJournlsPdfReports(
+      journals: journals,
+      totalCredit: onYou,
+      totalDebit: onHem,
+      customerId: widget.homeModel.caId ?? 0,
+      curencyId: widget.homeModel.curId ?? 0,
+      accGroupId: widget.homeModel.accGId ?? 0,
+      share: true,
+    );
+    if (file != null) {
+      Share.shareXFiles([XFile(file.path)], text: 'حساب ');
+    }
+  }
+
+  Future<void> pdfAction() async {
+    if (journals.isNotEmpty) {
+      JournalPdfControls.generateJournlsPdfReports(
+          journals: journals,
+          totalCredit: onYou,
+          totalDebit: onHem,
+          customerId: widget.homeModel.caId ?? 0,
+          curencyId: widget.homeModel.curId ?? 0,
+          accGroupId: widget.homeModel.accGId ?? 0,
+          share: false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return journals.isEmpty
@@ -97,33 +131,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 child: Column(
                   children: [
                     CustomBackBtnWidget(
-                      shareAction: () async {
-                        File? file =
-                            await JournalPdfControls.generateJournlsPdfReports(
-                          journals: journals,
-                          totalCredit: onYou,
-                          totalDebit: onHem,
-                          customerId: widget.homeModel.caId ?? 0,
-                          curencyId: widget.homeModel.curId ?? 0,
-                          accGroupId: widget.homeModel.accGId ?? 0,
-                          share: true,
-                        );
-                        if (file != null) {
-                          Share.shareXFiles([XFile(file.path)], text: 'حساب ');
-                        }
-                      },
-                      action: () {
-                        if (journals.isNotEmpty) {
-                          JournalPdfControls.generateJournlsPdfReports(
-                              journals: journals,
-                              totalCredit: onYou,
-                              totalDebit: onHem,
-                              customerId: widget.homeModel.caId ?? 0,
-                              curencyId: widget.homeModel.curId ?? 0,
-                              accGroupId: widget.homeModel.accGId ?? 0,
-                              share: false);
-                        }
-                      },
+                      shareAction: shareAction,
+                      action: pdfAction,
                       icon: FontAwesomeIcons.solidFilePdf,
                       title: customerController.allCustomers
                           .firstWhere(
@@ -162,7 +171,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ),
                           ),
                           const SizedBox(
-                            width: 10,
+                            width: 12,
                           ),
                           Container(
                             width: 20,
@@ -264,8 +273,28 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const SizedBox(
-                            width: 20,
+                          GestureDetector(
+                            onTap: () {
+                              Get.bottomSheet(DetailsShareSheetWidget(
+                                pdfAction: pdfAction,
+                                shareAction: shareAction,
+                                customerPhone: customerController.allCustomers
+                                    .firstWhere((element) =>
+                                        element.id == widget.homeModel.caId)
+                                    .phone,
+                                debit: onHem,
+                                credit: onYou,
+                              ));
+                            },
+                            child: Container(
+                                color: MyColors.bg,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: const FaIcon(
+                                  Icons.share,
+                                  size: 20,
+                                  color: MyColors.lessBlackColor,
+                                )),
                           ),
                           Row(
                             children: [
@@ -289,8 +318,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 width: 10,
                               ),
                               Text(
-                                resultMoney < 0 ? "علية" : "لة",
-                                style: MyTextStyles.subTitle,
+                                resultMoney < 0 ? ": علية" : ": لة",
+                                style: MyTextStyles.subTitle.copyWith(
+                                  fontWeight: FontWeight.normal,
+                                ),
                               ),
                               const SizedBox(
                                 width: 10,
@@ -332,29 +363,32 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
               ),
             ),
-            floatingActionButton: FloatingActionButton(
-              backgroundColor:
-                  getStatus() ? MyColors.primaryColor : MyColors.blackColor,
-              onPressed: () {
-                if (getStatus()) {
-                  Get.bottomSheet(
-                    NewRecordScreen(
-                      homeModel: widget.homeModel,
-                    ),
-                    isScrollControlled: true,
-                  ).then((value) {
-                    getAllJournals();
-                  });
-                } else {
-                  CustomDialog.customSnackBar(
-                      "تم ايقاف هذا الحساب من الاعدادات",
-                      SnackPosition.BOTTOM,
-                      false);
-                  return;
-                }
-              },
-              child: const FaIcon(FontAwesomeIcons.plus),
-            ),
+            floatingActionButton: widget.isFormReports
+                ? const SizedBox()
+                : FloatingActionButton(
+                    backgroundColor: getStatus()
+                        ? MyColors.primaryColor
+                        : MyColors.blackColor,
+                    onPressed: () {
+                      if (getStatus()) {
+                        Get.bottomSheet(
+                          NewRecordScreen(
+                            homeModel: widget.homeModel,
+                          ),
+                          isScrollControlled: true,
+                        ).then((value) {
+                          getAllJournals();
+                        });
+                      } else {
+                        CustomDialog.customSnackBar(
+                            "تم ايقاف هذا الحساب من الاعدادات",
+                            SnackPosition.BOTTOM,
+                            false);
+                        return;
+                      }
+                    },
+                    child: const FaIcon(FontAwesomeIcons.plus),
+                  ),
           );
   }
 
