@@ -128,8 +128,7 @@ class AccountMoveScreen extends StatelessWidget {
                                     ),
                                     child: TextFormField(
                                       controller: textEditingController,
-                                      style: MyTextStyles.subTitle
-                                          .copyWith(color: MyColors.blackColor),
+
                                       onChanged: (value) {
                                         accountMovemoentController
                                                 .fromDate.value =
@@ -174,6 +173,10 @@ class AccountMoveScreen extends StatelessWidget {
 
                                       textAlign: TextAlign.right,
                                       textDirection: TextDirection.rtl,
+                                      style: MyTextStyles.subTitle.copyWith(
+                                        color: MyColors.blackColor,
+                                        fontWeight: FontWeight.normal,
+                                      ),
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(
                                             borderSide: BorderSide.none,
@@ -189,7 +192,9 @@ class AccountMoveScreen extends StatelessWidget {
                                           vertical: 0,
                                         ),
                                         hintText: "بحث في حسابات العملاء",
-                                        hintStyle: MyTextStyles.body,
+                                        hintStyle: MyTextStyles.body.copyWith(
+                                          fontWeight: FontWeight.normal,
+                                        ),
                                       ),
                                       // style: myTextStyles.subTitle,
                                     ),

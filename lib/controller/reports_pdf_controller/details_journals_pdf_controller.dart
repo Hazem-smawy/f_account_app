@@ -75,7 +75,7 @@ class JournalPdfControls {
   }
 
   static Widget buildMoneyMovementsTableReport(final journls) {
-    final headers = ["التأريخ", "لك", "المبلغ", 'التفاصيل'];
+    final headers = ["التأريخ", " ", "لة", "علية", 'التفاصيل'];
 
     return Table(
         border: TableBorder.all(color: PdfColors.grey300),
@@ -91,8 +91,9 @@ class JournalPdfControls {
               ),
               PdfApi.debitOrCreditView(e.credit > e.debit),
               PdfApi.paddedHeadingTextEnglishCell(
-                  GlobalUtitlity.formatNumberDouble(
-                      number: (e.credit - e.debit).abs())),
+                  GlobalUtitlity.formatNumberDouble(number: (e.credit).abs())),
+              PdfApi.paddedHeadingTextEnglishCell(
+                  GlobalUtitlity.formatNumberDouble(number: (e.debit).abs())),
               PdfApi.paddedHeadingTextArabicCell(e.details),
             ]);
           }).toList()

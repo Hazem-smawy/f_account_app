@@ -398,15 +398,15 @@ class EditPersonalInfoSheet extends StatelessWidget {
                           return;
                         }
                         var newPersonalInfo = PersonalModel(
-                            id: 1,
-                            name:
-                                personalController.newPersonal['newName'] ?? "",
-                            email:
-                                personalController.newPersonal['email'] ?? "",
-                            address:
-                                personalController.newPersonal['address'] ?? "",
-                            phone:
-                                personalController.newPersonal['phone'] ?? "");
+                          id: 1,
+                          name: personalController.newPersonal['newName'] ?? "",
+                          email: personalController.newPersonal['email'] ?? "",
+                          address:
+                              personalController.newPersonal['address'] ?? "",
+                          phone: personalController.newPersonal['phone'] ?? "",
+                          isPersonal: false,
+                          isSelectedAccountType: false,
+                        );
 
                         isFirstTime
                             ? personalController.createPersona(newPersonalInfo)

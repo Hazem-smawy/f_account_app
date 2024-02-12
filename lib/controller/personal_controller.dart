@@ -24,4 +24,18 @@ class PersonalController extends GetxController {
   Future<void> updatePersonal(PersonalModel persoanl) async {
     personalData.updatePersonal(persoanl);
   }
+
+  Future<void> updateIsPersonal(bool isPersonal) async {
+    final updatedPersonal = PersonalModel(
+        id: 1,
+        name: newPersonal['name'],
+        email: newPersonal['email'],
+        address: newPersonal['address'] ?? "",
+        phone: newPersonal['phone'] ?? "",
+        isPersonal: isPersonal,
+        isSelectedAccountType: true);
+
+    await updatePersonal(updatedPersonal);
+    await getPersonal();
+  }
 }

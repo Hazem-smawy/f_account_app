@@ -29,6 +29,7 @@ class Customer {
   final bool status;
   final DateTime createdAt;
   final DateTime modifiedAt;
+
   Customer({
     this.id,
     required this.name,

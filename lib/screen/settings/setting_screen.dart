@@ -9,6 +9,7 @@ import 'package:account_app/screen/personal_info/personal_info.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
 import 'package:account_app/screen/settings/curency_setting.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/no_personal_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -191,19 +192,16 @@ class SettingScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: MyColors.bg,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
+                child: Obx(
+                  () => Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: MyColors.bg,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: ListView(
                       children: [
                         const SizedBox(height: 15),
                         SettingItemWidget(
@@ -232,75 +230,107 @@ class SettingScreen extends StatelessWidget {
                             title: "النسخ الإحتياطي الى جوجل درايف",
                             icon: FontAwesomeIcons.googleDrive),
                         const SizedBox(height: 30),
-                        const Spacer(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                SystemNavigator.pop();
-                              },
-                              child: Container(
-                                width: Get.width - 150,
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(18),
-                                  color: MyColors.containerColor,
-                                ),
-                                child: Text(
-                                  "خروج ",
-                                  style: MyTextStyles.subTitle,
-                                ),
+                        const SizedBox(height: 15),
+                        if (personalController
+                                    .newPersonal['isSelectedAccountType'] !=
+                                null &&
+                            personalController
+                                    .newPersonal['isSelectedAccountType'] ==
+                                0)
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: MyColors.secondaryTextColor
+                                    .withOpacity(0.2),
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () => Get.to(() => const AboutAppScreen()),
-                              child: Container(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: const FaIcon(
-                                  FontAwesomeIcons.question,
-                                  size: 20,
-                                  color: MyColors.secondaryTextColor,
+                            child: Column(
+                              children: [
+                                Text(
+                                  "نوع النشاط",
+                                  style: MyTextStyles.title2,
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                        // const SizedBox(
-                        //   height: 10,
-                        // ),
-                        // GestureDetector(
-                        //   onTap: () async {
-                        //     CustomDialog.loadingProgress();
-                        //     await deleteDatabase(
-                        //         await DatabaseService().fullPath);
-                        //     await copyController.restoreSucess();
-                        //     Get.back();
-
-                        //     Get.offAll(() => MyEntroScreen());
-                        //   },
-                        //   child: Container(
-                        //     width: Get.width - 100,
-                        //     alignment: Alignment.center,
-                        //     padding: const EdgeInsets.all(10),
-                        //     decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(18),
-                        //       color: Color.fromARGB(255, 252, 203, 203),
-                        //     ),
-                        //     child: Text(
-                        //       "خروج ومسح كل البيانات ",
-                        //       style: myTextStyles.subTitle.copyWith(
-                        //         color: Color.fromARGB(255, 146, 44, 36),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                        const SizedBox(height: 15),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  children: [
+                                    Flexible(
+                                      child: CustomBtnWidget(
+                                        color: MyColors.blackColor,
+                                        action: () {
+                                          personalController
+                                              .updateIsPersonal(true);
+                                        },
+                                        label: " نشاط شخصي",
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Flexible(
+                                      child: CustomBtnWidget(
+                                        color: MyColors.lessBlackColor,
+                                        action: () {
+                                          personalController
+                                              .updateIsPersonal(false);
+                                        },
+                                        label: "نشاط تجاري",
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
                       ],
                     ),
                   ),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 20, right: 20, left: 20, top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        SystemNavigator.pop();
+                      },
+                      child: Container(
+                        width: Get.width - 150,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                          color: MyColors.bg,
+                        ),
+                        child: Text(
+                          "خروج ",
+                          style: MyTextStyles.subTitle,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => Get.to(() => const AboutAppScreen()),
+                      child: Container(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: const FaIcon(
+                          FontAwesomeIcons.question,
+                          size: 20,
+                          color: MyColors.lessBlackColor,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
               )
             ],
           ),

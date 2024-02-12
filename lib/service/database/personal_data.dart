@@ -15,11 +15,9 @@ class PersonalData {
           ${PersonalField.name} ${FieldType.textType},
           ${PersonalField.phone} ${FieldType.textType},
           ${PersonalField.email} ${FieldType.textType},
-          ${PersonalField.address} ${FieldType.textType}
-          
-         
-
-
+          ${PersonalField.address} ${FieldType.textType},
+          ${PersonalField.isPersonal} ${FieldType.boolType},
+          ${PersonalField.isSelectedAccountType} ${FieldType.boolType}
         );
     ''');
   }
@@ -57,6 +55,21 @@ class PersonalData {
       final updatedObject = await db.update(
           TableName.personalTbl, personalModel.toMap(),
           where: '${PersonalField.id} = ?', whereArgs: [personalModel.id]);
+      Get.back();
+      return updatedObject;
+    } catch (e) {
+      CustomDialog.customSnackBar("حدث خطأ", SnackPosition.BOTTOM, true);
+    }
+    return null;
+  }
+
+  Future<int?> updateIsPersonal(bool isPersonal, int id, isSelected) async {
+    final db = await DatabaseService().database;
+
+    try {
+      final updatedObject = await db.update(TableName.personalTbl,
+          {'isPersonal': isPersonal, 'isSelectedAccountType': isSelected},
+          where: '${PersonalField.id} = ?', whereArgs: [id]);
       Get.back();
       return updatedObject;
     } catch (e) {

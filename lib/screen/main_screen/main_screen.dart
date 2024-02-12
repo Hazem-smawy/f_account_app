@@ -26,6 +26,8 @@ class MyMainScreen extends StatelessWidget {
   final HomeController homeController = Get.find();
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   final controller = PageController();
+  final uo = 0;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -216,7 +218,10 @@ class MyMainScreen extends StatelessWidget {
                         }
                       } else {
                         CustomDialog.customSnackBar(
-                            "هذا التصنيف موقف", SnackPosition.BOTTOM, true);
+                          "هذا التصنيف موقف",
+                          SnackPosition.BOTTOM,
+                          true,
+                        );
                         return;
                       }
                     },

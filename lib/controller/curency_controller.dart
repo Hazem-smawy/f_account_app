@@ -11,13 +11,6 @@ class CurencyController extends GetxController {
   final editCurency = {}.obs;
   final selectedCurency = {}.obs;
 
-  /*
-  _productsController.newProduct.update(
-        'status', (value) => value,
-        ifAbsent: (() => value));
-  }
-
- */
   @override
   void onInit() {
     readAllCurency();

@@ -1,4 +1,5 @@
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/constant/sizes.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -155,7 +156,7 @@ class CustomBtnWidget extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           elevation: 0,
           backgroundColor: color,
-          minimumSize: const Size.fromHeight(50),
+          minimumSize: Size.fromHeight(textFieldSize),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

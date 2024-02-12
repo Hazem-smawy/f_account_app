@@ -1,5 +1,7 @@
 import 'package:account_app/controller/accgroup_controller.dart';
+import 'package:account_app/controller/journal_controller.dart';
 import 'package:account_app/models/customer_account.dart';
+import 'package:account_app/models/journal_model.dart';
 import 'package:account_app/service/database/customer_account_data.dart';
 import 'package:get/get.dart';
 
@@ -58,6 +60,12 @@ class CustomerAccountController extends GetxController {
   }
 
   Future<void> deleteCustomerAccount(int id) async {
+    JournalController journalController = JournalController();
+    List<Journal> journals =
+        await journalController.getAllJournalsForCustomerAccount(id);
+    journals.forEach((element) {
+      journalController.deleteJournal(element.id ?? 0);
+    });
     customerAccountData.delete(id);
     readAllCustomerAccounts();
   }

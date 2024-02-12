@@ -7,8 +7,18 @@ class PersonalField {
   static const String email = "email";
   static const String address = "address";
   static const String phone = "phone";
+  static const String isPersonal = "isPersonal";
+  static const String isSelectedAccountType = 'isSelectedAccountType';
 
-  static final List<String> values = [id, name, email, address, phone];
+  static final List<String> values = [
+    id,
+    name,
+    email,
+    address,
+    phone,
+    isPersonal,
+    isSelectedAccountType,
+  ];
 }
 
 class PersonalModel {
@@ -17,12 +27,16 @@ class PersonalModel {
   String email;
   String address;
   String phone;
+  bool isPersonal;
+  bool isSelectedAccountType;
   PersonalModel({
     required this.id,
     required this.name,
     required this.email,
     required this.address,
     required this.phone,
+    required this.isPersonal,
+    required this.isSelectedAccountType,
   });
 
   PersonalModel copyWith({
@@ -31,14 +45,18 @@ class PersonalModel {
     String? email,
     String? address,
     String? phone,
+    bool? isPersonal,
+    bool? isSelectedAccountType,
   }) {
     return PersonalModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      email: email ?? this.email,
-      address: address ?? this.address,
-      phone: phone ?? this.phone,
-    );
+        id: id ?? this.id,
+        name: name ?? this.name,
+        email: email ?? this.email,
+        address: address ?? this.address,
+        phone: phone ?? this.phone,
+        isPersonal: isPersonal ?? this.isPersonal,
+        isSelectedAccountType:
+            isSelectedAccountType ?? this.isSelectedAccountType);
   }
 
   Map<String, dynamic> toMap() {
@@ -48,6 +66,8 @@ class PersonalModel {
       'email': email,
       'address': address,
       'phone': phone,
+      'isPersonal': isPersonal ? 1 : 0,
+      'isSelectedAccountType': isSelectedAccountType ? 1 : 0,
     };
   }
 
@@ -58,6 +78,8 @@ class PersonalModel {
       email: map['email'] as String,
       address: map['address'] as String,
       phone: map['phone'] as String,
+      isPersonal: map['isPersonal'] == 1,
+      isSelectedAccountType: map['isSelectedAccountType'] == 1,
     );
   }
 
@@ -68,7 +90,7 @@ class PersonalModel {
 
   @override
   String toString() {
-    return 'PersonalModel(id: $id, name: $name, email: $email, address: $address, phone: $phone)';
+    return 'PersonalModel(id: $id, name: $name, email: $email, address: $address, phone: $phone, isPersonal :$isPersonal, isSelectedAccountType : $isSelectedAccountType)';
   }
 
   @override
@@ -79,7 +101,9 @@ class PersonalModel {
         other.name == name &&
         other.email == email &&
         other.address == address &&
-        other.phone == phone;
+        other.phone == phone &&
+        other.isPersonal == isPersonal &&
+        other.isSelectedAccountType == isSelectedAccountType;
   }
 
   @override
@@ -88,6 +112,8 @@ class PersonalModel {
         name.hashCode ^
         email.hashCode ^
         address.hashCode ^
-        phone.hashCode;
+        phone.hashCode ^
+        isPersonal.hashCode ^
+        isSelectedAccountType.hashCode;
   }
 }

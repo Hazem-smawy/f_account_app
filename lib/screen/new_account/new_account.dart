@@ -2,6 +2,7 @@
 
 import 'package:account_app/constant/notification.dart';
 import 'package:account_app/constant/shadows.dart';
+import 'package:account_app/constant/sizes.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
@@ -23,6 +24,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/widget/custom_textfiled_widget.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' as date_formater;
 // import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 
 class NewAccountScreen extends StatefulWidget {
@@ -92,6 +94,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
           onTap: () {
             setState(() {
               details = [];
+              customers = [];
             });
           },
           child: AnimatedContainer(
@@ -142,7 +145,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                               const SizedBox(width: 10),
                               Expanded(
                                   child: Container(
-                                height: 50,
+                                height: textFieldSize,
                                 alignment: Alignment.center,
                                 //padding: const EdgeInsets.symmetric(horizontal: 10),
                                 decoration: BoxDecoration(
@@ -234,50 +237,78 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                           const SizedBox(height: 10),
                           Row(
                             children: [
-                              GestureDetector(
-                                onTap: () => _selectDate(context),
-                                child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: MyColors.containerSecondColor,
-                                    ),
-                                    child: const Center(
-                                        child: FaIcon(
-                                      FontAwesomeIcons.calendarCheck,
-                                      color: MyColors.secondaryTextColor,
-                                      size: 22,
-                                    ))),
+                              Flexible(
+                                flex: 1,
+                                child: GestureDetector(
+                                  onTap: () => _selectDate(context),
+                                  child: Container(
+                                      height: textFieldSize,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: MyColors.containerSecondColor,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          const SizedBox(
+                                            width: 7,
+                                          ),
+                                          FittedBox(
+                                            child: Text(
+                                              date_formater.DateFormat.yMd()
+                                                  .format(_selectedDate),
+                                              style: const TextStyle(
+                                                color: MyColors.blackColor,
+                                                fontSize: 13,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const FaIcon(
+                                            FontAwesomeIcons.calendarCheck,
+                                            color: MyColors.secondaryTextColor,
+                                            size: 22,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                        ],
+                                      )),
+                                ),
                               ),
                               const SizedBox(width: 10),
-                              Expanded(
+                              Flexible(
+                                  flex: 2,
                                   child: DetailTextFieldWidget(
-                                key: const Key("newAccount"),
-                                textHint: "التفاصل",
-                                controller: detailsTextController,
-                                action: (p0) {
-                                  newAccountController.newAccount.update(
-                                    'desc',
-                                    (value) => p0,
-                                    ifAbsent: () => p0,
-                                  );
+                                    key: const Key("newAccount"),
+                                    textHint: "التفاصل",
+                                    controller: detailsTextController,
+                                    action: (p0) {
+                                      newAccountController.newAccount.update(
+                                        'desc',
+                                        (value) => p0,
+                                        ifAbsent: () => p0,
+                                      );
 
-                                  if (p0.isNotEmpty) {
-                                    setState(() {
-                                      details = detailController.allDetails
-                                          .where((e) => e['body']
-                                              .toString()
-                                              .contains(p0.toString().trim()))
-                                          .toList();
-                                    });
-                                  } else {
-                                    setState(() {
-                                      details = [];
-                                    });
-                                  }
-                                },
-                              )),
+                                      if (p0.isNotEmpty) {
+                                        setState(() {
+                                          details = detailController.allDetails
+                                              .where((e) => e['body']
+                                                  .toString()
+                                                  .contains(
+                                                      p0.toString().trim()))
+                                              .toList();
+                                        });
+                                      } else {
+                                        setState(() {
+                                          details = [];
+                                        });
+                                      }
+                                    },
+                                  )),
                             ],
                           ),
                           CurencyShowWidget(),
@@ -309,7 +340,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                       ),
                       if (customers.isNotEmpty)
                         Positioned(
-                          top: CEC.errorMessage.value == "" ? 65 : 115,
+                          top: CEC.errorMessage.value == "" ? 67 : 120,
                           right: 0,
                           left: 0,
                           child: Container(
@@ -340,7 +371,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                         ),
                       if (details.isNotEmpty)
                         Positioned(
-                          top: CEC.errorMessage.value == "" ? 125 : 175,
+                          top: CEC.errorMessage.value == "" ? 125 : 183,
                           right: 0,
                           left: 0,
                           child: Stack(
@@ -364,17 +395,19 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return DetailListItemWidet(
-                                      body: details[index]['body'],
+                                      body: details[index]['body'].toString(),
                                       action: () {
                                         setState(() {
                                           detailsTextController.text =
-                                              details[index]['body'];
+                                              details[index]['body'].toString();
                                           newAccountController.newAccount
                                               .update(
                                             'desc',
-                                            (value) => details[index]['body'],
-                                            ifAbsent: () =>
-                                                details[index]['body'],
+                                            (value) => details[index]['body']
+                                                .toString(),
+                                            ifAbsent: () => details[index]
+                                                    ['body']
+                                                .toString(),
                                           );
 
                                           details = [];
@@ -612,7 +645,7 @@ class DetailListItemWidet extends StatelessWidget {
         ),
         child: FittedBox(
           child: Text(
-            body,
+            body.toString(),
             textAlign: TextAlign.right,
             style: MyTextStyles.subTitle.copyWith(
               fontWeight: FontWeight.bold,

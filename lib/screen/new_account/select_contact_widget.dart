@@ -1,4 +1,5 @@
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/constant/sizes.dart';
 import 'package:account_app/controller/select_contact_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
@@ -61,17 +62,17 @@ class SelectContactWidget extends StatelessWidget {
         _askContactPermissions();
       },
       child: Container(
-        height: 48,
-        //  width: 50,
+        height: textFieldSize,
+        width: textFieldSize,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: MyColors.lessBlackColor.withOpacity(0.8),
+          color: MyColors.containerColor,
         ),
         child: const Center(
           child: FaIcon(
             FontAwesomeIcons.addressBook,
-            color: MyColors.containerColor,
+            color: MyColors.lessBlackColor,
             size: 18,
           ),
         ),

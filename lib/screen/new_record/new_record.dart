@@ -2,12 +2,15 @@
 
 import 'package:account_app/constant/notification.dart';
 import 'package:account_app/constant/shadows.dart';
+import 'package:account_app/constant/sizes.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/detail_controller.dart';
 import 'package:account_app/controller/error_controller.dart';
+import 'package:account_app/controller/journal_controller.dart';
 import 'package:account_app/controller/new_account_controller.dart';
 import 'package:account_app/models/home_model.dart';
+import 'package:account_app/models/journal_model.dart';
 import 'package:account_app/screen/new_account/new_account.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/error_widget.dart';
@@ -17,10 +20,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/widget/custom_textfiled_widget.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' as date_formater;
 
 class NewRecordScreen extends StatefulWidget {
   final HomeModel homeModel;
-  const NewRecordScreen({super.key, required this.homeModel});
+  final bool isEdditing;
+  const NewRecordScreen(
+      {super.key, required this.homeModel, required this.isEdditing});
 
   @override
   State<NewRecordScreen> createState() => _NewRecordScreenState();
@@ -32,7 +38,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   Future _selectDate(BuildContext ctx) async {
     final DateTime? picked = await showDatePicker(
         context: ctx,
-        initialDate: DateTime.now(),
+        initialDate: widget.isEdditing
+            ? journalController.newJournal['registeredAt']
+            : DateTime.now(),
         firstDate: DateTime(2020),
         lastDate: DateTime(2030));
 
@@ -49,10 +57,20 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   List<dynamic> details = [];
   TextEditingController detailsTextController = TextEditingController();
   TextEditingController moneyTextController = TextEditingController();
+  JournalController journalController = Get.find();
   @override
   void initState() {
     super.initState();
-    newAccountController.newAccount.clear();
+    if (widget.isEdditing) {
+      detailsTextController.text = journalController.newJournal['details'];
+      final moneyStr = (journalController.newJournal['credit'] -
+              journalController.newJournal['debit'])
+          .abs()
+          .toString();
+      moneyTextController.text = moneyStr.substring(0, moneyStr.length - 2);
+    } else {
+      newAccountController.newAccount.clear();
+    }
   }
 
   @override
@@ -88,7 +106,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           });
                         },
                         child: Container(
-                          height: 50,
+                          height: textFieldSize,
                           padding: const EdgeInsets.only(right: 10),
                           alignment: Alignment.centerRight,
                           decoration: BoxDecoration(
@@ -104,21 +122,31 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                   // color: MyColors.containerColor.withOpacity(0.5),
                                 ),
-                                child: Text(
-                                  curencyController.allCurency
-                                      .firstWhere((element) =>
-                                          element.id == widget.homeModel.curId)
-                                      .name,
-                                  style: MyTextStyles.body
-                                      .copyWith(color: MyColors.bg),
+                                child: FittedBox(
+                                  child: Text(
+                                    curencyController.allCurency
+                                        .firstWhere(
+                                          (element) =>
+                                              element.id ==
+                                              widget.homeModel.curId,
+                                        )
+                                        .name,
+                                    style: MyTextStyles.body.copyWith(
+                                      color: MyColors.bg,
+                                    ),
+                                  ),
                                 ),
                               ),
                               const Spacer(),
                               Text(
                                 widget.homeModel.name,
                                 textAlign: TextAlign.right,
-                                style: MyTextStyles.subTitle
-                                    .copyWith(color: Colors.white),
+                                style: MyTextStyles.subTitle.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
                               ),
                             ],
                           ),
@@ -132,18 +160,42 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           GestureDetector(
                             onTap: () => _selectDate(context),
                             child: Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: MyColors.containerSecondColor,
-                                ),
-                                child: const Center(
-                                    child: FaIcon(
-                                  FontAwesomeIcons.calendarCheck,
-                                  color: MyColors.secondaryTextColor,
-                                  size: 22,
-                                ))),
+                              height: textFieldSize,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: MyColors.containerSecondColor,
+                              ),
+                              child: Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    date_formater.DateFormat.yMd()
+                                        .format(_selectedDate),
+                                    textDirection: TextDirection.rtl,
+                                    style: const TextStyle(
+                                      color: MyColors.blackColor,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    child: const Center(
+                                      child: FaIcon(
+                                        FontAwesomeIcons.calendarCheck,
+                                        color: MyColors.secondaryTextColor,
+                                        size: 22,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                           const SizedBox(
                             width: 10,
@@ -226,7 +278,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   ),
                   if (details.isNotEmpty)
                     Positioned(
-                      top: CEC.errorMessage.value == "" ? 186 : 200,
+                      top: CEC.errorMessage.value == "" ? 175 : 225,
                       right: 0,
                       left: 0,
                       child: Stack(
@@ -248,16 +300,18 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                               shrinkWrap: true,
                               itemBuilder: (BuildContext context, int index) {
                                 return DetailListItemWidet(
-                                  body: details[index]['body'],
+                                  body: details[index]['body'].toString(),
                                   action: () {
                                     newAccountController.newAccount.update(
                                       'desc',
-                                      (value) => details[index]['body'],
-                                      ifAbsent: () => details[index]['body'],
+                                      (value) =>
+                                          details[index]['body'].toString(),
+                                      ifAbsent: () =>
+                                          details[index]['body'].toString(),
                                     );
                                     setState(() {
                                       detailsTextController.text =
-                                          details[index]['body'];
+                                          details[index]['body'].toString();
 
                                       details = [];
                                     });
@@ -302,6 +356,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 
   Future<void> addNewRecordFunction(bool credit) async {
     newAccountController.newAccount['desc'] = detailsTextController.text.trim();
+    newAccountController.newAccount['money'] = moneyTextController.text.trim();
     newAccountController.newAccount['money'] =
         newAccountController.newAccount['money'].toString().replaceAll(",", "");
     if (newAccountController.newAccount['money'] == null ||
@@ -351,6 +406,21 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       CEC.errorMessage.value = interCorrectMoney;
       return;
     }
-    newAccountController.addNewRecordToCustomerAccount(widget.homeModel);
+    if (widget.isEdditing) {
+      final updatedJournal = Journal(
+        id: journalController.newJournal['id'],
+        customerAccountId: widget.homeModel.cacId ?? 0,
+        details: newAccountController.newAccount['desc'],
+        registeredAt: newAccountController.newAccount['date'],
+        credit: newAccountController.newAccount['credit'],
+        debit: newAccountController.newAccount['debit'],
+        createdAt: DateTime.parse(journalController.newJournal['createdAt']),
+        modifiedAt: DateTime.now(),
+      );
+      // print(updatedJournal);
+      journalController.updateJournal(updatedJournal);
+    } else {
+      newAccountController.addNewRecordToCustomerAccount(widget.homeModel);
+    }
   }
 }

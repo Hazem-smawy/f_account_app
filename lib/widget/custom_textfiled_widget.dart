@@ -1,4 +1,5 @@
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/constant/sizes.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/error_controller.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      height: textFieldSize,
       alignment: Alignment.center,
 
       //padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -87,7 +88,7 @@ class _CustomNumberFieldWidgetState extends State<CustomNumberFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      height: textFieldSize,
       alignment: Alignment.center,
       //padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
@@ -98,7 +99,7 @@ class _CustomNumberFieldWidgetState extends State<CustomNumberFieldWidget> {
         keyboardType: TextInputType.number,
         initialValue: widget.placeHolder ?? "",
         textAlign: TextAlign.right,
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         style: MyTextStyles.subTitle
             .copyWith(color: MyColors.blackColor, fontWeight: FontWeight.bold),
         onChanged: (value) {
@@ -146,7 +147,7 @@ class _DetailTextFieldWidgetState extends State<DetailTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      height: textFieldSize,
       alignment: Alignment.center,
       //padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
@@ -207,7 +208,7 @@ class _CustomCurencyFieldWidgetState extends State<CustomCurencyFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      height: textFieldSize,
       alignment: Alignment.center,
       //padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(

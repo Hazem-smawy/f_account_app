@@ -1,5 +1,7 @@
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/journal_controller.dart';
 import 'package:account_app/models/curency_model.dart';
+import 'package:account_app/models/home_model.dart';
 import 'package:account_app/models/journal_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -8,16 +10,24 @@ import '../../constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as date_formater;
 
+import '../new_record/new_record.dart';
+
 class DetialInfoSheet extends StatelessWidget {
   final String name;
   final Journal detailsRows;
   final Curency curency;
+  final JournalController journalController = Get.find();
+  final HomeModel homeModel;
+  final VoidCallback action;
 
-  const DetialInfoSheet(
-      {super.key,
-      required this.name,
-      required this.detailsRows,
-      required this.curency});
+  DetialInfoSheet({
+    super.key,
+    required this.name,
+    required this.detailsRows,
+    required this.curency,
+    required this.homeModel,
+    required this.action,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +47,40 @@ class DetialInfoSheet extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                name,
-                style: MyTextStyles.title2,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                textDirection: TextDirection.rtl,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                      journalController.newJournal.addAll(detailsRows.toMap());
+                      Get.bottomSheet(
+                        NewRecordScreen(
+                          homeModel: homeModel,
+                          isEdditing: true,
+                        ),
+                        isScrollControlled: true,
+                      ).then((value) {
+                        action();
+                      });
+                    },
+                    child: const FaIcon(
+                      FontAwesomeIcons.penToSquare,
+                      color: MyColors.primaryColor,
+                      size: 20,
+                    ),
+                  ),
+                  Text(
+                    name,
+                    style: MyTextStyles.title2,
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                ],
               ),
+
               //Divider(),
               const SizedBox(height: 25),
               Row(
@@ -196,21 +236,28 @@ class DetialInfoSheet extends StatelessWidget {
               const Spacer(),
 
               const SizedBox(height: 15),
-              GestureDetector(
-                onTap: () => Get.back(),
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: MyColors.secondaryTextColor,
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => Get.back(),
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        // width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: MyColors.secondaryTextColor,
+                        ),
+                        child: Text(
+                          "رجوع",
+                          textAlign: TextAlign.center,
+                          style: MyTextStyles.subTitle
+                              .copyWith(color: MyColors.bg),
+                        ),
+                      ),
+                    ),
                   ),
-                  child: Text(
-                    "رجوع",
-                    textAlign: TextAlign.center,
-                    style: MyTextStyles.subTitle.copyWith(color: MyColors.bg),
-                  ),
-                ),
+                ],
               ),
               // const SizedBox(height: 10),
             ],

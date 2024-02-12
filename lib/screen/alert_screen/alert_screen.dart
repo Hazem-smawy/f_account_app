@@ -12,7 +12,7 @@ import '../../widget/custom_dialog.dart';
 
 class AlertScreen extends StatelessWidget {
   AlertScreen({super.key});
-  AlertController alertController = Get.find();
+  final AlertController alertController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,17 +32,18 @@ class AlertScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       const SizedBox(
-                        width: 20,
+                        width: 30,
                       ),
                       Expanded(
-                          child: Text(
-                        'التنبيهات',
-                        textAlign: TextAlign.center,
-                        style: MyTextStyles.subTitle.copyWith(
-                          color: MyColors.bg,
-                          fontWeight: FontWeight.normal,
+                        child: Text(
+                          'التنبيهات',
+                          textAlign: TextAlign.center,
+                          style: MyTextStyles.subTitle.copyWith(
+                            color: MyColors.bg,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
-                      )),
+                      ),
                       GestureDetector(
                         onTap: () => Get.back(),
                         child: Container(
@@ -166,7 +167,7 @@ class AlertScreen extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: MyColors.bg.withOpacity(0.7),
+          // color: MyColors.bg.withOpacity(0.7),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

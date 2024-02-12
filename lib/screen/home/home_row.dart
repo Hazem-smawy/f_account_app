@@ -71,11 +71,17 @@ class HomeRowView extends StatelessWidget {
             CircleAvatar(
               backgroundColor: MyColors.lessBlackColor.withOpacity(0.9),
               radius: 13,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  "${homeModel.operation}",
-                  style: const TextStyle(color: MyColors.bg),
+              child: Padding(
+                padding: const EdgeInsets.all(3),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    '${homeModel.operation}',
+                    style: const TextStyle(
+                      color: MyColors.bg,
+                      fontSize: 12,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -99,26 +105,39 @@ class HomeRowView extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   if (curencyController.allCurency
-                      .firstWhere((element) =>
-                          element.id == curencyController.selectedCurency['id'])
+                      .firstWhere(
+                        (element) =>
+                            element.id ==
+                            curencyController.selectedCurency['id'],
+                      )
                       .status) {
                     Get.bottomSheet(
-                        NewRecordScreen(
-                          homeModel: homeModel,
-                        ),
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)));
+                      NewRecordScreen(
+                        homeModel: homeModel,
+                        isEdditing: false,
+                      ),
+                      isScrollControlled: true,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    );
                   } else {
                     CustomDialog.customSnackBar(
-                        "تم ايقاف هذه العمله من الاعدادات",
-                        SnackPosition.BOTTOM,
-                        false);
+                      "تم ايقاف هذه العمله من الاعدادات",
+                      SnackPosition.BOTTOM,
+                      false,
+                    );
                     return;
                   }
                 },
-                child: const FaIcon(FontAwesomeIcons.plus, size: 20),
-              )
+                child: const FaIcon(
+                  FontAwesomeIcons.plus,
+                  size: 20,
+                ),
+              ),
+            const SizedBox(
+              width: 5,
+            ),
           ],
         ),
       ),

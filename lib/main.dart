@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io' as io;
+import 'dart:io';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/controller/pdf_controller.dart';
 import 'package:background_fetch/background_fetch.dart';
 
@@ -67,6 +69,24 @@ void main() async {
   runApp(const MyApp());
 
   BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+}
+
+Future<void> _doLocalCopy() async {
+  CopyController copyController = Get.put(CopyController());
+  Platform.isIOS
+      ? copyController.selectFolderIos()
+      : copyController.selectFolder();
+
+  flutterLocalPlugin.show(
+    90,
+    "النسخ الإ حتياطي",
+    "تم عمل نسخة إحتياطية",
+    const NotificationDetails(
+      android: AndroidNotificationDetails(
+          "coding is the life", "android channal service",
+          ongoing: false, icon: "logo"),
+    ),
+  );
 }
 
 Future<void> _doCopyToGoogleDrive() async {
@@ -159,23 +179,28 @@ class _MyAppState extends State<MyApp> {
     // Configure BackgroundFetch.
     await BackgroundFetch.configure(
         BackgroundFetchConfig(
-            minimumFetchInterval: 60,
-            stopOnTerminate: false,
-            enableHeadless: true,
-            requiresBatteryNotLow: false,
-            requiresCharging: false,
-            requiresStorageNotLow: false,
-            requiresDeviceIdle: false,
-            requiredNetworkType: NetworkType.NONE), (String taskId) async {
+          minimumFetchInterval: 60 * 24,
+          stopOnTerminate: false,
+          enableHeadless: true,
+          requiresBatteryNotLow: false,
+          requiresCharging: false,
+          requiresStorageNotLow: false,
+          requiresDeviceIdle: false,
+          requiredNetworkType: NetworkType.NONE,
+        ), (String taskId) async {
       await _doCopyToGoogleDrive();
+      await _doLocalCopy();
 
       BackgroundFetch.finish(taskId);
     }, (String taskId) async {
       await _doCopyToGoogleDrive();
+      await _doLocalCopy();
 
       BackgroundFetch.finish(taskId);
     });
     if (DateTime.now().hour == 23) {
+      await _doLocalCopy();
+
       await _doCopyToGoogleDrive();
     }
     if (!mounted) return;

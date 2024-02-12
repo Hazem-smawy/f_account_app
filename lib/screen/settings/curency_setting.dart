@@ -131,7 +131,7 @@ class CurencySettingScreen extends StatelessWidget {
                                         style: MyTextStyles.title2,
                                       ))),
                                   DataCell(Text(
-                                    '${customerAccountController.allCustomerAccounts.where((p0) => p0.accgroupId == element.id).toList().length}',
+                                    '${customerAccountController.allCustomerAccounts.where((p0) => p0.curencyId == element.id).toList().length}',
                                     textAlign: TextAlign.center,
                                     overflow: TextOverflow.clip,
                                     textDirection: TextDirection.rtl,
@@ -382,10 +382,9 @@ class NewCurencySheet extends StatelessWidget {
   }
 
   bool isHasAAccountsOnIt() {
-    var accGoup = customerAccountController.allCustomerAccounts
+    var curency = customerAccountController.allCustomerAccounts
         .firstWhereOrNull((element) =>
-            element.accgroupId ==
-            curencyController.newCurency[CurencyField.id]);
-    return accGoup == null;
+            element.curencyId == curencyController.newCurency[CurencyField.id]);
+    return curency == null;
   }
 }

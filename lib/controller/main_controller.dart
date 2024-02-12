@@ -29,10 +29,11 @@ class MainController extends GetxController {
     Get.put(CustomerController());
     Get.put(AccGroupController());
     Get.put(CurencyController());
-    Get.put(JournalController());
+
     Get.put(CustomerAccountController());
 
     Get.put(HomeController());
+    Get.put(JournalController());
     Get.put(NewAccountController());
 
     Get.put(PersonalController());

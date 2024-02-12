@@ -1,11 +1,13 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/notification.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
+import 'package:account_app/controller/personal_controller.dart';
 import 'package:account_app/models/customer_account.dart';
 import 'package:account_app/utility/curency_format.dart';
 import 'package:account_app/widget/custom_dialog.dart';
@@ -30,7 +32,10 @@ class _CustomerAccountDetailsSheetState
   CustomerController customerController = Get.find();
 
   AccGroupController accGroupController = Get.find();
+
   CustomerAccountController customerAccountController = Get.find();
+  AccGroupCurencyController accGroupCurencyController = Get.find();
+  PersonalController personalController = Get.find();
   bool status = false;
   @override
   void initState() {
@@ -188,29 +193,66 @@ class _CustomerAccountDetailsSheetState
             icon: FontAwesomeIcons.clock,
           ),
           const SizedBox(height: 40),
-          GestureDetector(
-            onTap: () async {
-              customerAccountController.updateCustomerAccount(
-                  widget.customerAccount.copyWith(status: status));
-              homeController.getCustomerAccountsFromCurencyAndAccGroupIds();
-              Get.back();
-            },
-            child: Container(
-              height: 45,
-              width: double.infinity,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: MyColors.primaryColor.withOpacity(0.9)),
-              child: Text(
-                "تحد يث",
-                style: MyTextStyles.title2.copyWith(
-                  color: MyColors.bg,
+          Row(
+            children: [
+              if (personalController.newPersonal['isPersonal'] != null &&
+                  personalController.newPersonal['isPersonal'] != 0)
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                    CustomDialog.showDialog(
+                        title: "حذف",
+                        description: "هل انت متاكد من حذف هذا الحساب",
+                        color: Colors.red,
+                        icon: FontAwesomeIcons.trashCan,
+                        action: () async {
+                          Get.back();
+                          await customerAccountController.deleteCustomerAccount(
+                              widget.customerAccount.id ?? 0);
+                          await accGroupCurencyController
+                              .getAllAccGroupAndCurency();
+                          await homeController
+                              .getCustomerAccountsFromCurencyAndAccGroupIds();
+                        });
+                  },
+                  child: const FaIcon(
+                    FontAwesomeIcons.trash,
+                    color: Colors.red,
+                    size: 20,
+                  ),
+                ),
+              if (personalController.newPersonal['isPersonal'] != null &&
+                  personalController.newPersonal['isPersonal'] != 0)
+                const SizedBox(width: 30),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () async {
+                    customerAccountController.updateCustomerAccount(
+                        widget.customerAccount.copyWith(status: status));
+                    homeController
+                        .getCustomerAccountsFromCurencyAndAccGroupIds();
+                    Get.back();
+                  },
+                  child: Container(
+                    height: 45,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: MyColors.primaryColor.withOpacity(0.9)),
+                    child: Text(
+                      "تحد يث",
+                      style: MyTextStyles.title2.copyWith(
+                        color: MyColors.bg,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-          const SizedBox(height: 30),
+          const SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );

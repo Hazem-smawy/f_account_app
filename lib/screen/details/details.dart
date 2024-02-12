@@ -59,6 +59,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
       journals.sort((a, b) => b.createdAt.compareTo(a.createdAt));
     });
     getAllCalculationForMoney();
+    setState(() {});
   }
 
   void getAllCalculationForMoney() {
@@ -143,7 +144,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(
-                          vertical: 7, horizontal: 4),
+                          vertical: 10, horizontal: 4),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(9),
                         color: MyColors.lessBlackColor,
@@ -219,16 +220,24 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: () {
-                              Get.dialog(DetialInfoSheet(
-                                name: customerController.allCustomers
-                                    .firstWhere((element) =>
-                                        element.id == widget.homeModel.caId)
-                                    .name,
-                                detailsRows: journals[index],
-                                curency: curencyController.allCurency
-                                    .firstWhere((element) =>
-                                        element.id == widget.homeModel.curId),
-                              ));
+                              Get.dialog(
+                                DetialInfoSheet(
+                                  action: getAllJournals,
+                                  homeModel: widget.homeModel,
+                                  name: customerController.allCustomers
+                                      .firstWhere(
+                                        (element) =>
+                                            element.id == widget.homeModel.caId,
+                                      )
+                                      .name,
+                                  detailsRows: journals[index],
+                                  curency:
+                                      curencyController.allCurency.firstWhere(
+                                    (element) =>
+                                        element.id == widget.homeModel.curId,
+                                  ),
+                                ),
+                              );
                             },
                             child: DetailsRowWidget(
                               journal: journals[index],
@@ -243,7 +252,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Spacer(),
+                    // const Spacer(),
                     Row(
                       children: [
                         DetailsSammaryWidget(
@@ -373,6 +382,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       if (getStatus()) {
                         Get.bottomSheet(
                           NewRecordScreen(
+                            isEdditing: false,
                             homeModel: widget.homeModel,
                           ),
                           isScrollControlled: true,

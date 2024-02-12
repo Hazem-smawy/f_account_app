@@ -25,7 +25,7 @@ class AccountMoveRowWidget extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: Get.width / 7,
+            width: Get.width / 6,
             child: Text(
               date_formater.DateFormat.MEd().format(journal.registeredAt),
               textDirection: TextDirection.ltr,
