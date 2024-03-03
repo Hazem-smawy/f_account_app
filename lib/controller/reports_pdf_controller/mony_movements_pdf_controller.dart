@@ -47,7 +47,11 @@ class MoneyMovementPdfController {
           buildMoneyMovementsTableReport(),
           PdfApi.sammaryFooterMoney(
               credit: accountMovemoentController.totalCredit.value,
-              debit: accountMovemoentController.totalDebit.value),
+              debit: accountMovemoentController.totalDebit.value,
+              curency: curencyController.allCurency
+                  .firstWhere((element) =>
+                      element.id == accountMovemoentController.curencyId.value)
+                  .name),
         ],
         footer: (context) => Column(children: [
           Divider(),

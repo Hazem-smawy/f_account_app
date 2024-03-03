@@ -432,9 +432,7 @@ class ReportFilterWidget extends StatelessWidget {
         firstDate: DateTime(2023),
         lastDate: DateTime.now());
 
-    if (picked != null &&
-        picked != DateTime.parse(reportsController.fromDate.value)) {
-      picked;
+    if (picked != null) {
       reportsController.fromDate.value = picked.toIso8601String();
       reportsController.getJournalReport();
     }
@@ -442,13 +440,14 @@ class ReportFilterWidget extends StatelessWidget {
 
   Future _selectToDate(BuildContext ctx) async {
     final DateTime? picked = await showDatePicker(
-        context: ctx,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2023),
-        lastDate: DateTime.now());
+      context: ctx,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2023),
+      lastDate: DateTime.now().add(Duration(days: 1)),
+      currentDate: DateTime.now(),
+    );
 
-    if (picked != null &&
-        picked != DateTime.parse(reportsController.toDate.value)) {
+    if (picked != null) {
       reportsController.toDate.value = picked.toIso8601String();
       reportsController.getJournalReport();
     }

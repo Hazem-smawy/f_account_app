@@ -176,7 +176,7 @@ class MyDrawerView extends StatelessWidget {
                                       icon: FontAwesomeIcons.download,
                                       color: Colors.red,
                                       description:
-                                          "هل أنت متأكد من إستعادة نسخة ");
+                                          " هل أنت متأكد من إستعادة هذه النسخة ");
                                 },
                               ),
                               const SizedBox(

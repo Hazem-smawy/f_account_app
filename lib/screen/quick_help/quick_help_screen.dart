@@ -167,13 +167,14 @@ class HomeReportsScreen extends StatelessWidget {
                         Get.to(() => SettingScreen());
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(9),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: MyColors.lessBlackColor),
+                        padding: const EdgeInsets.all(7),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: MyColors.lessBlackColor,
+                        ),
                         child: const FaIcon(
                           FontAwesomeIcons.gear,
-                          size: 13,
+                          size: 15,
                           color: MyColors.bg,
                         ),
                       ),
@@ -282,6 +283,7 @@ class HomeReportFooterWidget extends StatelessWidget {
               title,
               style: MyTextStyles.subTitle.copyWith(
                 color: MyColors.containerColor,
+                fontWeight: FontWeight.normal,
               ),
             ),
             const SizedBox(

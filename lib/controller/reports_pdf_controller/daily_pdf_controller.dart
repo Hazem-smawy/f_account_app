@@ -12,10 +12,13 @@ import 'package:pdf/pdf.dart';
 import 'dart:io';
 import 'package:pdf/widgets.dart';
 
+import '../curency_controller.dart';
 import '../pdf_controller.dart';
 
 class DailyPdfController {
   static DailyReportsController dailyReportsController = Get.find();
+  static CurencyController curencyController = Get.find();
+
   static Future<File> generateDailyReportPdf() async {
     CopyController copyController = Get.find();
     if (Platform.isAndroid) {
@@ -38,7 +41,11 @@ class DailyPdfController {
           buildDailyTableReport(),
           PdfApi.sammaryFooterMoney(
               credit: dailyReportsController.totalCredit.value,
-              debit: dailyReportsController.totalDebit.value)
+              debit: dailyReportsController.totalDebit.value,
+              curency: curencyController.allCurency
+                  .firstWhere((element) =>
+                      element.id == dailyReportsController.curencyId.value)
+                  .name)
         ],
         footer: (context) => Column(children: [
           Divider(),
@@ -61,7 +68,6 @@ class DailyPdfController {
       "العملة",
       "علية",
       "لة",
-      "المبلغ",
       'التفاصيل',
       "الأسم",
       'التصنيف',

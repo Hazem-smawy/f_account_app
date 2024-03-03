@@ -155,7 +155,7 @@ class PdfApi extends GetxController {
     if (Platform.isAndroid) {
       String path = await ex.ExternalPath.getExternalStoragePublicDirectory(
           ex.ExternalPath.DIRECTORY_DOWNLOADS);
-      final file = File('$path/$name');
+      final file = File('$path/${DateTime.now().microsecondsSinceEpoch}_$name');
       await file.writeAsBytes(bytes);
       Future.delayed(const Duration(milliseconds: 200));
 
@@ -336,6 +336,7 @@ class PdfApi extends GetxController {
                 child: Text(textContent,
                     style: TextStyle(
                       color: color,
+                      fontWeight: FontWeight.bold,
                       font: enFont,
                     )),
               )
@@ -468,7 +469,9 @@ class PdfApi extends GetxController {
   }
 
   static Widget sammaryFooterMoney(
-      {required double credit, required double debit}) {
+      {required double credit,
+      required double debit,
+      required String curency}) {
     return Container(
       margin: const EdgeInsets.only(top: 30),
       decoration: BoxDecoration(
@@ -492,8 +495,11 @@ class PdfApi extends GetxController {
           ]),
           Divider(color: PdfColors.grey300, height: 1),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            paddedHeadingTextArabicCell(curency),
+            SizedBox(width: 10),
             coloredText(
-                GlobalUtitlity.formatNumberDouble(number: (credit - debit)),
+                GlobalUtitlity.formatNumberDouble(
+                    number: (credit - debit).abs()),
                 credit > debit ? PdfColors.green : PdfColors.red),
             SizedBox(width: 10),
             paddedHeadingTextCellRegular(credit < debit ? "علية" : 'لة'),

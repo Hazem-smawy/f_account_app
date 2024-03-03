@@ -45,9 +45,6 @@ class JournalController extends GetxController {
           journal.credit;
     }
 
-    print(totalCredit);
-    print(totalDebit);
-
     customerAccountController.updateCustomerAccount(newCustomerAccount.copyWith(
         totalCredit: totalCredit, totalDebit: totalDebit));
     journalData.updateJournal(journal);

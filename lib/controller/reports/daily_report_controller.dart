@@ -31,9 +31,10 @@ class DailyReportsController extends GetxController {
     totalDebit.value = 0;
     totalCredit.value = 0;
     journalsReports.value = await reportsData.getJournalsReport(
-        from: DateTime.parse(fromDate.value),
-        to: DateTime.parse(toDate.value),
-        curencyId: curencyId.value);
+      from: DateTime.parse(fromDate.value),
+      to: DateTime.parse(toDate.value),
+      curencyId: curencyId.value,
+    );
 
     if (journalsReports.isNotEmpty) {
       for (var element in journalsReports) {

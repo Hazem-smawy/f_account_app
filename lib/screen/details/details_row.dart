@@ -62,8 +62,8 @@ class DetailsRowWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: journal.credit < journal.debit
-                  ? MyColors.creditColor.withOpacity(0.8)
-                  : MyColors.debetColor.withOpacity(0.8),
+                  ? MyColors.creditColor.withOpacity(0.9)
+                  : MyColors.debetColor.withOpacity(0.9),
             ),
           ),
           SizedBox(

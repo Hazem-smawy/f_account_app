@@ -1,1 +1,1 @@
-final textFieldSize = 50.0;
+const textFieldSize = 50.0;

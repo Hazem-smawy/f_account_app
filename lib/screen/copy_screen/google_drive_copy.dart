@@ -119,7 +119,18 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                       label: "فتح أخر نسخة ",
                       //  action: () {},
                       action: () {
-                        contorller.getTheLastFile();
+                        CustomDialog.showDialog(
+                            action: () {
+                              //  copyController.openDatabaseFile();
+
+                              contorller.getTheLastFile();
+                              Get.back();
+                            },
+                            title: "إستعادة",
+                            icon: FontAwesomeIcons.download,
+                            color: Colors.red,
+                            description:
+                                " هل أنت متأكد من إستعادة هذه النسخة ");
                       },
                       description:
                           'عند استعادة اي نسخة سابقة سيتم حذف جميع البيانات الحالية , تأكد من عمل نسخة إحتياطية للبيانات الحالية',

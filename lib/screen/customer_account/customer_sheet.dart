@@ -195,35 +195,42 @@ class _CustomerAccountDetailsSheetState
           const SizedBox(height: 40),
           Row(
             children: [
-              if (personalController.newPersonal['isPersonal'] != null &&
-                  personalController.newPersonal['isPersonal'] != 0)
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                    CustomDialog.showDialog(
-                        title: "حذف",
-                        description: "هل انت متاكد من حذف هذا الحساب",
-                        color: Colors.red,
-                        icon: FontAwesomeIcons.trashCan,
-                        action: () async {
-                          Get.back();
-                          await customerAccountController.deleteCustomerAccount(
-                              widget.customerAccount.id ?? 0);
-                          await accGroupCurencyController
-                              .getAllAccGroupAndCurency();
-                          await homeController
-                              .getCustomerAccountsFromCurencyAndAccGroupIds();
-                        });
-                  },
-                  child: const FaIcon(
-                    FontAwesomeIcons.trash,
-                    color: Colors.red,
-                    size: 20,
+              GestureDetector(
+                onTap: () {
+                  Get.back();
+                  CustomDialog.showDialog(
+                      title: "حذف",
+                      description: "هل انت متاكد من حذف هذا الحساب",
+                      color: Colors.red,
+                      icon: FontAwesomeIcons.trashCan,
+                      action: () async {
+                        Get.back();
+                        await customerAccountController.deleteCustomerAccount(
+                            widget.customerAccount.id ?? 0);
+                        await accGroupCurencyController
+                            .getAllAccGroupAndCurency();
+                        await homeController
+                            .getCustomerAccountsFromCurencyAndAccGroupIds();
+                      });
+                },
+                child: Container(
+                  height: 45,
+                  width: 45,
+                  margin: const EdgeInsets.only(right: 10),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.red.withOpacity(0.1),
+                  ),
+                  child: const Center(
+                    child: FaIcon(
+                      Icons.highlight_remove_rounded,
+                      color: Colors.red,
+                      size: 20,
+                    ),
                   ),
                 ),
-              if (personalController.newPersonal['isPersonal'] != null &&
-                  personalController.newPersonal['isPersonal'] != 0)
-                const SizedBox(width: 30),
+              ),
               Expanded(
                 child: GestureDetector(
                   onTap: () async {

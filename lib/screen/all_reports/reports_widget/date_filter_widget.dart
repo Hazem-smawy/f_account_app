@@ -28,10 +28,13 @@ class DateFilterWidget extends StatelessWidget {
 
   Future _selectToDate(BuildContext ctx) async {
     final DateTime? picked = await showDatePicker(
-        context: ctx,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2023),
-        lastDate: DateTime.now());
+      context: ctx,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2023),
+      lastDate: DateTime.now().add(
+        const Duration(days: 1),
+      ),
+    );
 
     if (picked != null && picked != DateTime.parse(controller.toDate.value)) {
       controller.toDate.value = picked.toIso8601String();

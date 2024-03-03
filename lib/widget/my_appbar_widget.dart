@@ -47,11 +47,15 @@ class MyAppBarWidget extends StatelessWidget {
 
     return Obx(
       () => Container(
-        margin: const EdgeInsets.all(10),
-        padding: const EdgeInsets.symmetric(horizontal: 7),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 7,
+          vertical: 0,
+        ),
         decoration: BoxDecoration(
-            color: MyColors.lessBlackColor,
-            borderRadius: BorderRadius.circular(12)),
+          color: MyColors.lessBlackColor,
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Row(
           children: [
             GestureDetector(
@@ -138,8 +142,9 @@ class MyAppBarWidget extends StatelessWidget {
               accGroupCurencyController.homeReportShow.value
                   ? "مساعدة سريعة"
                   : accGroupName,
-              style: MyTextStyles.subTitle
-                  .copyWith(color: MyColors.containerColor),
+              style: MyTextStyles.subTitle.copyWith(
+                color: MyColors.containerColor,
+              ),
             ),
             const SizedBox(width: 10),
             GestureDetector(

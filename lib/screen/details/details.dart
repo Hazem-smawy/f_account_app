@@ -256,16 +256,18 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     Row(
                       children: [
                         DetailsSammaryWidget(
-                            icon: FontAwesomeIcons.arrowUp,
-                            title: "$onYou",
-                            subTitle: "له",
-                            color: MyColors.debetColor),
+                          icon: FontAwesomeIcons.arrowUp,
+                          title: "$onYou",
+                          subTitle: "له",
+                          color: MyColors.debetColor,
+                        ),
                         const SizedBox(width: 3),
                         DetailsSammaryWidget(
-                            icon: FontAwesomeIcons.arrowDown,
-                            title: ' $onHem',
-                            subTitle: "عليه",
-                            color: MyColors.creditColor),
+                          icon: FontAwesomeIcons.arrowDown,
+                          title: ' $onHem',
+                          subTitle: "عليه",
+                          color: MyColors.creditColor,
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -284,26 +286,29 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.bottomSheet(DetailsShareSheetWidget(
-                                pdfAction: pdfAction,
-                                shareAction: shareAction,
-                                customerPhone: customerController.allCustomers
-                                    .firstWhere((element) =>
-                                        element.id == widget.homeModel.caId)
-                                    .phone,
-                                debit: onHem,
-                                credit: onYou,
-                              ));
+                              Get.bottomSheet(
+                                DetailsShareSheetWidget(
+                                  pdfAction: pdfAction,
+                                  shareAction: shareAction,
+                                  customerPhone: customerController.allCustomers
+                                      .firstWhere((element) =>
+                                          element.id == widget.homeModel.caId)
+                                      .phone,
+                                  debit: onHem,
+                                  credit: onYou,
+                                ),
+                              );
                             },
                             child: Container(
-                                color: MyColors.bg,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: const FaIcon(
-                                  Icons.share,
-                                  size: 20,
-                                  color: MyColors.lessBlackColor,
-                                )),
+                              color: MyColors.bg,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: const FaIcon(
+                                Icons.share,
+                                size: 20,
+                                color: MyColors.lessBlackColor,
+                              ),
+                            ),
                           ),
                           Row(
                             children: [

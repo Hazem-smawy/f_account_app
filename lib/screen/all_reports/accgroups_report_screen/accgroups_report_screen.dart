@@ -35,8 +35,8 @@ class AccGroupsReportScreen extends StatelessWidget {
               child: ReportHeaderWidget(
                 title: " إجمالي التصنيفات",
                 action: () {
-                  if (accGroupReportController.totalCredit.value != 0.0 &&
-                      accGroupReportController.totalDebit.value != 0.0) {
+                  if (accGroupReportController.totalCredit.value != 0 ||
+                      accGroupReportController.totalDebit.value != 0) {
                     AccGroupsPdfContoller.generateAllAccGroupPdfReports();
                   } else {
                     CustomDialog.customSnackBar(

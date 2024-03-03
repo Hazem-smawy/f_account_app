@@ -161,6 +161,7 @@ class AlertScreen extends StatelessWidget {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Container EmptyAlertListWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: 5),

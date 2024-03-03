@@ -1,7 +1,9 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -135,7 +137,10 @@ class ContactAndSupportsScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           color: MyColors.bg,
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 10,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -143,13 +148,20 @@ class ContactAndSupportsScreen extends StatelessWidget {
               title: 'الهاتف',
               icon: Icons.phone_enabled_outlined,
               action: () async {
-                final Uri phoneUri = Uri(scheme: "tel", path: '775426836');
+                final Uri phoneUri = Uri(
+                  scheme: "tel",
+                  path: '775426836',
+                );
                 try {
                   if (await launchUrlString(phoneUri.toString())) {
                     await launchUrlString(phoneUri.toString());
                   }
                 } catch (error) {
-                  throw ("Cannot dial");
+                  CustomDialog.customSnackBar(
+                    "حدث خطأ",
+                    SnackPosition.TOP,
+                    false,
+                  );
                 }
               },
             ),
@@ -167,7 +179,8 @@ class ContactAndSupportsScreen extends StatelessWidget {
                   if (await canLaunchUrl(web)) {
                     launchUrl(web);
                   } else {
-                    print('Could not launch $web');
+                    CustomDialog.customSnackBar(
+                        "حدث خطأ", SnackPosition.TOP, false);
                   }
                 }),
             TitleWidget(
@@ -180,7 +193,11 @@ class ContactAndSupportsScreen extends StatelessWidget {
                 if (await canLaunchUrl(web)) {
                   launchUrl(web);
                 } else {
-                  print('Could not launch $web');
+                  CustomDialog.customSnackBar(
+                    "حدث خطأ",
+                    SnackPosition.TOP,
+                    false,
+                  );
                 }
               },
             ),
@@ -192,7 +209,11 @@ class ContactAndSupportsScreen extends StatelessWidget {
                 if (await canLaunchUrlString(web)) {
                   launchUrlString(web);
                 } else {
-                  print('Could not launch $web');
+                  CustomDialog.customSnackBar(
+                    "حدث خطأ",
+                    SnackPosition.TOP,
+                    false,
+                  );
                 }
               },
             ),
@@ -205,7 +226,11 @@ class ContactAndSupportsScreen extends StatelessWidget {
                 if (await canLaunchUrlString(url)) {
                   launchUrlString(url);
                 } else {
-                  print('Could not launch $url');
+                  CustomDialog.customSnackBar(
+                    "حدث خطأ",
+                    SnackPosition.TOP,
+                    false,
+                  );
                 }
               },
             ),
@@ -257,8 +282,9 @@ class TitleWidget extends StatelessWidget {
             fit: BoxFit.scaleDown,
             child: Text(
               title,
-              style:
-                  MyTextStyles.title2.copyWith(fontWeight: FontWeight.normal),
+              style: MyTextStyles.title2.copyWith(
+                fontWeight: FontWeight.normal,
+              ),
             ),
           ),
           const SizedBox(

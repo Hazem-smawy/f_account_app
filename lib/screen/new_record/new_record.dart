@@ -37,12 +37,13 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 
   Future _selectDate(BuildContext ctx) async {
     final DateTime? picked = await showDatePicker(
-        context: ctx,
-        initialDate: widget.isEdditing
-            ? journalController.newJournal['registeredAt']
-            : DateTime.now(),
-        firstDate: DateTime(2020),
-        lastDate: DateTime(2030));
+      context: ctx,
+      initialDate: widget.isEdditing
+          ? DateTime.parse(journalController.newJournal['registeredAt'])
+          : DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2030),
+    );
 
     if (picked != null && picked != _selectedDate) {
       setState(() {
@@ -68,6 +69,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
           .abs()
           .toString();
       moneyTextController.text = moneyStr.substring(0, moneyStr.length - 2);
+      _selectedDate =
+          DateTime.parse(journalController.newJournal['registeredAt']);
+      //details = journalController.newJournal['details'].split(',');
     } else {
       newAccountController.newAccount.clear();
     }
@@ -80,12 +84,12 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     return SafeArea(
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.all(15),
         constraints: const BoxConstraints(
           minHeight: 300,
         ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(15),
           color: MyColors.bg,
         ),
         child: SafeArea(
@@ -181,13 +185,11 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                  Container(
-                                    child: const Center(
-                                      child: FaIcon(
-                                        FontAwesomeIcons.calendarCheck,
-                                        color: MyColors.secondaryTextColor,
-                                        size: 22,
-                                      ),
+                                  const Center(
+                                    child: FaIcon(
+                                      FontAwesomeIcons.calendarCheck,
+                                      color: MyColors.secondaryTextColor,
+                                      size: 22,
                                     ),
                                   ),
                                   const SizedBox(
@@ -278,7 +280,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   ),
                   if (details.isNotEmpty)
                     Positioned(
-                      top: CEC.errorMessage.value == "" ? 175 : 225,
+                      top: CEC.errorMessage.value == "" ? 185 : 232,
                       right: 0,
                       left: 0,
                       child: Stack(
@@ -287,7 +289,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           Container(
                             constraints: BoxConstraints(
                               minHeight: 40,
-                              maxHeight: Get.height / 6.4,
+                              maxHeight: Get.height / 9,
                             ),
                             padding: const EdgeInsets.only(top: 3),
                             decoration: BoxDecoration(

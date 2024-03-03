@@ -1,7 +1,11 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -63,7 +67,8 @@ class DetailsShareSheetWidget extends StatelessWidget {
                 if (await canLaunchUrl(smsLaunchUri)) {
                   launchUrl(smsLaunchUri);
                 } else {
-                  print('Could not launch $smsLaunchUri');
+                  CustomDialog.customSnackBar(
+                      "حدث خطأ", SnackPosition.TOP, false);
                 }
               },
             ),

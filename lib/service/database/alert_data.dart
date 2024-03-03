@@ -29,7 +29,6 @@ class AlertData {
     } catch (e) {
       // CustomDialog.customSnackBar(
       //     'هذا الاسم موجود من قبل', SnackPosition.TOP, true);
-      print("error for crreate alert");
     }
     return null;
   }
@@ -68,7 +67,6 @@ class AlertData {
     } catch (e) {
       // CustomDialog.customSnackBar(
       //     'هذا الاسم موجود من قبل', SnackPosition.TOP, true);
-      print("error for update alert");
     }
     return null;
   }

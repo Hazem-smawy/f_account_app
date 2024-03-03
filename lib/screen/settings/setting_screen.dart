@@ -254,13 +254,21 @@ class SettingScreen extends StatelessWidget {
                                   style: MyTextStyles.title2,
                                 ),
                                 const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  "حدد نوع النشاط ل أمكانية التعديل على البيانات ",
+                                  style: MyTextStyles.body,
+                                ),
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Row(
                                   children: [
                                     Flexible(
                                       child: CustomBtnWidget(
-                                        color: MyColors.blackColor,
+                                        color: MyColors.blackColor
+                                            .withOpacity(0.5),
                                         action: () {
                                           personalController
                                               .updateIsPersonal(true);
@@ -273,7 +281,8 @@ class SettingScreen extends StatelessWidget {
                                     ),
                                     Flexible(
                                       child: CustomBtnWidget(
-                                        color: MyColors.lessBlackColor,
+                                        color: MyColors.lessBlackColor
+                                            .withOpacity(0.7),
                                         action: () {
                                           personalController
                                               .updateIsPersonal(false);
@@ -329,7 +338,7 @@ class SettingScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               )
             ],

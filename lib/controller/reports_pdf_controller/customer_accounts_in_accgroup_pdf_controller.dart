@@ -47,7 +47,11 @@ class CustomerAccountsInAccGroupPdfController {
           buildCustomerAccountsInAccGroupTableReport(),
           PdfApi.sammaryFooterMoney(
               credit: accGroupReportController.totalCredit.value,
-              debit: accGroupReportController.totalDebit.value)
+              debit: accGroupReportController.totalDebit.value,
+              curency: curencyController.allCurency
+                  .firstWhere((element) =>
+                      element.id == accGroupReportController.curencyId.value)
+                  .name)
         ],
         footer: (context) => Column(children: [
           Divider(),

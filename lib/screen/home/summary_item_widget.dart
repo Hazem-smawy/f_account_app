@@ -34,55 +34,71 @@ class HomeSammaryWidget extends StatelessWidget {
           //  border: Border.all(color: MyColors.shadowColor),
           color: MyColors.bg,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+        child: Stack(
           children: [
-            Container(
-              width: 35,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(7),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: MyColors.shadowColor,
-                  )),
+            Positioned.fill(
+                child: Container(
+              alignment: Alignment.bottomLeft,
               child: FaIcon(
-                icon,
-                color: color,
-                size: 20,
+                color == MyColors.creditColor
+                    ? Icons.trending_down
+                    : Icons.trending_up,
+                size: 90,
+                color: color.withOpacity(0.08),
               ),
-            ),
-            const SizedBox(height: 5),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+            )),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  curency.symbol,
-                  style: MyTextStyles.body.copyWith(
-                    // color: MyColors.secondaryTextColor,
-                    fontWeight: FontWeight.normal,
+                Container(
+                  width: 35,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(7),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: MyColors.shadowColor,
+                    ),
+                  ),
+                  child: FaIcon(
+                    icon,
+                    color: color,
+                    size: 20,
                   ),
                 ),
-                const SizedBox(
-                  width: 5,
+                const SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      curency.symbol,
+                      style: MyTextStyles.body.copyWith(
+                        // color: MyColors.secondaryTextColor,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    FittedBox(
+                      child: Text(
+                        intl.NumberFormat.currency(symbol: '', decimalDigits: 1)
+                            .format(double.parse(title)),
+                        style: MyTextStyles.title1,
+                      ),
+                    ),
+                  ],
                 ),
-                FittedBox(
+                Padding(
+                  padding: const EdgeInsets.only(right: 3),
                   child: Text(
-                    intl.NumberFormat.currency(symbol: '', decimalDigits: 1)
-                        .format(double.parse(title)),
-                    style: MyTextStyles.title1,
+                    subTitle,
+                    style: MyTextStyles.body.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 3),
-              child: Text(
-                subTitle,
-                style: MyTextStyles.body.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
             ),
           ],
         ),

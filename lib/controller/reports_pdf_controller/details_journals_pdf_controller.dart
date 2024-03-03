@@ -53,6 +53,9 @@ class JournalPdfControls {
           PdfApi.sammaryFooterMoney(
             credit: totalCredit,
             debit: totalDebit,
+            curency: curencyController.allCurency
+                .firstWhere((element) => element.id == curencyId)
+                .name,
           ),
         ],
         footer: (context) => Column(children: [

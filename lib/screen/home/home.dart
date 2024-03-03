@@ -99,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 20, left: 5, top: 5),
-                    padding: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: MyColors.bg,

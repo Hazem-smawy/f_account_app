@@ -63,9 +63,9 @@ class CustomerAccountController extends GetxController {
     JournalController journalController = JournalController();
     List<Journal> journals =
         await journalController.getAllJournalsForCustomerAccount(id);
-    journals.forEach((element) {
+    for (var element in journals) {
       journalController.deleteJournal(element.id ?? 0);
-    });
+    }
     customerAccountData.delete(id);
     readAllCustomerAccounts();
   }

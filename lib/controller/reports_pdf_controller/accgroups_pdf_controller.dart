@@ -1,5 +1,6 @@
 import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/copy_controller.dart';
+import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/reports/accgroups_report_controller.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +20,7 @@ class AccGroupsPdfContoller {
   static final AccGroupsReportController allAccGroupReportsController =
       Get.find();
   static final AccGroupController accGroupController = Get.find();
+  static final CurencyController curencyController = Get.find();
 
   static Future<void> generateAllAccGroupPdfReports() async {
     CopyController copyController = Get.find();
@@ -42,7 +44,12 @@ class AccGroupsPdfContoller {
                 buildAccGroupTableReport(),
                 PdfApi.sammaryFooterMoney(
                     credit: allAccGroupReportsController.totalCredit.value,
-                    debit: allAccGroupReportsController.totalDebit.value)
+                    debit: allAccGroupReportsController.totalDebit.value,
+                    curency: curencyController.allCurency
+                        .firstWhere((element) =>
+                            element.id ==
+                            allAccGroupReportsController.curencyId.value)
+                        .name)
               ],
           footer: (context) {
             final pages = "${context.pageNumber}  / ${context.pagesCount}";

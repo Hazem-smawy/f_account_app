@@ -156,7 +156,7 @@ class CustomBtnWidget extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           elevation: 0,
           backgroundColor: color,
-          minimumSize: Size.fromHeight(textFieldSize),
+          minimumSize: const Size.fromHeight(textFieldSize),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
