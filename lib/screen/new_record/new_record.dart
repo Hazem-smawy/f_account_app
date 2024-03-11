@@ -15,6 +15,7 @@ import 'package:account_app/screen/new_account/new_account.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/error_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_awesome_calculator/flutter_awesome_calculator.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:account_app/constant/colors.dart';
@@ -203,21 +204,92 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                             width: 10,
                           ),
                           Expanded(
-                              child: CustomCurencyFieldWidget(
-                            controller: moneyTextController,
-                            textHint: "المبلغ",
-                            onTap: () {
-                              setState(() {
-                                details = [];
-                              });
-                            },
-                            action: (p0) {
-                              newAccountController.newAccount.update(
-                                'money',
-                                (value) => p0,
-                                ifAbsent: () => p0,
-                              );
-                            },
+                              child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: MyColors.containerSecondColor,
+                            ),
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.bottomSheet(Container(
+                                      padding: const EdgeInsets.only(
+                                        top: 20,
+                                        bottom: 20,
+                                      ),
+                                      margin: const EdgeInsets.only(
+                                        left: 15,
+                                        right: 15,
+                                        bottom: 30,
+                                      ),
+
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      // height: MediaQuery.of(context)
+                                      //         .size
+                                      //         .height *
+                                      //     0.9,
+                                      child: FlutterAwesomeCalculator(
+                                        clearButtonColor: Colors.white,
+                                        operatorsButtonColor: MyColors.bg,
+                                        context: context,
+                                        buttonRadius: 15,
+                                        showAnswerField: true,
+                                        digitsButtonColor: Colors.white,
+                                        backgroundColor: Colors.white,
+                                        expressionAnswerColor: Colors.black,
+                                        onChanged: (answer, expression) {
+                                          setState(
+                                            () {
+                                              moneyTextController.text = answer;
+                                              newAccountController.newAccount
+                                                  .update(
+                                                'money',
+                                                (value) => answer,
+                                                ifAbsent: () => answer,
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ));
+                                  },
+                                  child: SizedBox(
+                                    width: textFieldSize - 10,
+                                    height: textFieldSize,
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.calculate_outlined,
+                                        size: 22,
+                                        color: MyColors.lessBlackColor
+                                            .withOpacity(0.8),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: CustomCurencyFieldWidget(
+                                    controller: moneyTextController,
+                                    textHint: "المبلغ",
+                                    onTap: () {
+                                      setState(() {
+                                        details = [];
+                                      });
+                                    },
+                                    action: (p0) {
+                                      newAccountController.newAccount.update(
+                                        'money',
+                                        (value) => p0,
+                                        ifAbsent: () => p0,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           )),
                         ],
                       ),

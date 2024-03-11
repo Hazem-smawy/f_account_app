@@ -55,6 +55,7 @@ class AccountMoveRowWidget extends StatelessWidget {
             width: Get.width / 4,
             child: FittedBox(
               fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
               child: Text(
                 GlobalUtitlity.formatNumberDouble(
                   number: (journal.debit - journal.credit).abs(),
@@ -83,16 +84,15 @@ class AccountMoveRowWidget extends StatelessWidget {
                 Expanded(
                   child: Container(
                     alignment: Alignment.centerRight,
-                    child: FittedBox(
-                      child: Text(
-                        journal.details,
-                        textDirection: TextDirection.rtl,
-                        textAlign: TextAlign.right,
-                        style: MyTextStyles.subTitle.copyWith(
-                            fontWeight: FontWeight.normal,
-                            overflow: TextOverflow.ellipsis),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                    child: Text(
+                      journal.details,
+                      textDirection: TextDirection.rtl,
+                      textAlign: TextAlign.right,
+                      style: MyTextStyles.subTitle.copyWith(
+                          fontWeight: FontWeight.normal,
+                          overflow: TextOverflow.ellipsis),
+                      overflow: TextOverflow.clip,
+                      maxLines: 2,
                     ),
                   ),
                 ),

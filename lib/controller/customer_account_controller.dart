@@ -55,8 +55,15 @@ class CustomerAccountController extends GetxController {
   }
 
   Future<void> updateCustomerAccount(CustomerAccount customerAccount) async {
-    customerAccountData.updateCustomerAccount(customerAccount);
-    readAllCustomerAccounts();
+    await customerAccountData.updateCustomerAccount(customerAccount);
+
+    // final newCustomerAccount = allCustomerAccounts
+    //     .firstWhere((element) => element.id == customerAccount.id);
+
+    // if (newCustomerAccount.operation == 0) {
+    //   deleteCustomerAccount(newCustomerAccount.id ?? 0);
+    // }
+    await readAllCustomerAccounts();
   }
 
   Future<void> deleteCustomerAccount(int id) async {
@@ -64,7 +71,7 @@ class CustomerAccountController extends GetxController {
     List<Journal> journals =
         await journalController.getAllJournalsForCustomerAccount(id);
     for (var element in journals) {
-      journalController.deleteJournal(element.id ?? 0);
+      journalController.deleteJournal(element);
     }
     customerAccountData.delete(id);
     readAllCustomerAccounts();

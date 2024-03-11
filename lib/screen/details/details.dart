@@ -14,6 +14,7 @@ import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/utility/curency_format.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
+import 'package:account_app/widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -43,6 +44,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   double onHem = 0.0;
   double onYou = 0.0;
   double resultMoney = 0.0;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -51,6 +53,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
   }
 
   Future<void> getAllJournals() async {
+    setState(() {
+      isLoading = true;
+    });
     var newJournals = await journalController
         .getAllJournalsForCustomerAccount(widget.homeModel.cacId ?? 0);
 
@@ -59,7 +64,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
       journals.sort((a, b) => b.createdAt.compareTo(a.createdAt));
     });
     getAllCalculationForMoney();
-    setState(() {});
+    setState(() {
+      isLoading = false;
+    });
   }
 
   void getAllCalculationForMoney() {
@@ -91,17 +98,22 @@ class _DetailsScreenState extends State<DetailsScreen> {
   CurencyController curencyController = Get.find();
 
   Future<void> shareAction() async {
-    File? file = await JournalPdfControls.generateJournlsPdfReports(
-      journals: journals,
-      totalCredit: onYou,
-      totalDebit: onHem,
-      customerId: widget.homeModel.caId ?? 0,
-      curencyId: widget.homeModel.curId ?? 0,
-      accGroupId: widget.homeModel.accGId ?? 0,
-      share: true,
-    );
-    if (file != null) {
-      Share.shareXFiles([XFile(file.path)], text: 'حساب ');
+    if (journals.isNotEmpty) {
+      File? file = await JournalPdfControls.generateJournlsPdfReports(
+        journals: journals,
+        totalCredit: onYou,
+        totalDebit: onHem,
+        customerId: widget.homeModel.caId ?? 0,
+        curencyId: widget.homeModel.curId ?? 0,
+        accGroupId: widget.homeModel.accGId ?? 0,
+        share: true,
+      );
+      if (file != null) {
+        Share.shareXFiles([XFile(file.path)], text: 'حساب ');
+      }
+    } else {
+      CustomDialog.customSnackBar(
+          "ليس هناك شئ لمشاركتة", SnackPosition.BOTTOM, true);
     }
   }
 
@@ -115,296 +127,318 @@ class _DetailsScreenState extends State<DetailsScreen> {
           curencyId: widget.homeModel.curId ?? 0,
           accGroupId: widget.homeModel.accGId ?? 0,
           share: false);
+    } else {
+      CustomDialog.customSnackBar(
+          "ليس هناك شئ لطباعتة", SnackPosition.BOTTOM, true);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return journals.isEmpty
-        ? const SizedBox()
-        : Scaffold(
-            body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 10,
-                ),
-                child: Column(
-                  children: [
-                    CustomBackBtnWidget(
-                      shareAction: shareAction,
-                      action: pdfAction,
-                      icon: FontAwesomeIcons.solidFilePdf,
-                      title: customerController.allCustomers
-                          .firstWhere(
-                              (element) => element.id == widget.homeModel.caId)
-                          .name,
-                    ),
-                    const SizedBox(height: 10),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 4),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9),
-                        color: MyColors.lessBlackColor,
-                      ),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: Get.width / 5,
-                            child: Text(
-                              'الحساب',
-                              textAlign: TextAlign.center,
-                              style: MyTextStyles.subTitle.copyWith(
-                                color: MyColors.bg,
-                              ),
-                            ),
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 10,
+          ),
+          child: Column(
+            children: [
+              CustomBackBtnWidget(
+                shareAction: shareAction,
+                action: pdfAction,
+                icon: FontAwesomeIcons.solidFilePdf,
+                title: customerController.allCustomers
+                    .firstWhere(
+                        (element) => element.id == widget.homeModel.caId)
+                    .name,
+              ),
+              const SizedBox(height: 10),
+              if (journals.isNotEmpty)
+                Container(
+                  width: double.infinity,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9),
+                    color: MyColors.lessBlackColor,
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: Get.width / 5,
+                        child: Text(
+                          'الحساب',
+                          textAlign: TextAlign.center,
+                          style: MyTextStyles.subTitle.copyWith(
+                            color: MyColors.bg,
+                            fontWeight: FontWeight.normal,
                           ),
-                          SizedBox(
-                            width: Get.width / 9,
-                            child: Text(
-                              'التأريخ',
-                              textAlign: TextAlign.center,
-                              style: MyTextStyles.subTitle.copyWith(
-                                color: MyColors.bg,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          Container(
-                            width: 20,
-                            height: 5,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: widget.homeModel.totalCredit >
-                                      widget.homeModel.totalDebit
-                                  ? MyColors.debetColor
-                                  : MyColors.creditColor,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          SizedBox(
-                            width: Get.width / 6,
-                            child: Text('المبلغ',
-                                textAlign: TextAlign.left,
-                                style: MyTextStyles.subTitle.copyWith(
-                                  color: MyColors.bg,
-                                )),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                              width: Get.width / 4,
-                              child: Text(
-                                ' التفاصيل',
-                                textAlign: TextAlign.center,
-                                style: MyTextStyles.subTitle.copyWith(
-                                  color: MyColors.bg,
-                                ),
-                              )),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: journals.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Get.dialog(
-                                DetialInfoSheet(
-                                  action: getAllJournals,
-                                  homeModel: widget.homeModel,
-                                  name: customerController.allCustomers
-                                      .firstWhere(
-                                        (element) =>
-                                            element.id == widget.homeModel.caId,
-                                      )
-                                      .name,
-                                  detailsRows: journals[index],
-                                  curency:
-                                      curencyController.allCurency.firstWhere(
-                                    (element) =>
-                                        element.id == widget.homeModel.curId,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: DetailsRowWidget(
-                              journal: journals[index],
-                              accountMoney: getAccountMoney(journals[index])
-                                  .abs()
-                                  .toString(),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    // const Spacer(),
-                    Row(
-                      children: [
-                        DetailsSammaryWidget(
-                          icon: FontAwesomeIcons.arrowUp,
-                          title: "$onYou",
-                          subTitle: "له",
-                          color: MyColors.debetColor,
                         ),
-                        const SizedBox(width: 3),
-                        DetailsSammaryWidget(
-                          icon: FontAwesomeIcons.arrowDown,
-                          title: ' $onHem',
-                          subTitle: "عليه",
-                          color: MyColors.creditColor,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: MyColors.shadowColor),
-                        color: MyColors.bg,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Get.bottomSheet(
-                                DetailsShareSheetWidget(
-                                  pdfAction: pdfAction,
-                                  shareAction: shareAction,
-                                  customerPhone: customerController.allCustomers
-                                      .firstWhere((element) =>
-                                          element.id == widget.homeModel.caId)
-                                      .phone,
-                                  debit: onHem,
-                                  credit: onYou,
-                                ),
-                              );
-                            },
-                            child: Container(
+                      SizedBox(
+                        width: Get.width / 9,
+                        child: Text(
+                          'التأريخ',
+                          textAlign: TextAlign.center,
+                          style: MyTextStyles.subTitle.copyWith(
+                            color: MyColors.bg,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 11,
+                      ),
+                      Container(
+                        width: 20,
+                        height: 5,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: onYou > onHem
+                              ? MyColors.debetColor
+                              : MyColors.creditColor,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      SizedBox(
+                        width: Get.width / 6,
+                        child: Text(
+                          'المبلغ',
+                          textAlign: TextAlign.left,
+                          style: MyTextStyles.subTitle.copyWith(
+                            color: MyColors.bg,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      SizedBox(
+                          width: Get.width / 4,
+                          child: Text(
+                            ' التفاصيل',
+                            textAlign: TextAlign.center,
+                            style: MyTextStyles.subTitle.copyWith(
                               color: MyColors.bg,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: const FaIcon(
-                                Icons.share,
-                                size: 20,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              const SizedBox(
+                height: 5,
+              ),
+              if (journals.isEmpty)
+                Expanded(
+                    child: isLoading
+                        ? Container(
+                            width: Get.width - 25,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: MyColors.bg.withOpacity(0.7),
+                            ),
+                            child: const Center(
+                              child: CircularProgressIndicator(
                                 color: MyColors.lessBlackColor,
                               ),
                             ),
+                          )
+                        : const EmptyWidget(
+                            imageName: 'assets/images/accGroup.png',
+                            label: "لايوجد أي عمليات في هذا الحساب")),
+              if (journals.isNotEmpty)
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: journals.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Get.dialog(
+                            DetialInfoSheet(
+                              action: getAllJournals,
+                              homeModel: widget.homeModel,
+                              name: customerController.allCustomers
+                                  .firstWhere(
+                                    (element) =>
+                                        element.id == widget.homeModel.caId,
+                                  )
+                                  .name,
+                              detailsRows: journals[index],
+                              curency: curencyController.allCurency.firstWhere(
+                                (element) =>
+                                    element.id == widget.homeModel.curId,
+                              ),
+                              accountPaused: getStatus(),
+                            ),
+                          );
+                        },
+                        child: DetailsRowWidget(
+                          journal: journals[index],
+                          accountMoney: getAccountMoney(journals[index]),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              const SizedBox(
+                height: 20,
+              ),
+              // const Spacer(),
+              Row(
+                children: [
+                  DetailsSammaryWidget(
+                    icon: FontAwesomeIcons.arrowUp,
+                    title: "$onYou",
+                    subTitle: "له",
+                    color: MyColors.debetColor,
+                  ),
+                  const SizedBox(width: 3),
+                  DetailsSammaryWidget(
+                    icon: FontAwesomeIcons.arrowDown,
+                    title: ' $onHem',
+                    subTitle: "عليه",
+                    color: MyColors.creditColor,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 2,
+              ),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: MyColors.shadowColor),
+                  color: MyColors.bg,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Get.bottomSheet(
+                          DetailsShareSheetWidget(
+                            pdfAction: pdfAction,
+                            shareAction: shareAction,
+                            customerPhone: customerController.allCustomers
+                                .firstWhere((element) =>
+                                    element.id == widget.homeModel.caId)
+                                .phone,
+                            debit: onHem,
+                            credit: onYou,
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                curencyController.selectedCurency['symbol'],
-                                style: MyTextStyles.body,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              FittedBox(
-                                child: Text(
-                                  GlobalUtitlity.formatNumberDouble(
-                                      number: resultMoney.abs()),
-                                  style: MyTextStyles.subTitle.copyWith(
-                                    color: MyColors.lessBlackColor,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                resultMoney < 0 ? ": علية" : ": لة",
-                                style: MyTextStyles.subTitle.copyWith(
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 30,
-                                height: 30,
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.all(7),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: MyColors.shadowColor,
-                                  ),
-                                ),
-                                child: Center(
-                                  child: FaIcon(
-                                    resultMoney > 0
-                                        ? FontAwesomeIcons.chevronUp
-                                        : FontAwesomeIcons.chevronDown,
-                                    color: resultMoney > 0
-                                        ? MyColors.debetColor
-                                        : MyColors.creditColor,
-                                    size: 15,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 40,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 10),
-                        ],
+                        );
+                      },
+                      child: Container(
+                        color: MyColors.bg,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: const FaIcon(
+                          Icons.share,
+                          size: 20,
+                          color: MyColors.lessBlackColor,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 9),
+                    Row(
+                      children: [
+                        Text(
+                          curencyController.selectedCurency['symbol'],
+                          style: MyTextStyles.body,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        FittedBox(
+                          child: Text(
+                            GlobalUtitlity.formatNumberDouble(
+                                number: resultMoney.abs()),
+                            style: MyTextStyles.subTitle.copyWith(
+                              color: MyColors.lessBlackColor,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          resultMoney < 0 ? ": علية" : ": لة",
+                          style: MyTextStyles.subTitle.copyWith(
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          width: 30,
+                          height: 30,
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: MyColors.shadowColor,
+                            ),
+                          ),
+                          child: Center(
+                            child: FaIcon(
+                              resultMoney > 0
+                                  ? FontAwesomeIcons.chevronUp
+                                  : FontAwesomeIcons.chevronDown,
+                              color: resultMoney > 0
+                                  ? MyColors.debetColor
+                                  : MyColors.creditColor,
+                              size: 15,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 40,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 10),
                   ],
                 ),
               ),
+              const SizedBox(height: 9),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: widget.isFormReports
+          ? const SizedBox()
+          : FloatingActionButton(
+              backgroundColor:
+                  getStatus() ? MyColors.primaryColor : MyColors.blackColor,
+              onPressed: () {
+                if (getStatus()) {
+                  Get.bottomSheet(
+                    NewRecordScreen(
+                      isEdditing: false,
+                      homeModel: widget.homeModel,
+                    ),
+                    isScrollControlled: true,
+                  ).then((value) {
+                    getAllJournals();
+                  });
+                } else {
+                  CustomDialog.customSnackBar(
+                      "تم ايقاف هذا الحساب من الاعدادات",
+                      SnackPosition.BOTTOM,
+                      false);
+                  return;
+                }
+              },
+              child: const FaIcon(FontAwesomeIcons.plus),
             ),
-            floatingActionButton: widget.isFormReports
-                ? const SizedBox()
-                : FloatingActionButton(
-                    backgroundColor: getStatus()
-                        ? MyColors.primaryColor
-                        : MyColors.blackColor,
-                    onPressed: () {
-                      if (getStatus()) {
-                        Get.bottomSheet(
-                          NewRecordScreen(
-                            isEdditing: false,
-                            homeModel: widget.homeModel,
-                          ),
-                          isScrollControlled: true,
-                        ).then((value) {
-                          getAllJournals();
-                        });
-                      } else {
-                        CustomDialog.customSnackBar(
-                            "تم ايقاف هذا الحساب من الاعدادات",
-                            SnackPosition.BOTTOM,
-                            false);
-                        return;
-                      }
-                    },
-                    child: const FaIcon(FontAwesomeIcons.plus),
-                  ),
-          );
+    );
   }
 
   bool getStatus() {

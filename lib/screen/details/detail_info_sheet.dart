@@ -3,6 +3,7 @@ import 'package:account_app/controller/journal_controller.dart';
 import 'package:account_app/models/curency_model.dart';
 import 'package:account_app/models/home_model.dart';
 import 'package:account_app/models/journal_model.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
@@ -19,15 +20,16 @@ class DetialInfoSheet extends StatelessWidget {
   final JournalController journalController = Get.find();
   final HomeModel homeModel;
   final VoidCallback action;
+  final bool accountPaused;
 
-  DetialInfoSheet({
-    super.key,
-    required this.name,
-    required this.detailsRows,
-    required this.curency,
-    required this.homeModel,
-    required this.action,
-  });
+  DetialInfoSheet(
+      {super.key,
+      required this.name,
+      required this.detailsRows,
+      required this.curency,
+      required this.homeModel,
+      required this.action,
+      required this.accountPaused});
 
   @override
   Widget build(BuildContext context) {
@@ -51,51 +53,72 @@ class DetialInfoSheet extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     Get.back();
-                    //     journalController.newJournal
-                    //         .addAll(detailsRows.toMap());
-                    //     Get.bottomSheet(
-                    //       NewRecordScreen(
-                    //         homeModel: homeModel,
-                    //         isEdditing: true,
-                    //       ),
-                    //       isScrollControlled: true,
-                    //     ).then((value) {
-                    //       action();
-                    //     });
-                    //   },
-                    //   child: Container(
-                    //     margin: const EdgeInsets.all(5),
-                    //     padding: const EdgeInsets.only(
-                    //         left: 15, right: 5, top: 15, bottom: 15),
-                    //     color: MyColors.containerColor,
-                    //     child: FaIcon(
-                    //       FontAwesomeIcons.trash,
-                    //       color: Colors.red.withOpacity(0.7),
-                    //       size: 20,
-                    //     ),
-                    //   ),
-                    // ),
                     GestureDetector(
                       onTap: () {
-                        Get.back();
-                        journalController.newJournal
-                            .addAll(detailsRows.toMap());
-                        Get.bottomSheet(
-                          NewRecordScreen(
-                            homeModel: homeModel,
-                            isEdditing: true,
-                          ),
-                          isScrollControlled: true,
-                        ).then((value) {
-                          action();
-                        });
+                        if (accountPaused) {
+                          CustomDialog.showDialog(
+                              title: "حذف",
+                              description: "هل أنت متأكد من حذف هذا السجل",
+                              icon: FontAwesomeIcons.solidTrashCan,
+                              color: Colors.red,
+                              action: () async {
+                                await journalController
+                                    .deleteJournal(detailsRows);
+                                action();
+                                Get.back();
+                                Get.back();
+                              });
+                        } else {
+                          CustomDialog.customSnackBar(
+                            " تم ايقاف هذا الحساب من الاعدادات للحذف قم بتغير الإعدادات",
+                            SnackPosition.BOTTOM,
+                            false,
+                          );
+                        }
                       },
                       child: Container(
                         margin: const EdgeInsets.all(5),
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 5, top: 15, bottom: 15),
+                        color: MyColors.containerColor,
+                        child: FaIcon(
+                          FontAwesomeIcons.solidTrashCan,
+                          color: Colors.red.withOpacity(0.7),
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (accountPaused) {
+                          Get.back();
+                          journalController.newJournal
+                              .addAll(detailsRows.toMap());
+                          Get.bottomSheet(
+                            NewRecordScreen(
+                              homeModel: homeModel,
+                              isEdditing: true,
+                            ),
+                            isScrollControlled: true,
+                          ).then((value) {
+                            action();
+                          });
+                        } else {
+                          CustomDialog.customSnackBar(
+                            " تم ايقاف هذا الحساب من الاعدادات ل التعديل قم بتغير الإعدادات",
+                            SnackPosition.BOTTOM,
+                            false,
+                          );
+                        }
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.only(
+                          left: 5,
+                          right: 15,
+                          top: 15,
+                          bottom: 15,
+                        ),
                         color: MyColors.containerColor,
                         child: const FaIcon(
                           FontAwesomeIcons.penToSquare,
@@ -106,22 +129,22 @@ class DetialInfoSheet extends StatelessWidget {
                     ),
                   ],
                 ),
-                // const SizedBox(
-                //   width: 20,
-                // ),
+                const SizedBox(
+                  width: 5,
+                ),
                 Text(
                   name,
                   style: MyTextStyles.title2,
                 ),
-                // const Spacer(),
-                //const FaIcon(Icons.more_vert_rounded),
+                const Spacer(),
+                const FaIcon(Icons.more_vert_rounded),
                 const SizedBox(
-                  width: 40,
+                  width: 10,
                 ),
               ],
             ),
 
-            //Divider(),
+            const Divider(),
             //  const SizedBox(height: 5),
             Expanded(
               child: Container(
@@ -145,7 +168,7 @@ class DetialInfoSheet extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                          "${detailsRows.credit - detailsRows.debit}",
+                          "${(detailsRows.credit - detailsRows.debit).abs()}",
                           style: MyTextStyles.subTitle
                               .copyWith(color: MyColors.blackColor),
                         ),

@@ -129,7 +129,7 @@ class MyDrawerView extends StatelessWidget {
                         }));
                       },
                       icon: FontAwesomeIcons.users,
-                      title: "حسابات العملاء",
+                      title: "الحسابات",
                     ),
                     DrawerItemWidget(
                       onPress: () => Get.to(() => SettingScreen()),

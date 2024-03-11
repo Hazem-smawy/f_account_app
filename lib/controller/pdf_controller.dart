@@ -229,7 +229,9 @@ class PdfApi extends GetxController {
     final isRTL = date_formater.Bidi.detectRtlDirectionality(textContent);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Column(children: [
+      child: Container(
+          // constraints: const BoxConstraints(maxWidth: 1 * PdfPageFormat.cm),
+          child: Column(children: [
         if (!isRTL) SizedBox(height: 5),
         Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -239,6 +241,7 @@ class PdfApi extends GetxController {
                 textDirection: isRTL ? TextDirection.rtl : TextDirection.ltr,
                 child: Text(
                   textContent,
+                  overflow: TextOverflow.clip,
                   style: TextStyle(
                     font: globalCustomFont,
                     fontFallback: [enFont],
@@ -247,7 +250,7 @@ class PdfApi extends GetxController {
                 ),
               )
             ]),
-      ]),
+      ])),
     );
   }
 

@@ -85,7 +85,7 @@ class HomeController extends GetxController {
           createdAt: DateTime.now(),
           modifiedAt: DateTime.now()),
       AccGroup(
-          name: "المورين",
+          name: "الموردين",
           status: true,
           createdAt: DateTime.now(),
           modifiedAt: DateTime.now()),

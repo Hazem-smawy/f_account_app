@@ -26,7 +26,9 @@ class HomeRowView extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: MyColors.bg,
+        color: (!status || !homeModel.caStatus || !homeModel.cacStatus)
+            ? MyColors.secondaryTextColor.withOpacity(0.1)
+            : MyColors.bg,
         // boxShadow: [myShadow.blackShadow],
       ),
       child: GestureDetector(
@@ -90,16 +92,26 @@ class HomeRowView extends StatelessWidget {
               child: Text(
                 homeModel.name,
                 textAlign: TextAlign.right,
-                style: MyTextStyles.subTitle
-                    .copyWith(color: MyColors.secondaryTextColor),
+                style: MyTextStyles.subTitle.copyWith(
+                  color: MyColors.secondaryTextColor,
+                ),
               ),
             ),
             const SizedBox(width: 15),
             if (!status || !homeModel.caStatus || !homeModel.cacStatus)
-              const FaIcon(
-                FontAwesomeIcons.folderOpen,
-                size: 20,
-                color: MyColors.secondaryTextColor,
+              GestureDetector(
+                onTap: () {
+                  CustomDialog.customSnackBar(
+                    " تم ايقاف هذا الحساب من الاعدادات للإضافة قم بتغير الإعدادات",
+                    SnackPosition.TOP,
+                    true,
+                  );
+                },
+                child: FaIcon(
+                  FontAwesomeIcons.circleXmark,
+                  size: 20,
+                  color: MyColors.creditColor.withOpacity(0.4),
+                ),
               ),
             if (status && homeModel.caStatus && homeModel.cacStatus)
               GestureDetector(
@@ -127,7 +139,7 @@ class HomeRowView extends StatelessWidget {
                       SnackPosition.BOTTOM,
                       false,
                     );
-                    return;
+                    //  return;
                   }
                 },
                 child: const FaIcon(

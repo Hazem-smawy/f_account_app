@@ -19,6 +19,7 @@ import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/error_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_awesome_calculator/flutter_awesome_calculator.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:account_app/constant/colors.dart';
@@ -124,23 +125,107 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                             children: [
                               SizedBox(
                                   width: Get.width / 3,
-                                  child: CustomCurencyFieldWidget(
-                                    controller: moneyTextController,
-                                    textHint: "المبلغ",
-                                    onTap: () {
-                                      setState(() {
-                                        customers.clear();
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: MyColors.containerSecondColor,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            Get.bottomSheet(Container(
+                                              padding: const EdgeInsets.only(
+                                                top: 20,
+                                                bottom: 20,
+                                              ),
+                                              margin: const EdgeInsets.only(
+                                                left: 15,
+                                                right: 15,
+                                                bottom: 30,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              child: FlutterAwesomeCalculator(
+                                                clearButtonColor: Colors.white,
+                                                operatorsButtonColor:
+                                                    MyColors.bg,
+                                                buttonRadius: 15,
+                                                context: context,
+                                                showAnswerField: true,
+                                                digitsButtonColor: Colors.white,
+                                                backgroundColor: Colors.white,
+                                                expressionAnswerColor:
+                                                    Colors.black,
+                                                onChanged:
+                                                    (answer, expression) {
+                                                  setState(
+                                                    () {
+                                                      moneyTextController.text =
+                                                          answer;
+                                                      newAccountController
+                                                          .newAccount
+                                                          .update(
+                                                        'money',
+                                                        (value) => answer,
+                                                        ifAbsent: () => answer,
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                              ),
+                                            ));
+                                          },
+                                          child: Container(
+                                            margin:
+                                                const EdgeInsets.only(left: 5),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(7),
+                                              // border: Border.all(
+                                              //   color: MyColors
+                                              //       .secondaryTextColor
+                                              //       .withOpacity(0.5),
+                                              // ),
+                                            ),
+                                            width: textFieldSize - 20,
+                                            height: textFieldSize - 20,
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons.calculate_outlined,
+                                                size: 22,
+                                                color:
+                                                    MyColors.secondaryTextColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: CustomCurencyFieldWidget(
+                                            controller: moneyTextController,
+                                            textHint: "المبلغ",
+                                            onTap: () {
+                                              setState(() {
+                                                customers.clear();
 
-                                        details = [];
-                                      });
-                                    },
-                                    action: (p0) {
-                                      newAccountController.newAccount.update(
-                                        'money',
-                                        (value) => p0,
-                                        ifAbsent: () => p0,
-                                      );
-                                    },
+                                                details = [];
+                                              });
+                                            },
+                                            action: (p0) {
+                                              newAccountController.newAccount
+                                                  .update(
+                                                'money',
+                                                (value) => p0,
+                                                ifAbsent: () => p0,
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   )),
                               const SizedBox(width: 10),
                               Expanded(
@@ -154,17 +239,6 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                 ),
                                 child: Row(
                                   children: [
-                                    // SizedBox(
-                                    //   width: 10,
-                                    // ),
-                                    // GestureDetector(
-                                    //   // onTap: _askContactPermissions,
-                                    //   child: FaIcon(
-                                    //     FontAwesomeIcons.user,
-                                    //     size: 18,
-                                    //     color: MyColors.secondaryTextColor,
-                                    //   ),
-                                    // ),
                                     Expanded(
                                       child: TextFormField(
                                         controller: nameController,
@@ -216,22 +290,19 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                         ),
                                       ),
                                     ),
+                                    SelectContactWidget(
+                                      action: (contactName, contactNumber) {
+                                        nameController.text = contactName;
+                                        newAccountController.newAccount.update(
+                                          'phone',
+                                          (value) => contactName,
+                                          ifAbsent: () => contactNumber,
+                                        );
+                                      },
+                                    )
                                   ],
                                 ),
                               )),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              SelectContactWidget(
-                                action: (contactName, contactNumber) {
-                                  nameController.text = contactName;
-                                  newAccountController.newAccount.update(
-                                    'phone',
-                                    (value) => contactName,
-                                    ifAbsent: () => contactNumber,
-                                  );
-                                },
-                              )
                             ],
                           ),
                           const SizedBox(height: 10),

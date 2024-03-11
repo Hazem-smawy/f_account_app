@@ -247,7 +247,7 @@ class _CustomerAccountDetailsSheetState
                         borderRadius: BorderRadius.circular(12),
                         color: MyColors.primaryColor.withOpacity(0.9)),
                     child: Text(
-                      "تحد يث",
+                      "حفظ",
                       style: MyTextStyles.title2.copyWith(
                         color: MyColors.bg,
                       ),

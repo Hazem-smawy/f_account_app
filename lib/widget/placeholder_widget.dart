@@ -97,8 +97,10 @@ class PlaceHolderWidget extends StatelessWidget {
                       ),
                       const SizedBox(height: 30),
                       Text(
-                        "لا يوجدأي حساب في هذا التصنيف ",
-                        style: MyTextStyles.title2,
+                        "لا يوجد أي حساب في هذا التصنيف ",
+                        style: MyTextStyles.title2.copyWith(
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
                       const SizedBox(
                         height: 10,

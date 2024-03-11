@@ -181,8 +181,8 @@ class AccGroupCurencyListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(
-        left: 15,
-        top: 60,
+        left: 20,
+        top: 58,
         // right: Get.width / 2.3,
       ),
       width: Get.width / 2,
@@ -317,7 +317,7 @@ class AccGroupCurencyListItemWidget extends StatelessWidget {
             ),
           if (curency == null)
             const FaIcon(
-              FontAwesomeIcons.folderOpen,
+              FontAwesomeIcons.folder,
               size: 14,
               color: MyColors.secondaryTextColor,
             ),

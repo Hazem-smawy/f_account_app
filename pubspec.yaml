@@ -49,7 +49,7 @@ dependencies:
   timezone: any
   url_launcher: any
   flutter_native_contact_picker: ^0.0.4
- 
+  flutter_awesome_calculator: ^1.0.0+1
 dev_dependencies:
   flutter_test:
     sdk: flutter

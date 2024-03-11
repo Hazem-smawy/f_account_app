@@ -70,7 +70,7 @@ class CustomerAccountsView extends StatelessWidget {
                             horizontal: 20,
                             vertical: 0,
                           ),
-                          hintText: "بحث في حسابات العملاء",
+                          hintText: "بحث في الحسابات",
                           hintStyle: MyTextStyles.body,
                         ),
                         // style: myTextStyles.subTitle,
@@ -143,6 +143,10 @@ class CustomerAccountsView extends StatelessWidget {
                                   customerAccountController
                                       .allCustomerAccounts[index].accgroupId)
                               .name;
+                          final result = customerAccountController
+                                  .searchedList[index].totalCredit -
+                              customerAccountController
+                                  .searchedList[index].totalDebit;
                           return GestureDetector(
                             onTap: () {
                               Get.bottomSheet(CustomerAccountDetailsSheet(
@@ -151,8 +155,8 @@ class CustomerAccountsView extends StatelessWidget {
                               ));
                             },
                             child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
+                              padding: const EdgeInsets.only(
+                                  left: 15, right: 15, top: 15, bottom: 10),
                               margin: const EdgeInsets.only(bottom: 7),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
@@ -162,20 +166,21 @@ class CustomerAccountsView extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      CircleAvatar(
-                                        radius: 5,
-                                        backgroundColor:
-                                            customerAccountController
-                                                    .searchedList[index].status
-                                                ? Colors.green
-                                                : Colors.red,
+                                      Icon(
+                                        result < 0
+                                            ? Icons.trending_down_rounded
+                                            : Icons.trending_up_rounded,
+                                        size: 20,
+                                        color: result < 0
+                                            ? MyColors.creditColor
+                                            : MyColors.debetColor,
                                       ),
                                       const SizedBox(
                                         width: 10,
                                       ),
                                       Text(
-                                        "الحالة",
-                                        style: MyTextStyles.body,
+                                        result.abs().toString(),
+                                        style: MyTextStyles.title2,
                                       ),
                                       const Spacer(),
                                       const SizedBox(width: 10),
@@ -185,13 +190,34 @@ class CustomerAccountsView extends StatelessWidget {
                                           icon: FontAwesomeIcons.user),
                                     ],
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Divider(),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const SizedBox(
-                                        width: 10,
+                                      Row(
+                                        textDirection: TextDirection.rtl,
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 5,
+                                            backgroundColor:
+                                                customerAccountController
+                                                        .searchedList[index]
+                                                        .status
+                                                    ? Colors.green
+                                                    : Colors.red,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            "الحالة",
+                                            style: MyTextStyles.body,
+                                          ),
+                                        ],
                                       ),
                                       SizedBox(
                                         width: Get.width / 4,

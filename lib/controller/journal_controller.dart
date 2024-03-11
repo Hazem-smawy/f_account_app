@@ -51,7 +51,20 @@ class JournalController extends GetxController {
     homeController.getCustomerAccountsFromCurencyAndAccGroupIds();
   }
 
-  Future<void> deleteJournal(int id) async {
-    journalData.delete(id);
+  Future<void> deleteJournal(Journal journal) async {
+    await journalData.delete(journal.id ?? 0);
+
+    final newCustomerAccount =
+        customerAccountController.allCustomerAccounts.firstWhere(
+      (element) => element.id == journal.customerAccountId,
+    );
+
+    await customerAccountController
+        .updateCustomerAccount(newCustomerAccount.copyWith(
+      totalCredit: newCustomerAccount.totalCredit - journal.credit,
+      totalDebit: newCustomerAccount.totalDebit - journal.debit,
+      operation: newCustomerAccount.operation - 1,
+    ));
+    await homeController.getCustomerAccountsFromCurencyAndAccGroupIds();
   }
 }

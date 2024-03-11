@@ -53,97 +53,109 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     calculateResultMoneyForYou();
     return curency != null
-        ? Column(mainAxisSize: MainAxisSize.min, children: [
-            const SizedBox(height: 5),
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 5),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              child: rows != null
-                  ? HomePrivateSammaryWidget(
-                      forYou: forYou,
-                      onYou: onYou,
-                      curency: curency ??
-                          Curency(
-                            name: "",
-                            symbol: "",
-                            status: true,
-                            createdAt: DateTime.now(),
-                            modifiedAt: DateTime.now(),
-                          ),
-                    )
-                  : const SizedBox(),
-            ),
-
-            Expanded(
-              child: rows != null
-                  ? ListView.builder(
-                      padding: const EdgeInsets.only(
-                          bottom: 30, right: 20, left: 20, top: 10),
-                      itemCount: rows?.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return HomeRowView(
-                          homeModel: rows?[index],
-                          status: stauts,
-                        );
-                      },
-                    )
-                  : SizedBox(child: PlaceHolderWidget()),
-            ),
-
-            // curency menu
-            if (curency != null)
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 20, left: 5, top: 5),
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: MyColors.bg,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const SizedBox(width: 10),
-                        Text(
-                          curency?.symbol ?? " ",
-                          style: MyTextStyles.body.copyWith(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: MyColors.lessBlackColor,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Container(
-                          width: 1,
-                          height: 15,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3),
-                            color: MyColors.secondaryTextColor.withOpacity(0.7),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          curency?.name ?? "",
-                          style: MyTextStyles.body.copyWith(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: MyColors.lessBlackColor,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                      ],
-                    ),
-                  ),
-                ],
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                child: rows != null
+                    ? HomePrivateSammaryWidget(
+                        forYou: forYou,
+                        onYou: onYou,
+                        curency: curency ??
+                            Curency(
+                              name: "",
+                              symbol: "",
+                              status: true,
+                              createdAt: DateTime.now(),
+                              modifiedAt: DateTime.now(),
+                            ),
+                      )
+                    : const SizedBox(),
               ),
 
-            // end curency menu
-          ])
+              Expanded(
+                child: rows != null
+                    ? ListView.builder(
+                        padding: const EdgeInsets.only(
+                          bottom: 30,
+                          right: 20,
+                          left: 20,
+                          top: 10,
+                        ),
+                        itemCount: rows?.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return HomeRowView(
+                            homeModel: rows?[index],
+                            status: stauts,
+                          );
+                        },
+                      )
+                    : SizedBox(
+                        child: PlaceHolderWidget(),
+                      ),
+              ),
+
+              // curency menu
+              if (curency != null)
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Container(
+                      margin:
+                          const EdgeInsets.only(bottom: 20, left: 5, top: 5),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: MyColors.bg,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(width: 10),
+                          Text(
+                            curency?.symbol ?? " ",
+                            style: MyTextStyles.body.copyWith(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: MyColors.lessBlackColor,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Container(
+                            width: 1,
+                            height: 15,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(3),
+                              color:
+                                  MyColors.secondaryTextColor.withOpacity(0.7),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            curency?.name ?? "",
+                            style: MyTextStyles.body.copyWith(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: MyColors.lessBlackColor,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+              // end curency menu
+            ],
+          )
         : PlaceHolderWidget();
   }
 }

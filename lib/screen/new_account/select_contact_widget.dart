@@ -62,12 +62,16 @@ class SelectContactWidget extends StatelessWidget {
         _askContactPermissions();
       },
       child: Container(
+        margin: const EdgeInsets.all(5),
         height: textFieldSize,
-        width: textFieldSize,
+        width: textFieldSize - 10,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: MyColors.containerColor,
+          border: Border.all(
+            color: MyColors.secondaryTextColor.withOpacity(0.2),
+          ),
+          // color: MyColors.containerColor,
         ),
         child: const Center(
           child: FaIcon(
