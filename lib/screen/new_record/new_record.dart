@@ -116,7 +116,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           alignment: Alignment.centerRight,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: MyColors.lessBlackColor.withOpacity(0.9),
+                            //color: MyColors.containerColor,
                           ),
                           child: Row(
                             children: [
@@ -137,22 +137,34 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                                         )
                                         .name,
                                     style: MyTextStyles.body.copyWith(
-                                      color: MyColors.bg,
-                                    ),
+                                        // color: MyColors.bg,
+                                        ),
                                   ),
                                 ),
+                              ),
+
+                              const Icon(
+                                FontAwesomeIcons.dollarSign,
+                                size: 18,
+                                color: MyColors.secondaryTextColor,
                               ),
                               const Spacer(),
                               Text(
                                 widget.homeModel.name,
                                 textAlign: TextAlign.right,
-                                style: MyTextStyles.subTitle.copyWith(
-                                  color: Colors.white,
-                                ),
+                                style: MyTextStyles.subTitle,
                               ),
                               const SizedBox(
                                 width: 10,
                               ),
+                              const Icon(
+                                Icons.person,
+                                size: 20,
+                                color: MyColors.secondaryTextColor,
+                              ),
+                              // const SizedBox(
+                              //   width: 10,
+                              // ),
                             ],
                           ),
                         ),

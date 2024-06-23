@@ -20,7 +20,7 @@ class DetailsRowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 5),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(7),
         color: MyColors.bg.withOpacity(0.5),
@@ -33,15 +33,15 @@ class DetailsRowWidget extends StatelessWidget {
               children: [
                 FaIcon(
                   accountMoney < 0
-                      ? Icons.trending_down_outlined
-                      : Icons.trending_up_outlined,
+                      ? Icons.keyboard_arrow_down_outlined
+                      : Icons.keyboard_arrow_up_outlined,
                   size: 13,
                   color: accountMoney < 0
                       ? MyColors.creditColor.withOpacity(0.9)
                       : MyColors.debetColor.withOpacity(0.9),
                 ),
                 SizedBox(
-                  width: 5,
+                  width: 3,
                 ),
                 Expanded(
                   child: FittedBox(

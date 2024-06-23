@@ -157,7 +157,7 @@ class CustomerAccountsView extends StatelessWidget {
                             child: Container(
                               padding: const EdgeInsets.only(
                                   left: 15, right: 15, top: 15, bottom: 10),
-                              margin: const EdgeInsets.only(bottom: 7),
+                              margin: const EdgeInsets.only(bottom: 10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 color: MyColors.bg.withOpacity(0.7),
@@ -182,12 +182,13 @@ class CustomerAccountsView extends StatelessWidget {
                                         result.abs().toString(),
                                         style: MyTextStyles.title2,
                                       ),
-                                      const Spacer(),
                                       const SizedBox(width: 10),
-                                      CustomerAccountItem(
-                                          isCustomerName: true,
-                                          title: customer ?? "",
-                                          icon: FontAwesomeIcons.user),
+                                      Expanded(
+                                        child: CustomerAccountItem(
+                                            isCustomerName: true,
+                                            title: customer ?? "",
+                                            icon: FontAwesomeIcons.user),
+                                      ),
                                     ],
                                   ),
                                   const SizedBox(
