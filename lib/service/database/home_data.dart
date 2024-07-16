@@ -15,7 +15,7 @@ class HomeData {
   Future<List<HomeModel>> getCustomerAccountsForAccGroup() async {
     final db = await DatabaseService().database;
     final result = await db.rawQuery(
-        'SELECT cac.customerId AS caId, ca.name ,cac.id AS cacId,ca.status AS caStatus,cac.status AS cacStatus,totalDebit ,cac.totalCredit , cac.operation, cac.accgroupId AS accGId,cac.curencyId AS curId FROM customeraccount AS cac  JOIN  customer AS ca ON cac.customerId = ca.id ');
+        'SELECT cac.customerId AS caId, ca.name ,cac.id AS cacId,ca.status AS caStatus,cac.status AS cacStatus,totalDebit ,cac.totalCredit , cac.operation, cac.accgroupId AS accGId,cac.curencyId AS curId FROM customeraccount AS cac  JOIN  customer AS ca ON cac.customerId = ca.id order by ca.modifiedAt desc ');
 
     /*
 
@@ -53,7 +53,7 @@ ORDER by acc.id , cac.curencyid
     DateTime todayEnd = todayStart.add(const Duration(days: 1));
 
     final result = await db.rawQuery(
-        "SELECT j.id as jId ,cac.id as cacId , j.debit as debit, j.credit as credit ,ca.name as name, accG.name as accName, cur.symbol,cur.name as curencyName  FROM journal as j join customeraccount as cac on j.customerAccountId = cac.id join customer as ca on cac.customerId = ca.id  join accgroup as accG on cac.accgroupId = accG.id   join curency  as cur on cac.curencyId = cur.id WHERE j.createdAt BETWEEN ? AND ? order by j.createdAt desc",
+        "SELECT j.id as jId ,cac.id as cacId , j.debit as debit, j.credit as credit ,j.details as desc,j.registeredAt as date ,j.createdAt as cdAt,j.modifiedAt as mdAt ,ca.name as name, accG.name as accName, cur.symbol,cur.name as curencyName  FROM journal as j join customeraccount as cac on j.customerAccountId = cac.id join customer as ca on cac.customerId = ca.id  join accgroup as accG on cac.accgroupId = accG.id   join curency  as cur on cac.curencyId = cur.id WHERE j.createdAt BETWEEN ? AND ? order by j.createdAt desc",
         [todayStart.toIso8601String(), todayEnd.toIso8601String()]);
     return result;
   }

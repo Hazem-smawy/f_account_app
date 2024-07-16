@@ -3,6 +3,7 @@ import 'package:account_app/controller/journal_controller.dart';
 import 'package:account_app/models/curency_model.dart';
 import 'package:account_app/models/home_model.dart';
 import 'package:account_app/models/journal_model.dart';
+import 'package:account_app/utility/curency_format.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -21,15 +22,18 @@ class DetialInfoSheet extends StatelessWidget {
   final HomeModel homeModel;
   final VoidCallback action;
   final bool accountPaused;
+  final bool isFromReports;
 
-  DetialInfoSheet(
-      {super.key,
-      required this.name,
-      required this.detailsRows,
-      required this.curency,
-      required this.homeModel,
-      required this.action,
-      required this.accountPaused});
+  DetialInfoSheet({
+    super.key,
+    required this.name,
+    required this.detailsRows,
+    required this.curency,
+    required this.homeModel,
+    required this.action,
+    required this.accountPaused,
+    required this.isFromReports,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -53,80 +57,97 @@ class DetialInfoSheet extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        if (accountPaused) {
-                          CustomDialog.showDialog(
-                              title: "حذف",
-                              description: "هل أنت متأكد من حذف هذا السجل",
-                              icon: FontAwesomeIcons.solidTrashCan,
-                              color: Colors.red,
-                              action: () async {
-                                await journalController
-                                    .deleteJournal(detailsRows);
-                                action();
-                                Get.back();
-                                Get.back();
-                              });
-                        } else {
-                          CustomDialog.customSnackBar(
-                            " تم ايقاف هذا الحساب من الاعدادات للحذف قم بتغير الإعدادات",
-                            SnackPosition.BOTTOM,
-                            false,
-                          );
-                        }
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.all(5),
-                        padding: const EdgeInsets.only(
-                            left: 10, right: 5, top: 15, bottom: 15),
-                        color: MyColors.containerColor,
-                        child: FaIcon(
-                          FontAwesomeIcons.solidTrashCan,
-                          color: Colors.red.withOpacity(0.7),
-                          size: 20,
+                    if (!isFromReports)
+                      GestureDetector(
+                        onTap: () {
+                          if (accountPaused) {
+                            CustomDialog.showDialog(
+                                title: "حذف",
+                                description: "هل أنت متأكد من حذف هذا السجل",
+                                icon: FontAwesomeIcons.solidTrashCan,
+                                color: Colors.red,
+                                action: () async {
+                                  await journalController
+                                      .deleteJournal(detailsRows);
+                                  action();
+                                  Get.back();
+                                  Get.back();
+                                });
+                          } else {
+                            CustomDialog.customSnackBar(
+                              " تم ايقاف هذا الحساب من الاعدادات للحذف قم بتغير الإعدادات",
+                              SnackPosition.BOTTOM,
+                              false,
+                            );
+                          }
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.all(5),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 5, top: 15, bottom: 15),
+                          color: MyColors.containerColor,
+                          child: FaIcon(
+                            FontAwesomeIcons.solidTrashCan,
+                            color: Colors.red.withOpacity(0.7),
+                            size: 20,
+                          ),
                         ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        if (accountPaused) {
-                          Get.back();
-                          journalController.newJournal
-                              .addAll(detailsRows.toMap());
-                          Get.bottomSheet(
-                            NewRecordScreen(
-                              homeModel: homeModel,
-                              isEdditing: true,
-                            ),
-                            isScrollControlled: true,
-                          ).then((value) {
-                            action();
-                          });
-                        } else {
-                          CustomDialog.customSnackBar(
-                            " تم ايقاف هذا الحساب من الاعدادات ل التعديل قم بتغير الإعدادات",
-                            SnackPosition.BOTTOM,
-                            false,
-                          );
-                        }
-                      },
-                      child: Container(
+                    if (!isFromReports)
+                      GestureDetector(
+                        onTap: () {
+                          if (accountPaused) {
+                            Get.back();
+                            journalController.newJournal
+                                .addAll(detailsRows.toMap());
+                            Get.bottomSheet(
+                              NewRecordScreen(
+                                homeModel: homeModel,
+                                isEdditing: true,
+                              ),
+                              isScrollControlled: true,
+                            ).then((value) {
+                              action();
+                            });
+                          } else {
+                            CustomDialog.customSnackBar(
+                              " تم ايقاف هذا الحساب من الاعدادات ل التعديل قم بتغير الإعدادات",
+                              SnackPosition.BOTTOM,
+                              false,
+                            );
+                          }
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.all(5),
+                          padding: const EdgeInsets.only(
+                            left: 5,
+                            right: 15,
+                            top: 15,
+                            bottom: 15,
+                          ),
+                          color: MyColors.containerColor,
+                          child: const FaIcon(
+                            FontAwesomeIcons.penToSquare,
+                            color: MyColors.primaryColor,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    if (isFromReports)
+                      Container(
                         margin: const EdgeInsets.all(5),
                         padding: const EdgeInsets.only(
                           left: 5,
-                          right: 15,
+                          right: 5,
                           top: 15,
                           bottom: 15,
                         ),
                         color: MyColors.containerColor,
-                        child: const FaIcon(
-                          FontAwesomeIcons.penToSquare,
-                          color: MyColors.primaryColor,
-                          size: 20,
+                        child: const SizedBox(
+                          height: 10,
+                          width: 0,
                         ),
                       ),
-                    ),
                   ],
                 ),
                 const SizedBox(
@@ -168,7 +189,10 @@ class DetialInfoSheet extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                          "${(detailsRows.credit - detailsRows.debit).abs()}",
+                          GlobalUtitlity.formatNumberDouble(
+                            number:
+                                (detailsRows.credit - detailsRows.debit).abs(),
+                          ),
                           style: MyTextStyles.subTitle
                               .copyWith(color: MyColors.blackColor),
                         ),
@@ -185,13 +209,13 @@ class DetialInfoSheet extends StatelessWidget {
                       children: [
                         Text(
                           curency.symbol,
-                          style: MyTextStyles.subTitle.copyWith(
+                          style: MyTextStyles.title2.copyWith(
                               color: MyColors.blackColor,
                               fontWeight: FontWeight.normal),
                         ),
                         Text(
                           curency.name,
-                          style: MyTextStyles.subTitle.copyWith(
+                          style: MyTextStyles.title2.copyWith(
                             fontWeight: FontWeight.normal,
                             color: MyColors.blackColor,
                           ),
@@ -209,7 +233,7 @@ class DetialInfoSheet extends StatelessWidget {
                         Text(
                           date_formater.DateFormat.yMEd()
                               .format(detailsRows.registeredAt),
-                          style: MyTextStyles.subTitle.copyWith(
+                          style: MyTextStyles.title2.copyWith(
                               color: MyColors.blackColor,
                               fontWeight: FontWeight.normal),
                         ),
@@ -226,7 +250,7 @@ class DetialInfoSheet extends StatelessWidget {
                         Text(
                           date_formater.DateFormat.Hm()
                               .format(detailsRows.createdAt),
-                          style: MyTextStyles.subTitle.copyWith(
+                          style: MyTextStyles.title2.copyWith(
                               color: MyColors.blackColor,
                               fontWeight: FontWeight.normal),
                         ),
@@ -243,7 +267,7 @@ class DetialInfoSheet extends StatelessWidget {
                         Text(
                           date_formater.DateFormat.yMEd()
                               .format(detailsRows.createdAt),
-                          style: MyTextStyles.subTitle.copyWith(
+                          style: MyTextStyles.title2.copyWith(
                               color: MyColors.blackColor,
                               fontWeight: FontWeight.normal),
                         ),
@@ -262,9 +286,10 @@ class DetialInfoSheet extends StatelessWidget {
                         Text(
                           date_formater.DateFormat.Hm()
                               .format(detailsRows.createdAt),
-                          style: MyTextStyles.subTitle.copyWith(
-                              color: MyColors.blackColor,
-                              fontWeight: FontWeight.normal),
+                          style: MyTextStyles.title2.copyWith(
+                            color: MyColors.blackColor,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
                         const InfoTitleWidget(
                           title: "وقت الإنشاء",

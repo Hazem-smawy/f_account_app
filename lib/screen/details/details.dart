@@ -260,6 +260,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         onTap: () {
                           Get.dialog(
                             DetialInfoSheet(
+                              isFromReports: widget.isFormReports,
                               action: getAllJournals,
                               homeModel: widget.homeModel,
                               name: customerController.allCustomers

@@ -27,6 +27,7 @@ class AccountMoveScreen extends StatelessWidget {
       Get.put(AccountMovemoentController());
 
   final AccGroupController accGroupController = Get.find();
+  final CurencyController curencyController = Get.find();
 
   final CustomerController customerController = Get.find();
 
@@ -347,9 +348,17 @@ class AccountMoveScreen extends StatelessWidget {
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return AccountMoveRowWidget(
-                                            journal: accountMovemoentController
-                                                    .customerAccountsJournals[
-                                                index]);
+                                          curency: curencyController.allCurency
+                                              .firstWhere(
+                                            (element) =>
+                                                element.id ==
+                                                accountMovemoentController
+                                                    .curencyId.value,
+                                          ),
+                                          journal: accountMovemoentController
+                                              .customerAccountsJournals[index],
+                                          name: textEditingController.text,
+                                        );
                                       },
                                     ),
                             ),
